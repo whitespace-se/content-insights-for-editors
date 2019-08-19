@@ -1,0 +1,14 @@
+{
+    "name": "content-insights-for-editors",
+    "description": "",
+    "type": "wordpress-plugin",
+    "autoload": {
+    },
+    "require": {
+        "vlucas/phpdotenv": "^3.4"
+    },
+    "suggest": {
+        "advanced-custom-fields/advanced-custom-fields-pro": "Used by the plugin for settingspages",
+        "helsingborg-stad/broken-link-detector": "Needed for handling page and content scanning to find broken links."
+    }
+}
