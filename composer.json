@@ -1,7 +1,22 @@
 {
     "name": "content-insights-for-editors",
-    "description": "",
+    "description": "Content Insights for Editors is a WordPress plugin.",
     "type": "wordpress-plugin",
+    "license": "MIT",
+    "homepage": "https://whitespace.se/en/open-source/",
+    "keywords": [
+      "content insights",
+      "broken links",
+      "editors",
+      "matomo",
+      "analytics"
+    ],
+    "authors": [
+      {
+        "name": "Whitespace Dev",
+        "email": "code@whitespace.se"
+      }
+    ],
     "autoload": {
     },
     "require": {
