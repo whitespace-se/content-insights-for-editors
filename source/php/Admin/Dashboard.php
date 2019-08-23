@@ -218,8 +218,18 @@ class Dashboard {
 					get_edit_post_link($value->ID) .
 					'"><strong>' .
 					$value->title .
-					'</strong></a>
-                    </td>
+					'</strong></a>';
+				if (isset($value->feedback)):
+					echo '<div class="cife-customer-feedback-wrapper">
+					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
+						round($value->feedback['yes']) .
+						'% <i class="cife-icon cife-icon--thumb-up"></i></span>
+					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
+						round($value->feedback['no']) .
+						'% <i class="cife-icon cife-icon--thumb-down"></i></span>
+					</div>';
+				endif;
+				echo '</td>
                     <td>' .
 					$value->visitors .
 					'</td>

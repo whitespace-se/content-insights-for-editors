@@ -168,7 +168,7 @@ if (function_exists('acf_add_local_field_group')) {
 				array(
 					'param' => 'options_page',
 					'operator' => '==',
-					'value' => 'content-insights-for-editors-settings',
+					'value' => 'content-insights-for-editors-page-settings',
 				),
 			),
 		),
