@@ -42,7 +42,7 @@ $loader->addPrefix(
 $loader->register();
 
 add_action('plugins_loaded', function () {
-	if ( function_exists( 'register_fields_posttype_select' ) ) {
+	if ( !function_exists( 'register_fields_posttype_select' ) ) {
 		require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH .
 			'plugins/acf-post-type-field/acf-posttype-select.php';
 	}
