@@ -30,7 +30,7 @@ class MailFormatter {
 	}
 
 	public static function formatAndSendMail($userID) {
-		$logo = apply_filters('cife_notification_mail_logo', null);
+		$logo = apply_filters('cife_notification_mail_logo_url', null);
 		$userData = get_userdata($userID);
 		$brokenLinks = PostQuery::getListPosts($userID, true);
 		$brokenLinksMapped = array_map(
@@ -60,7 +60,7 @@ class MailFormatter {
 		);
 
 		$_htmlvars = [
-			'logo' => $logo ? wp_get_attachment_url($logo['id']) : false,
+			'logo' => $logo,
 			'intro_header' => sprintf(
 				'%s %s,',
 				__('Hi', 'content-insights-for-editors'),
