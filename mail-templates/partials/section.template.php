@@ -12,7 +12,7 @@
     <div style="border-bottom: 15px solid #ffffff; border-left: 30px solid #ffffff; border-right: 30px solid #ffffff;color:#555555;background-color: #f4f4f4;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
     <ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%;margin-top:0px; list-style-type: none; margin-left: 0; padding-left: 0;">
     <?php if ($_sectionVars['list_header']): ?>
-        <li style="list-style-type: none; margin-bottom: 6px; margin-left: 0;">
+        <li style="list-style-type: none; margin-bottom: 6px; margin-left: 0px;">
             <table style="width: 100%">
                 <tr>
                     <th><?php echo $_sectionVars['list_header']['title'] ?: '';  ?></th>
@@ -22,7 +22,7 @@
         </li>
     <?php endif; ?>
     <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0;">
+        <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0px;">
         <table style="width: 100%">
                 <tr>
                     <td><a href="<?php echo $item[

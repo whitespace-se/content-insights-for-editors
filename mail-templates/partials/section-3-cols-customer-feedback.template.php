@@ -10,7 +10,7 @@
     	'section_header'
     ]; ?></span></p>
 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:650px"><tr class="layout-full-width" style="background-color:#FFFFFF"><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="282" style="background-color:#FFFFFF;width:282px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
+<!--[if (mso)|(IE)]><td align="center" width="282" style="width:282px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
 <div class="col num6" style="display: table-cell; vertical-align: top; max-width: 282px; min-width: 282px; width: 282px;">
 <div style="width:100% !important;">
 <!--[if (!mso)&(!IE)]><!-->
@@ -27,8 +27,8 @@
 </div>
 </div>
 <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td><td align="center" width="142" style="background-color:#FFFFFF;width:142px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px;"><![endif]-->
-<div class="col num3" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 142px; width: 142px;">
+<!--[if (mso)|(IE)]></td><td align="center" width="142" style="width:142px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px;"><![endif]-->
+<div class="col num3 mobile_hide" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 142px; width: 142px;">
 <div style="width:100% !important;">
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-right: 0px; padding-left: 0px;">
@@ -44,8 +44,8 @@
 </div>
 </div>
 <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td><td align="center" width="115" style="background-color:#FFFFFF;width:115px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px;"><![endif]-->
-<div class="col num3" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 115px; width: 115px;">
+<!--[if (mso)|(IE)]></td><td align="center" width="115" style="width:115px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px;"><![endif]-->
+<div class="col num3 mobile_hide" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 115px; width: 115px;">
 <div style="width:100% !important;">
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-right: 0px; padding-left: 0px;">
@@ -72,7 +72,7 @@
 <div class="block-grid three-up" style="Margin: 0 auto; min-width: 320px; max-width: 650px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">
 <div style="background-color: #f4f4f4; margin: 30px; margin-top: 0;">
 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:650px"><tr class="layout-full-width" style="background-color:#FFFFFF"><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="282" style="background-color:#FFFFFF;width:282px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
+<!--[if (mso)|(IE)]><td align="center" width="282" style="width:282px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
 <div class="col num6" style="display: table-cell; vertical-align: top; max-width: 282px; min-width: 282px; width: 282px;">
 <div style="width:100% !important;">
 <!--[if (!mso)&(!IE)]><!-->
@@ -82,7 +82,7 @@
 <div style="color:#555555;font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%; list-style-type: none; margin-left: 0; padding-left: 0;">
 <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0;">
+        <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0px;">
             <a href="<?php echo $item[
                     	'url'
                     ]; ?>" rel="noopener" style="text-decoration: underline; color: #5b2c82;" target="_blank"><?php echo $item[
@@ -99,8 +99,8 @@
 </div>
 </div>
 <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td><td align="center" width="142" style="background-color:#FFFFFF;width:142px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
-<div class="col num3" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 142px; width: 142px;">
+<!--[if (mso)|(IE)]></td><td align="center" width="142" style="width:142px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
+<div class="col num3 mobile_hide" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 142px; width: 142px;">
 <div style="width:100% !important;">
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
@@ -109,7 +109,7 @@
 
 <ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%; list-style-type: none; margin-left: 0; padding-left: 0;">
 <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px; clear: both; height: 14px; margin-bottom: 6px;  margin-left: 0;">
+        <li style="font-size: 12px; line-height: 14px; clear: both; height: 14px; margin-bottom: 6px;  margin-left: 0px;">
         <?php $_feedback = $item['feedback']; ?>
         <?php include CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH .
             '/partials/customer-feedback/base.template.php'; ?>
@@ -123,8 +123,8 @@
 </div>
 </div>
 <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td><td align="center" width="115" style="background-color:#FFFFFF;width:115px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
-<div class="col num3" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 115px; width: 115px;">
+<!--[if (mso)|(IE)]></td><td align="center" width="115" style="width:115px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;"><![endif]-->
+<div class="col num3 mobile_hide" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 115px; width: 115px;">
 <div style="width:100% !important;">
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
@@ -134,7 +134,7 @@
 <div style="font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
 <ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%; list-style-type: none; margin-left: 0; padding-left: 0;">
 <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px; text-align: right; margin-bottom: 6px; margin-left: 0;">
+        <li style="font-size: 12px; line-height: 14px; text-align: right; margin-bottom: 6px; margin-left: 0px;">
             <?php echo $item['value']; ?>
         </li>
     <?php endforeach; ?>
