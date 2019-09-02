@@ -60,10 +60,7 @@ class PostQuery {
                 LEFT JOIN $brokenLinksTable links ON $postName.ID = links.post_id
                 LEFT JOIN $analyticsTable analytics ON $postName.ID = analytics.post_id ";
 
-		$where_posts = apply_filters(
-			'cife_posts_where_statments',
-			array()
-		);
+		$where_posts = apply_filters('cife_posts_where_statments', array());
 
 		if ($postId === false && is_numeric($userID) && $userID != 0) {
 			$where_posts['user.ID'] = (int) $userID;
@@ -122,7 +119,7 @@ class PostQuery {
 		}
 
 		$result = $wpdb->get_results($sql);
-		
+
 		return $result;
 	}
 
@@ -162,8 +159,16 @@ class PostQuery {
                 LIMIT %d",
 			$count
 		);
-
-		return $wpdb->get_results($sql);
+		$results = $wpdb->get_results($sql);
+		if (class_exists('\CustomerFeedback\App')) {
+			foreach ($results as $res) {
+				$res->feedback = \CustomerFeedback\Responses::getResponses(
+					$res->ID,
+					'percent'
+				);
+			}
+		}
+		return $results;
 	}
 
 	public static function getMostBrokenLinksPosts($count = 10, $userID = false) {
@@ -204,10 +209,10 @@ class PostQuery {
 			'post_status' => 'publish',
 			'date_query' => array(
 				'before' => $time,
-				'column' => 'post_modified'
+				'column' => 'post_modified',
 			),
 			'order' => 'ASC',
-			'orderby' => 'post_modified'
+			'orderby' => 'post_modified',
 		);
 		if ($userID) {
 			if (Settings::getUseAlternateUserField()) {
@@ -215,7 +220,7 @@ class PostQuery {
 				$args['meta_query'][] = array(
 					'key' => 'page_meta_maineditor',
 					'value' => $userID,
-					'compare' => '='
+					'compare' => '=',
 				);
 			} else {
 				$args['author'] = $userID;

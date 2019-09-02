@@ -20,11 +20,17 @@ class MailFormatter {
 
 	public static function mapNumberOfViews($item) {
 		$item['value'] = $item['post']->visitors;
+		if (class_exists('\CustomerFeedback\App')) {
+			$item['feedback'] = [
+				'yes' => round($item['post']->feedback['yes']).'%',
+				'no' => round($item['post']->feedback['no']).'%',
+			];
+		}
 		return $item;
 	}
 
 	public static function formatAndSendMail($userID) {
-		$logo = null;
+		$logo = apply_filters('cife_notification_mail_logo_url', null);
 		$userData = get_userdata($userID);
 		$brokenLinks = PostQuery::getListPosts($userID, true);
 		$brokenLinksMapped = array_map(
@@ -54,7 +60,7 @@ class MailFormatter {
 		);
 
 		$_htmlvars = [
-			'logo' => wp_get_attachment_url($logo['id']),
+			'logo' => $logo,
 			'intro_header' => sprintf(
 				'%s %s,',
 				__('Hi', 'content-insights-for-editors'),
@@ -72,6 +78,7 @@ class MailFormatter {
 			'cife_notification_mail_list_sections',
 			array(
 				[
+					'id' => 'broken-links',
 					'list' => $brokenLinksMapped,
 					'list_header' => [
 						'title' => __('Page title', 'content-insights-for-editors'),
@@ -86,6 +93,7 @@ class MailFormatter {
 					),
 				],
 				[
+					'id' => 'most-viewed',
 					'list' => $mostViewedMapped,
 					'list_header' => [
 						'title' => __('Page title', 'content-insights-for-editors'),
@@ -101,6 +109,7 @@ class MailFormatter {
 					),
 				],
 				[
+					'id' => 'rarely-updated',
 					'list' => $rarelyUpdatedMapped,
 					'list_header' => [
 						'title' => __('Page title', 'content-insights-for-editors'),
@@ -117,6 +126,13 @@ class MailFormatter {
 				],
 			)
 		);
+		if (class_exists('\CustomerFeedback\App')) {
+			foreach($_htmlvars['sections'] as &$section) {
+				if ($section['id'] === 'most-viewed') {
+					$section['list_header']['feedback'] =  __('Customer feedback', 'content-insights-for-editors');
+				}
+			}
+		}
 
 		$_htmlvars = apply_filters('cife_notification_mail_vars', $_htmlvars);
 
@@ -127,7 +143,6 @@ class MailFormatter {
 		);
 		$email_body = include CONTENT_INSIGHTS_FOR_EDITORS_PATH .
 			'/mail-templates/broken-links-notice.template.php';
-
 		$headers = array('Content-Type: text/html; charset=UTF-8');
 		return wp_mail($email_to, $email_subject, $email_body, $headers);
 	}

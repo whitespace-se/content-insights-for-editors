@@ -28,7 +28,12 @@ endif;?>
 
 <?php
 foreach($_htmlvars['sections'] as $_sectionVars):
-	include CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH . '/partials/section.template.php';
+	$template = CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH . '/partials/section.template.php';
+	if ($_sectionVars['id'] === 'most-viewed' && class_exists('\CustomerFeedback\App')) {
+		$template = CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH . '/partials/section-3-cols-customer-feedback.template.php';
+	}
+	$template = apply_filters('cife_notification_mail_render_section', $template, $_sectionVars);
+	include $template;
 endforeach;
 ?>
 

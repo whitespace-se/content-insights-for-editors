@@ -82,6 +82,20 @@ When resources have been installed. The plugin can be activated by looking for a
 
 Here are the hooks for customizing the plugin
 
+### Set the mail logo url
+```php
+cife_notification_mail_list_sections
+```
+
+**Example usage**
+
+```php
+add_action('cife_notification_mail_list_sections', function($currentLogo) {
+    $logo =  get_field('logotype', 'option');
+    return  wp_get_attachment_url($logo['id']);
+});
+```
+
 ### Adding a section to mail notification
 ```php
 cife_notification_mail_list_sections
@@ -105,6 +119,22 @@ add_action('cife_notification_mail_list_sections', function($sections){
         'no_items_text' => '', // string, Replace list if empty
     ]);
     return $sections;
+});
+```
+
+### Modify which section template to use during render
+```php
+cife_notification_mail_render_section
+```
+
+**Example usage**
+
+```php
+add_action('cife_notification_mail_list_sections', function($template, $sectionVars){
+    if ($_sectionVars['id'] === 'most-viewed' && class_exists('\CustomerFeedback\App')) {
+        return CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH . '/partials/section-3-cols-customer-feedback.template.php';
+    }
+    return $template; // Absolute php file path
 });
 ```
 
