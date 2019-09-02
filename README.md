@@ -84,13 +84,13 @@ Here are the hooks for customizing the plugin
 
 ### Set the mail logo url
 ```php
-cife_notification_mail_list_sections
+cife_notification_mail_logo_url
 ```
 
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_list_sections', function($currentLogo) {
+add_action('cife_notification_mail_logo_url', function($currentLogo) {
     $logo =  get_field('logotype', 'option');
     return  wp_get_attachment_url($logo['id']);
 });
