@@ -21,6 +21,16 @@
 			border-collapse: collapse;
 		}
 
+		ul {
+			list-style-type: none;
+			margin-left: 0;
+			padding-left: 0;
+		}
+
+		li {
+			margin-bottom: 6px;
+		}
+
 		* {
 			line-height: inherit;
 		}
