@@ -80,9 +80,9 @@
 <!--<![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;"><![endif]-->
 <div style="color:#555555;font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%;">
+<ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%; list-style-type: none; margin-left: 0; padding-left: 0;">
 <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px;">
+        <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0;">
             <a href="<?php echo $item[
                     	'url'
                     ]; ?>" rel="noopener" style="text-decoration: underline; color: #5b2c82;" target="_blank"><?php echo $item[
@@ -107,9 +107,9 @@
 <!--<![endif]-->
 <div style="color:#555555;font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 
-<ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%;">
+<ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%; list-style-type: none; margin-left: 0; padding-left: 0;">
 <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px; clear: both; height: 14px;">
+        <li style="font-size: 12px; line-height: 14px; clear: both; height: 14px; margin-bottom: 6px;  margin-left: 0;">
         <?php $_feedback = $item['feedback']; ?>
         <?php include CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH .
             '/partials/customer-feedback/base.template.php'; ?>
@@ -132,9 +132,9 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;"><![endif]-->
 <div style="color:#555555;font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%;">
+<ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%; list-style-type: none; margin-left: 0; padding-left: 0;">
 <?php foreach ($_sectionVars['list'] as $item): ?>
-        <li style="font-size: 12px; line-height: 14px; text-align: right;">
+        <li style="font-size: 12px; line-height: 14px; text-align: right; margin-bottom: 6px; margin-left: 0;">
             <?php echo $item['value']; ?>
         </li>
     <?php endforeach; ?>
