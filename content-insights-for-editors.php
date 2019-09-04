@@ -20,8 +20,6 @@ define(
 	CONTENT_INSIGHTS_FOR_EDITORS_PATH . '/mail-templates'
 );
 
-
-
 add_action('plugins_loaded', function () {
 	load_plugin_textdomain(
 		'content-insights-for-editors',
@@ -44,16 +42,14 @@ $loader->addPrefix(
 $loader->register();
 
 add_action('plugins_loaded', function () {
-	$acfExportManager = new \AcfExportManager\AcfExportManager();
-	$acfExportManager->setTextdomain('content-insights-for-editors');
-	$acfExportManager->setExportFolder(
-		CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/AcfFields/'
-	);
-	$acfExportManager->autoExport(array(
-		'options-page' => 'group_5d19aaf9c929e',
-	));
-	$acfExportManager->import();
-});
+	if ( !function_exists( 'register_fields_posttype_select' ) ) {
+		require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH .
+			'plugins/acf-post-type-field/acf-posttype-select.php';
+	}
+
+	require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH .
+		'source/php/AcfFields/php/options-page.php';
+}, 99);
 
 register_deactivation_hook(__FILE__, 'cife_decativation');
 if (!function_exists('cife_decativation')) {
