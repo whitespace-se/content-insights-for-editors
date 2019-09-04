@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Content Insights for Editors
  * Description:       Analyse content for your website
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Johan Veeborn, Anders Rehn, Whitespace
  * Text Domain:       content-insights-for-editors
  * Domain Path:       /languages
@@ -49,7 +49,7 @@ add_action('plugins_loaded', function () {
 
 	require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH .
 		'source/php/AcfFields/php/options-page.php';
-});
+}, 99);
 
 register_deactivation_hook(__FILE__, 'cife_decativation');
 if (!function_exists('cife_decativation')) {

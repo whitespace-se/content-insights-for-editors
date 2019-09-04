@@ -10,9 +10,9 @@
     <!--[if mso]></td></tr></table><![endif]-->
     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-bottom: 15px solid #ffffff; border-left: 30px solid #ffffff; border-right: 30px solid #ffffff;padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Trebuchet MS', Tahoma, sans-serif"><![endif]-->
     <div style="border-bottom: 15px solid #ffffff; border-left: 30px solid #ffffff; border-right: 30px solid #ffffff;color:#555555;background-color: #f4f4f4;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-    <ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%;margin-top:0px; padding-left: 15px; list-style-type: disc;">
+    <ul style="color: #555555; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 120%;margin-top:0px; list-style-type: none; margin-left: 0; padding-left: 0;">
     <?php if ($_sectionVars['list_header']): ?>
-        <li style="list-style-type: none;">
+        <li style="list-style-type: none; margin-bottom: 6px; margin-left: 0px;">
             <table style="width: 100%">
                 <tr>
                     <th><?php echo $_sectionVars['list_header']['title'] ?: '';  ?></th>
@@ -21,18 +21,18 @@
             </table>
         </li>
     <?php endif; ?>
-    <?php foreach ($_sectionVars['list'] as $brokenLink): ?>
-        <li style="font-size: 12px; line-height: 14px;">
+    <?php foreach ($_sectionVars['list'] as $item): ?>
+        <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0px;">
         <table style="width: 100%">
                 <tr>
-                    <td><a href="<?php echo $brokenLink[
+                    <td><a href="<?php echo $item[
                     	'url'
-                    ]; ?>" rel="noopener" style="text-decoration: underline; color: #5b2c82;" target="_blank"><?php echo $brokenLink[
+                    ]; ?>" rel="noopener" style="text-decoration: underline; color: #5b2c82;" target="_blank"><?php echo $item[
 	'title'
 ]; ?></a></td>
-    <?php if (!empty($brokenLink['value'])): ?>
+    <?php if (!empty($item['value'])): ?>
         <td style="text-align:right;">
-            <?php echo $brokenLink['value']; ?>
+            <?php echo $item['value']; ?>
         </td>
     <?php endif; ?>
                 </tr>

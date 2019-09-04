@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-08-15 16:09+0200\n"
+"POT-Creation-Date: 2019-09-02 11:07+0200\n"
 "PO-Revision-Date: 2019-08-05 11:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -41,75 +41,75 @@ msgstr ""
 msgid "Top 10 pages not updated in a while (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:57
+#: source/php/Admin/Dashboard.php:58
 msgid "Your top 10 pages most visited last month"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:63
+#: source/php/Admin/Dashboard.php:67
 msgid "Your 10 least visited pages last month"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:69
+#: source/php/Admin/Dashboard.php:75
 msgid "All your pages with broken links"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:78
+#: source/php/Admin/Dashboard.php:85
 msgid "All your pages not updated in the last"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:80
+#: source/php/Admin/Dashboard.php:89
 msgid "days"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:158
+#: source/php/Admin/Dashboard.php:167
 msgid "No broken links found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:162
+#: source/php/Admin/Dashboard.php:172
 msgid "Nice job, everything seems to be in order."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:166 source/php/Admin/Dashboard.php:229
-#: source/php/Admin/Dashboard.php:286
+#: source/php/Admin/Dashboard.php:178 source/php/Admin/Dashboard.php:254
+#: source/php/Admin/Dashboard.php:311
 msgid "Click here to"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:168 source/php/Admin/Dashboard.php:288
+#: source/php/Admin/Dashboard.php:180 source/php/Admin/Dashboard.php:313
 msgid "view your pages"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:197 source/php/Admin/Dashboard.php:250
-#: source/php/Util/MailFormatter.php:76 source/php/Util/MailFormatter.php:86
-#: source/php/Util/MailFormatter.php:101
+#: source/php/Admin/Dashboard.php:209 source/php/Admin/Dashboard.php:275
+#: source/php/Util/MailFormatter.php:82 source/php/Util/MailFormatter.php:97
+#: source/php/Util/MailFormatter.php:113
 msgid "Page title"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:198 source/php/Util/MailFormatter.php:87
+#: source/php/Admin/Dashboard.php:210 source/php/Util/MailFormatter.php:98
 msgid "Number of visitors"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:199 source/php/Admin/Dashboard.php:251
-#: source/php/Util/ListTable.php:91 source/php/Util/MailFormatter.php:102
+#: source/php/Admin/Dashboard.php:211 source/php/Admin/Dashboard.php:276
+#: source/php/Util/ListTable.php:91 source/php/Util/MailFormatter.php:114
 msgid "Last updated"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:221
+#: source/php/Admin/Dashboard.php:245
 msgid "No pages found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:226 source/php/Util/MailFormatter.php:94
+#: source/php/Admin/Dashboard.php:251 source/php/Util/MailFormatter.php:105
 msgid "Seems like you are not the author of any pages yet."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:231
+#: source/php/Admin/Dashboard.php:256
 msgid "create a new page"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:272
+#: source/php/Admin/Dashboard.php:297
 msgid "No old pages found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:278
+#: source/php/Admin/Dashboard.php:303
 #, php-format
 msgid "Great! All of your pages have been updated within the last %d days."
 msgstr ""
@@ -175,7 +175,7 @@ msgstr ""
 msgid "No data available"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:77
+#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:85
 msgid "Broken links"
 msgstr ""
 
@@ -239,34 +239,38 @@ msgstr ""
 msgid "Analysis updated"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:60
+#: source/php/Util/MailFormatter.php:64
 msgid "Hi"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:64
+#: source/php/Util/MailFormatter.php:68
 msgid ""
 "This is a short summary of all pages you are the author to that contains "
 "broken links, pages that has not been updated in a while and your most "
 "visited pages this week."
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:79
+#: source/php/Util/MailFormatter.php:89
 msgid "Good news! No broken links found this time, keep up the good work."
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:90
+#: source/php/Util/MailFormatter.php:101
 msgid "Your top 10 pages most visited last week"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:105
+#: source/php/Util/MailFormatter.php:117
 msgid "Pages not updated in a while"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:109
+#: source/php/Util/MailFormatter.php:121
 msgid "Excellent all your pages have been updated recently!"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:122
+#: source/php/Util/MailFormatter.php:130
+msgid "Customer feedback"
+msgstr ""
+
+#: source/php/Util/MailFormatter.php:139
 msgid "Summary of your pages content"
 msgstr ""
 
