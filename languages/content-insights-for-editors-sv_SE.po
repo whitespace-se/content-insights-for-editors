@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-05 10:59+0200\n"
-"PO-Revision-Date: 2019-09-05 11:00+0200\n"
+"POT-Creation-Date: 2019-09-05 11:01+0200\n"
+"PO-Revision-Date: 2019-09-05 11:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -21,6 +21,67 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: plugins\n"
+
+#: source/php/AcfFields/php/options-page.php:9
+msgid "Analyzed posttypes"
+msgstr "Analyserade posttyper"
+
+#: source/php/AcfFields/php/options-page.php:29
+msgid "Use alternative user field"
+msgstr "Använd alternativt användarfält"
+
+#: source/php/AcfFields/php/options-page.php:33
+msgid ""
+"Uses the Editor field (page_meta_maineditor) for user filtering, instead of "
+"Author used by default."
+msgstr ""
+"Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
+"istället för Författare som används som standard."
+
+#: source/php/AcfFields/php/options-page.php:49
+msgid "Enable automatic mailing for broken links"
+msgstr "Aktivera automatiska utskick för brutna länkar"
+
+#: source/php/AcfFields/php/options-page.php:53
+msgid ""
+"Sends email to all authors, editors and administrators every two weeks with "
+"a report on their broken links."
+msgstr ""
+"Skickar mail till alla författare, redaktörer samt administratörer varannan "
+"vecka med en rapport om deras brutna länkar."
+
+#: source/php/AcfFields/php/options-page.php:69
+msgid "Obsolete pages"
+msgstr "Föråldrade sidor"
+
+#: source/php/AcfFields/php/options-page.php:73
+msgid ""
+"Set the threshold for how many days a page that has not been updated should "
+"be before the plugin flags the page as outdated."
+msgstr ""
+"Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats skall "
+"vara innan pluginet flaggar sidan som föråldrad."
+
+#: source/php/AcfFields/php/options-page.php:110
+msgid "ex. https://analys.yourdomain.se/"
+msgstr "ex. https://analys.dindoman.se/"
+
+#: source/php/AcfFields/php/options-page.php:126
+msgid "Matomo Api key"
+msgstr "Matomo API-nyckel"
+
+#: source/php/AcfFields/php/options-page.php:130
+msgid ""
+"Visit admin for your Matomo installation. Under Platform -> API there is & "
+"token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
+"xxxxxxxxxxxxxxx"
+msgstr ""
+"Besök admin för din Matomoinstallation. Under Plattform -> API finns "
+"&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
+
+#: source/php/AcfFields/php/options-page.php:146
+msgid "Matomo site id"
+msgstr ""
 
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
@@ -324,53 +385,6 @@ msgstr "Analysera webbplats"
 #. Author of the plugin/theme
 msgid "Johan Veeborn, Anders Rehn, Whitespace"
 msgstr ""
-
-#~ msgid "Analyzed posttypes"
-#~ msgstr "Analyserade posttyper"
-
-#~ msgid "Use alternative user field"
-#~ msgstr "Använd alternativt användarfält"
-
-#~ msgid ""
-#~ "Uses the Editor field (page_meta_maineditor) for user filtering, instead "
-#~ "of Author used by default."
-#~ msgstr ""
-#~ "Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
-#~ "istället för Författare som används som standard."
-
-#~ msgid "Enable automatic mailing for broken links"
-#~ msgstr "Aktivera automatiska utskick för brutna länkar"
-
-#~ msgid ""
-#~ "Sends email to all authors, editors and administrators every two weeks "
-#~ "with a report on their broken links."
-#~ msgstr ""
-#~ "Skickar mail till alla författare, redaktörer samt administratörer "
-#~ "varannan vecka med en rapport om deras brutna länkar."
-
-#~ msgid "Obsolete pages"
-#~ msgstr "Föråldrade sidor"
-
-#~ msgid ""
-#~ "Set the threshold for how many days a page that has not been updated "
-#~ "should be before the plugin flags the page as outdated."
-#~ msgstr ""
-#~ "Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats "
-#~ "skall vara innan pluginet flaggar sidan som föråldrad."
-
-#~ msgid "ex. https://analys.yourdomain.se/"
-#~ msgstr "ex. https://analys.dindoman.se/"
-
-#~ msgid "Matomo Api key"
-#~ msgstr "Matomo API-nyckel"
-
-#~ msgid ""
-#~ "Visit admin for your Matomo installation. Under Platform -> API there is "
-#~ "& token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
-#~ "xxxxxxxxxxxxxxx"
-#~ msgstr ""
-#~ "Besök admin för din Matomoinstallation. Under Plattform -> API finns "
-#~ "&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
 
 #~ msgid "Visa endast sidor med trasiga länkar"
 #~ msgstr "Visa endast sidor med brutna länkar"

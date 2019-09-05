@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-05 11:00+0200\n"
+"POT-Creation-Date: 2019-09-05 11:01+0200\n"
 "PO-Revision-Date: 2019-08-05 11:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,6 +21,59 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: plugins\n"
+
+#: source/php/AcfFields/php/options-page.php:9
+msgid "Analyzed posttypes"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:29
+msgid "Use alternative user field"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:33
+msgid ""
+"Uses the Editor field (page_meta_maineditor) for user filtering, instead "
+"of Author used by default."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:49
+msgid "Enable automatic mailing for broken links"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:53
+msgid ""
+"Sends email to all authors, editors and administrators every two weeks "
+"with a report on their broken links."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:69
+msgid "Obsolete pages"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:73
+msgid ""
+"Set the threshold for how many days a page that has not been updated "
+"should be before the plugin flags the page as outdated."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:110
+msgid "ex. https://analys.yourdomain.se/"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:126
+msgid "Matomo Api key"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:130
+msgid ""
+"Visit admin for your Matomo installation. Under Platform -> API there is & "
+"token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
+"xxxxxxxxxxxxxxx"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:146
+msgid "Matomo site id"
+msgstr ""
 
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
