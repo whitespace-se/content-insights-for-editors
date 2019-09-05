@@ -135,12 +135,12 @@ class PostQuery {
 		$timespanRow = esc_sql(sprintf('%s_visitors', $timespan));
 		$sql = "SELECT $postName.ID AS ID,
                         $postName.post_title AS title,
-                        analytics.$timespanRow AS visitors
+                        COALESCE(analytics.$timespanRow, 0) AS visitors 
 				FROM $wpdb->posts $postName";
 		if ($userID !== false && Settings::getUseAlternateUserField()) {
 			$sql .= " LEFT JOIN $wpdb->postmeta postmeta ON $postName.ID = postmeta.post_id";
 		}
-		$sql .= " INNER JOIN $analyticsTable analytics ON $postName.ID = analytics.post_id";
+		$sql .= " LEFT JOIN $analyticsTable analytics ON $postName.ID = analytics.post_id";
 		$sql .= " WHERE $postName.post_status = 'publish' AND $postName.post_type != 'revision'";
 		if ($userID !== false) {
 			if (Settings::getUseAlternateUserField()) {
