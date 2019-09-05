@@ -9,6 +9,7 @@ class Matomo {
 	private static $wpdb = null;
 
 	public static $installChecked = false;
+	public static $matomoIsActive = false;
 
 	private $matomoUrl = null;
 	private $idSite = null;
@@ -29,12 +30,38 @@ class Matomo {
 		$this->parameters['idSite'] = Settings::getMatomoIdSite();
 
 		$this->parameters['token_auth'] = Settings::getMatomoApiToken();
+		self::$matomoIsActive = $this->checkMatomoParamtersSet();
+		if (!self::$matomoIsActive) {
+			add_action( 'admin_notices', array($this, 'adminNoticeWarnMatomo') );
+		}
 
 		add_action('wp', array($this, 'schedule'));
 		add_action('content-insights-for-editors-matomo', array(
 			$this,
 			'updatePagesWeekAndMonth',
 		));
+	}
+
+	private function checkMatomoParamtersSet() {
+		if (empty($this->matomoUrl)) {
+			return false;
+		}
+		if (empty($this->parameters['idSite'])) {
+			return false;
+		}
+		if (empty($this->parameters['token_auth'])) {
+			return false;
+		}
+		return true;
+	}
+
+	public function adminNoticeWarnMatomo() {
+		?>
+		<div class="notice notice-warning">
+			<p><?php _e( 'Matomo is not configured', 'content-insights-for-editors' ); ?></p>
+			<a href="<?php echo admin_url('admin.php?page=content-insights-for-editors-page-settings'); ?>"><?php _e('Configure settings for Matomo', 'content-insights-for-editors'); ?></a>
+		</div>
+		<?php
 	}
 
 	public function schedule() {

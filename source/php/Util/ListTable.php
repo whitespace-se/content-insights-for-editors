@@ -84,7 +84,7 @@ class ListTable extends \WP_List_Table {
 	}
 
 	public function get_columns() {
-		return array(
+		$basicColumns = array(
 			'title' => __('Post', 'content-insights-for-editors'),
 			'url' => __('Web address', 'content-insights-for-editors'),
 			'length' => __('Number of broken links', 'content-insights-for-editors'),
@@ -92,6 +92,8 @@ class ListTable extends \WP_List_Table {
 			'author' => self::$useAlternateUserField
 				? __('Editor', 'content-insights-for-editors')
 				: __('Author', 'content-insights-for-editors'),
+		);
+		$matomoColumns = Matomo::$matomoIsActive ? array(
 			'week_visitors' => sprintf(
 				'%s: %d %s',
 				__('Visitor', 'content-insights-for-editors'),
@@ -105,7 +107,8 @@ class ListTable extends \WP_List_Table {
 				_n('day', 'days', 30, 'content-insights-for-editors')
 			),
 			'updated_date' => __('Analysis updated', 'content-insights-for-editors'),
-		);
+		) : array();
+		return array_merge($basicColumns, $matomoColumns);
 	}
 
 	public function get_hidden_columns() {
@@ -113,12 +116,17 @@ class ListTable extends \WP_List_Table {
 	}
 
 	public function get_sortable_columns() {
-		return array(
+		$basicColumns = array(
 			'length' => array('length', true),
 			'modified' => array('modified', false),
+		);
+
+		$matomoColumns = Matomo::$matomoIsActive ? array(
 			'week_visitors' => array('week_visitors', true),
 			'month_visitors' => array('month_visitors', true),
-		);
+		) : array();
+
+		return array_merge($basicColumns, $matomoColumns);
 	}
 
 	public function column_default($item, $column_name) {

@@ -3,6 +3,7 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Admin;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\PostQuery;
+use CONTENT_INSIGHTS_FOR_EDITORS\Util\Matomo;
 
 class Dashboard {
 	function __construct() {
@@ -13,22 +14,24 @@ class Dashboard {
 		global $wp_meta_boxes;
 		$last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
 		if (current_user_can('administrator')):
-			wp_add_dashboard_widget(
-				'cife_visitors_week_admin',
-				__(
-					'Top 10 most visitied pages last 7 days (sitewide)',
-					'content-insights-for-editors'
-				),
-				array($this, 'adminTopTenLastWeek')
-			);
-			wp_add_dashboard_widget(
-				'cife_visitors_month_admin',
-				__(
-					'Top 10 most visitied pages last month (sitewide)',
-					'content-insights-for-editors'
-				),
-				array($this, 'adminTopTenLastMonth')
-			);
+			if (Matomo::$matomoIsActive) :
+				wp_add_dashboard_widget(
+					'cife_visitors_week_admin',
+					__(
+						'Top 10 most visitied pages last 7 days (sitewide)',
+						'content-insights-for-editors'
+					),
+					array($this, 'adminTopTenLastWeek')
+				);
+				wp_add_dashboard_widget(
+					'cife_visitors_month_admin',
+					__(
+						'Top 10 most visitied pages last month (sitewide)',
+						'content-insights-for-editors'
+					),
+					array($this, 'adminTopTenLastMonth')
+				);
+			endif;
 			wp_add_dashboard_widget(
 				'cife_broken_links_admin',
 				__(
@@ -52,23 +55,25 @@ class Dashboard {
 			}
 		endif;
 
-		wp_add_dashboard_widget(
-			'cife_visitors_top_month_user',
-			__(
-				'Your top 10 pages most visited last month',
-				'content-insights-for-editors'
-			),
-			array($this, 'userTopTenLastMonth')
-		);
+		if (Matomo::$matomoIsActive) :
+			wp_add_dashboard_widget(
+				'cife_visitors_top_month_user',
+				__(
+					'Your top 10 pages most visited last month',
+					'content-insights-for-editors'
+				),
+				array($this, 'userTopTenLastMonth')
+			);
 
-		wp_add_dashboard_widget(
-			'cife_visitors_bottom_month_user',
-			__(
-				'Your 10 least visited pages last month',
-				'content-insights-for-editors'
-			),
-			array($this, 'userBottomLastMonth')
-		);
+			wp_add_dashboard_widget(
+				'cife_visitors_bottom_month_user',
+				__(
+					'Your 10 least visited pages last month',
+					'content-insights-for-editors'
+				),
+				array($this, 'userBottomLastMonth')
+			);
+		endif;
 
 		wp_add_dashboard_widget(
 			'cife_broken_links_user',

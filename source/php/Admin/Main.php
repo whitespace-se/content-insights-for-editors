@@ -169,7 +169,9 @@ class Main {
 		);
 		echo $nextRun;
 		echo '</div>';
+		if (Matomo::$matomoIsActive) :
 		echo $this->btnTriggerUpdateAnalytics();
+		endif;
 	}
 
 	private function btnTriggerUpdateAnalytics() {
