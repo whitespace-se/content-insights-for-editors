@@ -135,13 +135,20 @@ class Main {
 	}
 
 	public function render() {
-		$PageList = new ListTable();
+		if (class_exists('\BrokenLinkDetector\App')) :
+			$PageList = new ListTable();
 
-		echo '<div class="wrap nestedpages">';
-		$this->renderTableHeader();
-		$PageList->prepare_items();
-		$PageList->display();
-		echo '</div>';
+			echo '<div class="wrap nestedpages">';
+			$this->renderTableHeader();
+			$PageList->prepare_items();
+			$PageList->display();
+			echo '</div>';
+		else :
+			echo '<div>';
+				echo '<h2>'.__('Broken links plugin not found', 'content-insights-for-editors').'</h2>';
+				echo '<p>'.__('This plugin depends on broken links in order to display a list of broken links. To enable this view please install and activate broken links.', 'content-insights-for-editors').'</p>';
+			echo '</div>';
+		endif;
 	}
 
 	private function renderTableHeader() {

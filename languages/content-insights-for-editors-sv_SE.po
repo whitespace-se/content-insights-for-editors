@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-02 11:08+0200\n"
-"PO-Revision-Date: 2019-09-02 11:09+0200\n"
+"POT-Creation-Date: 2019-09-05 08:57+0200\n"
+"PO-Revision-Date: 2019-09-05 08:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -16,10 +16,62 @@ msgstr ""
 "X-Poedit-WPHeader: content-insights-for-editors.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:21
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:19
+msgid "Post Type Select"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:22
+msgid "Choice"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:61
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:65
+msgid "Default Value"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:62
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:66
+msgid "Enter each default value on a new line"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:78
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:73
+msgid "Allow Null?"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:87
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:106
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:78
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:91
+msgid "Yes"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:88
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:107
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:79
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:92
+msgid "No"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:97
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:86
+msgid "Select multiple values?"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v4.php:163
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:125
+msgid "Select"
+msgstr ""
+
+#: plugins/acf-post-type-field/acf-posttype-select-v5.php:30
+msgid "Error! Please enter a higher value"
+msgstr ""
 
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
@@ -79,17 +131,17 @@ msgid "view your pages"
 msgstr "visa dina sidor"
 
 #: source/php/Admin/Dashboard.php:209 source/php/Admin/Dashboard.php:275
-#: source/php/Util/MailFormatter.php:82 source/php/Util/MailFormatter.php:97
-#: source/php/Util/MailFormatter.php:113
+#: source/php/Util/MailFormatter.php:84 source/php/Util/MailFormatter.php:99
+#: source/php/Util/MailFormatter.php:115
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: source/php/Admin/Dashboard.php:210 source/php/Util/MailFormatter.php:98
+#: source/php/Admin/Dashboard.php:210 source/php/Util/MailFormatter.php:100
 msgid "Number of visitors"
 msgstr "Antal besökare"
 
 #: source/php/Admin/Dashboard.php:211 source/php/Admin/Dashboard.php:276
-#: source/php/Util/ListTable.php:91 source/php/Util/MailFormatter.php:114
+#: source/php/Util/ListTable.php:93 source/php/Util/MailFormatter.php:116
 msgid "Last updated"
 msgstr "Senast uppdaterat"
 
@@ -97,7 +149,7 @@ msgstr "Senast uppdaterat"
 msgid "No pages found"
 msgstr "Inga sidor hittades"
 
-#: source/php/Admin/Dashboard.php:251 source/php/Util/MailFormatter.php:105
+#: source/php/Admin/Dashboard.php:251 source/php/Util/MailFormatter.php:107
 msgid "Seems like you are not the author of any pages yet."
 msgstr "Verkar som om du inte är författaren till några sidor ännu."
 
@@ -149,27 +201,40 @@ msgstr "meddelanden"
 msgid "No mail was sent, please select at least one user"
 msgstr "Ingen e-post skickades, välj minst en användare"
 
-#: source/php/Admin/Main.php:157
+#: source/php/Admin/Main.php:148
+msgid "Broken links plugin not found"
+msgstr "Tillägget Broken links hittades ej"
+
+#: source/php/Admin/Main.php:149
+msgid ""
+"This plugin depends on broken links in order to display a list of broken "
+"links. To enable this view please install and activate broken links."
+msgstr ""
+"Detta tillägget kräver att tillägget Broken links är aktiverat för att kunna "
+"presentera en lista över brutna länkar. För att aktivera denna vy, vänligen "
+"installera och aktivera tillägget Broken links."
+
+#: source/php/Admin/Main.php:164
 msgid "Next scheduled check for broken links"
 msgstr "Nästa schemalagda kontroll av brutna länkar"
 
-#: source/php/Admin/Main.php:168
+#: source/php/Admin/Main.php:175
 msgid "Analysed pages"
 msgstr "Analyserade sidor"
 
-#: source/php/Admin/Main.php:180
+#: source/php/Admin/Main.php:187
 msgid "Fetch visitorstaticstics for all pages"
 msgstr "Hämta besökarstatistik för alla sidor"
 
-#: source/php/Admin/Main.php:218
+#: source/php/Admin/Main.php:225
 msgid "Update of visitor statistics complete"
 msgstr "Uppdatering av besökarstatistik genomförd"
 
-#: source/php/Admin/Main.php:221
+#: source/php/Admin/Main.php:228
 msgid "error"
 msgstr "fel"
 
-#: source/php/Admin/Main.php:223
+#: source/php/Admin/Main.php:230
 msgid "Something went wrong"
 msgstr "Något gick fel"
 
@@ -177,7 +242,7 @@ msgstr "Något gick fel"
 msgid "No data available"
 msgstr "Ingen data fanns tillgänglig"
 
-#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:85
+#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:87
 msgid "Broken links"
 msgstr "Brutna länkar"
 
@@ -187,7 +252,7 @@ msgstr "Besökare"
 
 #: source/php/Admin/Metabox.php:47 source/php/Admin/Metabox.php:56
 #: source/php/Admin/Metabox.php:65 source/php/Admin/Metabox.php:74
-#: source/php/Util/ListTable.php:99 source/php/Util/ListTable.php:105
+#: source/php/Util/ListTable.php:101 source/php/Util/ListTable.php:107
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
@@ -205,47 +270,60 @@ msgstr "Statistik från"
 msgid "Settings"
 msgstr "Inställningar"
 
+#: source/php/Util/BrokenLinks.php:40
+msgid ""
+"Broken links plugin is missing. For best experience using this plugin we "
+"recommend you activate Broken links"
+msgstr ""
+"Tillägget Broken links saknas. Detta tillägg är starkt beroende av Broken "
+"links, för bästa upplevelse rekommenderas att tillägget installeras och "
+"aktiveras"
+
+#: source/php/Util/BrokenLinks.php:41
+msgid "Broken links repository"
+msgstr "Källkod för Broken links"
+
 #: source/php/Util/ListTable.php:59
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Util/ListTable.php:77
+#: source/php/Util/ListTable.php:78
 msgid "Show only pages with broken links"
 msgstr "Visa endast sidor med trasiga länkar"
 
-#: source/php/Util/ListTable.php:88
+#: source/php/Util/ListTable.php:90
 msgid "Post"
 msgstr "Inlägg"
 
-#: source/php/Util/ListTable.php:89
+#: source/php/Util/ListTable.php:91
 msgid "Web address"
 msgstr "Webbadress"
 
-#: source/php/Util/ListTable.php:90
+#: source/php/Util/ListTable.php:92
 msgid "Number of broken links"
 msgstr "Antal brutna länkar"
 
-#: source/php/Util/ListTable.php:93
+#: source/php/Util/ListTable.php:95
 msgid "Editor"
 msgstr "Redaktör"
 
-#: source/php/Util/ListTable.php:94
+#: source/php/Util/ListTable.php:96
 msgid "Author"
 msgstr "Författare"
 
-#: source/php/Util/ListTable.php:97 source/php/Util/ListTable.php:103
+#: source/php/Util/ListTable.php:99 source/php/Util/ListTable.php:105
 msgid "Visitor"
 msgstr "Besökare"
 
-#: source/php/Util/ListTable.php:107
+#: source/php/Util/ListTable.php:109
 msgid "Analysis updated"
 msgstr "Analys uppdaterad"
 
-#: source/php/Util/MailFormatter.php:64
+#: source/php/Util/MailFormatter.php:66
 msgid "Hi"
 msgstr "Hej"
 
-#: source/php/Util/MailFormatter.php:68
+#: source/php/Util/MailFormatter.php:70
 msgid ""
 "This is a short summary of all pages you are the author to that contains "
 "broken links, pages that has not been updated in a while and your most "
@@ -255,36 +333,35 @@ msgstr ""
 "innehåller brutna länkar, sidor som inte har uppdaterats på ett tag samt "
 "dina mest besökta sidor denna vecka."
 
-#: source/php/Util/MailFormatter.php:89
+#: source/php/Util/MailFormatter.php:91
 msgid "Good news! No broken links found this time, keep up the good work."
 msgstr "Goda nyheter! Inga brutna länkar hittade den här gången, fortsätt så."
 
-#: source/php/Util/MailFormatter.php:101
+#: source/php/Util/MailFormatter.php:103
 msgid "Your top 10 pages most visited last week"
 msgstr "Dina top 10 mest besökta sidor senaste veckan"
 
-#: source/php/Util/MailFormatter.php:117
+#: source/php/Util/MailFormatter.php:119
 msgid "Pages not updated in a while"
 msgstr "Sidor som ej uppdaterats på ett tag"
 
-#: source/php/Util/MailFormatter.php:121
+#: source/php/Util/MailFormatter.php:123
 msgid "Excellent all your pages have been updated recently!"
 msgstr "Utmärkt alla dina sidor har nyligen uppdaterats!"
 
-#: source/php/Util/MailFormatter.php:130
+#: source/php/Util/MailFormatter.php:132
 msgid "Customer feedback"
 msgstr "Feedback besökare"
 
-#: source/php/Util/MailFormatter.php:139
+#: source/php/Util/MailFormatter.php:141
 msgid "Summary of your pages content"
 msgstr "Sammanfattning av dina sidors innehåll"
 
 # msgid "Content Insights for Editors"
 # msgstr "Content Insights for Editors"
 #. Description of the plugin/theme
-#, fuzzy
 msgid "Analyse content for your website"
-msgstr "Analysera webbplats"
+msgstr "Analysera webbplatsens innehåll"
 
 #. Author of the plugin/theme
 msgid "Johan Veeborn, Anders Rehn, Whitespace"
@@ -309,9 +386,6 @@ msgstr ""
 
 #~ msgid "View all your pages"
 #~ msgstr "Visa alla dina sidor"
-
-#~ msgid "Broken link summary"
-#~ msgstr "Sammanfattning av brutna länkar"
 
 #~ msgid "Vistors"
 #~ msgstr "Besökare"

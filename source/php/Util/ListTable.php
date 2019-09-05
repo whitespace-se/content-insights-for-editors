@@ -70,14 +70,16 @@ class ListTable extends \WP_List_Table {
 			);
 			?>
             <div class="alignleft actions">
-                <?php wp_dropdown_users($args); ?>
+				<?php wp_dropdown_users($args); ?>
+				<?php if (class_exists('\BrokenLinkDetector\App')) : ?>
                 <label style="vertical-align: -webkit-baseline-middle;">
                     <input type="checkbox" name="show_only_broken_links" value="true" <?php echo $show_only_broken_links; ?> />
                     <?php _e(
                     	'Show only pages with broken links',
                     	'content-insights-for-editors'
                     ); ?>
-                </label>
+				</label>
+				<?php endif; ?>
             </div>
             <?php
 		}
