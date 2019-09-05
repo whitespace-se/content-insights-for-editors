@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-02 11:08+0200\n"
-"PO-Revision-Date: 2019-09-02 11:09+0200\n"
+"POT-Creation-Date: 2019-09-05 10:54+0200\n"
+"PO-Revision-Date: 2019-09-05 10:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -20,6 +20,68 @@ msgstr ""
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: plugins\n"
+
+#: source/php/AcfFields/php/options-page.php:9
+msgid "Analyzed posttypes"
+msgstr "Analyserade posttyper"
+
+#: source/php/AcfFields/php/options-page.php:29
+msgid "Use alternative user field"
+msgstr "Använd alternativt användarfält"
+
+#: source/php/AcfFields/php/options-page.php:33
+msgid ""
+"Uses the Editor field (page_meta_maineditor) for user filtering, instead of "
+"Author used by default."
+msgstr ""
+"Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
+"istället för Författare som används som standard."
+
+#: source/php/AcfFields/php/options-page.php:49
+msgid "Enable automatic mailing for broken links"
+msgstr "Aktivera automatiska utskick för brutna länkar"
+
+#: source/php/AcfFields/php/options-page.php:53
+msgid ""
+"Sends email to all authors, editors and administrators every two weeks with "
+"a report on their broken links."
+msgstr ""
+"Skickar mail till alla författare, redaktörer samt administratörer varannan "
+"vecka med en rapport om deras brutna länkar."
+
+#: source/php/AcfFields/php/options-page.php:69
+msgid "Obsolete pages"
+msgstr "Föråldrade sidor"
+
+#: source/php/AcfFields/php/options-page.php:73
+msgid ""
+"Set the threshold for how many days a page that has not been updated should "
+"be before the plugin flags the page as outdated."
+msgstr ""
+"Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats skall "
+"vara innan pluginet flaggar sidan som föråldrad."
+
+#: source/php/AcfFields/php/options-page.php:110
+msgid "ex. https://analys.yourdomain.se/"
+msgstr "ex. https://analys.dindoman.se/"
+
+#: source/php/AcfFields/php/options-page.php:126
+msgid "Matomo Api key"
+msgstr "Matomo API-nyckel"
+
+#: source/php/AcfFields/php/options-page.php:130
+msgid ""
+"Visit admin for your Matomo installation. Under Platform -> API there is & "
+"token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
+"xxxxxxxxxxxxxxx"
+msgstr ""
+"Besök admin för din Matomoinstallation. Under Plattform -> API finns "
+"&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
+
+#: source/php/AcfFields/php/options-page.php:146
+msgid "Matomo site id"
+msgstr ""
 
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
@@ -79,17 +141,17 @@ msgid "view your pages"
 msgstr "visa dina sidor"
 
 #: source/php/Admin/Dashboard.php:209 source/php/Admin/Dashboard.php:275
-#: source/php/Util/MailFormatter.php:82 source/php/Util/MailFormatter.php:97
-#: source/php/Util/MailFormatter.php:113
+#: source/php/Util/MailFormatter.php:84 source/php/Util/MailFormatter.php:99
+#: source/php/Util/MailFormatter.php:115
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: source/php/Admin/Dashboard.php:210 source/php/Util/MailFormatter.php:98
+#: source/php/Admin/Dashboard.php:210 source/php/Util/MailFormatter.php:100
 msgid "Number of visitors"
 msgstr "Antal besökare"
 
 #: source/php/Admin/Dashboard.php:211 source/php/Admin/Dashboard.php:276
-#: source/php/Util/ListTable.php:91 source/php/Util/MailFormatter.php:114
+#: source/php/Util/ListTable.php:91 source/php/Util/MailFormatter.php:116
 msgid "Last updated"
 msgstr "Senast uppdaterat"
 
@@ -97,7 +159,7 @@ msgstr "Senast uppdaterat"
 msgid "No pages found"
 msgstr "Inga sidor hittades"
 
-#: source/php/Admin/Dashboard.php:251 source/php/Util/MailFormatter.php:105
+#: source/php/Admin/Dashboard.php:251 source/php/Util/MailFormatter.php:107
 msgid "Seems like you are not the author of any pages yet."
 msgstr "Verkar som om du inte är författaren till några sidor ännu."
 
@@ -177,7 +239,7 @@ msgstr "Något gick fel"
 msgid "No data available"
 msgstr "Ingen data fanns tillgänglig"
 
-#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:85
+#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:87
 msgid "Broken links"
 msgstr "Brutna länkar"
 
@@ -241,11 +303,11 @@ msgstr "Besökare"
 msgid "Analysis updated"
 msgstr "Analys uppdaterad"
 
-#: source/php/Util/MailFormatter.php:64
+#: source/php/Util/MailFormatter.php:66
 msgid "Hi"
 msgstr "Hej"
 
-#: source/php/Util/MailFormatter.php:68
+#: source/php/Util/MailFormatter.php:70
 msgid ""
 "This is a short summary of all pages you are the author to that contains "
 "broken links, pages that has not been updated in a while and your most "
@@ -255,27 +317,27 @@ msgstr ""
 "innehåller brutna länkar, sidor som inte har uppdaterats på ett tag samt "
 "dina mest besökta sidor denna vecka."
 
-#: source/php/Util/MailFormatter.php:89
+#: source/php/Util/MailFormatter.php:91
 msgid "Good news! No broken links found this time, keep up the good work."
 msgstr "Goda nyheter! Inga brutna länkar hittade den här gången, fortsätt så."
 
-#: source/php/Util/MailFormatter.php:101
+#: source/php/Util/MailFormatter.php:103
 msgid "Your top 10 pages most visited last week"
 msgstr "Dina top 10 mest besökta sidor senaste veckan"
 
-#: source/php/Util/MailFormatter.php:117
+#: source/php/Util/MailFormatter.php:119
 msgid "Pages not updated in a while"
 msgstr "Sidor som ej uppdaterats på ett tag"
 
-#: source/php/Util/MailFormatter.php:121
+#: source/php/Util/MailFormatter.php:123
 msgid "Excellent all your pages have been updated recently!"
 msgstr "Utmärkt alla dina sidor har nyligen uppdaterats!"
 
-#: source/php/Util/MailFormatter.php:130
+#: source/php/Util/MailFormatter.php:132
 msgid "Customer feedback"
 msgstr "Feedback besökare"
 
-#: source/php/Util/MailFormatter.php:139
+#: source/php/Util/MailFormatter.php:141
 msgid "Summary of your pages content"
 msgstr "Sammanfattning av dina sidors innehåll"
 

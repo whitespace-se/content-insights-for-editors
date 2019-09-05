@@ -6,7 +6,7 @@ if (function_exists('acf_add_local_field_group')) {
 		'fields' => array(
 			array(
 				'key' => 'field_5d19ab0cbbc00',
-				'label' => 'Analyserade posttyper',
+				'label' => __('Analyzed posttypes', 'content-insights-for-editors'),
 				'name' => 'analysed_post_types',
 				'type' => 'posttype_select',
 				'instructions' => '',
@@ -26,11 +26,11 @@ if (function_exists('acf_add_local_field_group')) {
 			),
 			array(
 				'key' => 'field_5d19cd83d7edd',
-				'label' => 'Använd alternativt användarfält',
+				'label' => __('Use alternative user field', 'content-insights-for-editors'),
 				'name' => 'use_alternate_user_field',
 				'type' => 'true_false',
 				'instructions' =>
-					'Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, istället för Författare som används som standard.',
+					__('Uses the Editor field (page_meta_maineditor) for user filtering, instead of Author used by default.', 'content-insights-for-editors'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -46,11 +46,11 @@ if (function_exists('acf_add_local_field_group')) {
 			),
 			array(
 				'key' => 'field_5d19cd83d4ea3',
-				'label' => 'Aktivera automatiska utskick för brutna länkar',
+				'label' => __('Enable automatic mailing for broken links', 'content-insights-for-editors'),
 				'name' => 'use_broken_links_cron',
 				'type' => 'true_false',
 				'instructions' =>
-					'Skickar mail till alla författare, redaktörer samt administratörer varannan vecka med en rapport om deras brutna länkar.',
+					__('Sends email to all authors, editors and administrators every two weeks with a report on their broken links.', 'content-insights-for-editors'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -66,11 +66,11 @@ if (function_exists('acf_add_local_field_group')) {
 			),
 			array(
 				'key' => 'field_5d1c8f1232ba5',
-				'label' => 'Föråldrade sidor',
+				'label' => __('Obsolete pages', 'content-insights-for-editors'),
 				'name' => 'ws_minimum_last_updated_threshold',
 				'type' => 'number',
 				'instructions' =>
-					'Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats skall vara innan pluginet flaggar sidan som föråldrad.',
+					__('Set the threshold for how many days a page that has not been updated should be before the plugin flags the page as outdated.', 'content-insights-for-editors'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -107,7 +107,7 @@ if (function_exists('acf_add_local_field_group')) {
 				'label' => 'Matomo Api URL',
 				'name' => 'matomo_api_url',
 				'type' => 'text',
-				'instructions' => 'ex. https://analys.dindoman.se/',
+				'instructions' => __('ex. https://analys.yourdomain.se/', 'content-insights-for-editors'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -123,11 +123,11 @@ if (function_exists('acf_add_local_field_group')) {
 			),
 			array(
 				'key' => 'field_5d1c8d2b35ea2',
-				'label' => 'Matomo Api key',
+				'label' => __('Matomo Api key', 'content-insights-for-editors'),
 				'name' => 'matomo_api_key',
 				'type' => 'text',
 				'instructions' =>
-					'Besök admin för din Matomoinstallation. Under Plattform -> API finns &token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx',
+					__('Visit admin for your Matomo installation. Under Platform -> API there is & token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to xxxxxxxxxxxxxxx', 'content-insights-for-editors'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -143,7 +143,7 @@ if (function_exists('acf_add_local_field_group')) {
 			),
 			array(
 				'key' => 'field_5d1c8d3e35ea3',
-				'label' => 'Matomo id site',
+				'label' => __('Matomo site id', 'content-insights-for-editors'),
 				'name' => 'matomo_id_site',
 				'type' => 'number',
 				'instructions' => '',
