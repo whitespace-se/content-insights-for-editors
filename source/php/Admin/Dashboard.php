@@ -29,14 +29,16 @@ class Dashboard {
 				),
 				array($this, 'adminTopTenLastMonth')
 			);
-			wp_add_dashboard_widget(
-				'cife_broken_links_admin',
-				__(
-					'Top 10 pages with most number of broken links (sitewide)',
-					'content-insights-for-editors'
-				),
-				array($this, 'adminTopTenBrokenLinks')
-			);
+			if (class_exists('\BrokenLinkDetector\App')):
+				wp_add_dashboard_widget(
+					'cife_broken_links_admin',
+					__(
+						'Top 10 pages with most number of broken links (sitewide)',
+						'content-insights-for-editors'
+					),
+					array($this, 'adminTopTenBrokenLinks')
+				);
+			endif;
 			if ($last_updated_threshold) {
 				wp_add_dashboard_widget(
 					'cife_rarely_updated_admin',
@@ -70,11 +72,13 @@ class Dashboard {
 			array($this, 'userBottomLastMonth')
 		);
 
-		wp_add_dashboard_widget(
-			'cife_broken_links_user',
-			__('All your pages with broken links', 'content-insights-for-editors'),
-			array($this, 'userBrokenLinks')
-		);
+		if (class_exists('\BrokenLinkDetector\App')):
+			wp_add_dashboard_widget(
+				'cife_broken_links_user',
+				__('All your pages with broken links', 'content-insights-for-editors'),
+				array($this, 'userBrokenLinks')
+			);
+		endif;
 
 		if ($last_updated_threshold) {
 			wp_add_dashboard_widget(
