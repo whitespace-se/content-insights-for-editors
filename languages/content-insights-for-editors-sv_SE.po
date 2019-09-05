@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-05 10:01+0200\n"
-"PO-Revision-Date: 2019-09-05 10:01+0200\n"
+"POT-Creation-Date: 2019-09-05 14:17+0200\n"
+"PO-Revision-Date: 2019-09-05 14:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -20,58 +20,7 @@ msgstr ""
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:21
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:19
-msgid "Post Type Select"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:22
-msgid "Choice"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:61
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:65
-msgid "Default Value"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:62
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:66
-msgid "Enter each default value on a new line"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:78
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:73
-msgid "Allow Null?"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:87
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:106
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:78
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:91
-msgid "Yes"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:88
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:107
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:79
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:92
-msgid "No"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:97
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:86
-msgid "Select multiple values?"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v4.php:163
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:125
-msgid "Select"
-msgstr ""
-
-#: plugins/acf-post-type-field/acf-posttype-select-v5.php:30
-msgid "Error! Please enter a higher value"
-msgstr ""
+"X-Poedit-SearchPathExcluded-1: plugins\n"
 
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
@@ -141,7 +90,7 @@ msgid "Number of visitors"
 msgstr "Antal besökare"
 
 #: source/php/Admin/Dashboard.php:216 source/php/Admin/Dashboard.php:281
-#: source/php/Util/ListTable.php:91 source/php/Util/MailFormatter.php:122
+#: source/php/Util/ListTable.php:93 source/php/Util/MailFormatter.php:122
 msgid "Last updated"
 msgstr "Senast uppdaterat"
 
@@ -201,27 +150,40 @@ msgstr "meddelanden"
 msgid "No mail was sent, please select at least one user"
 msgstr "Ingen e-post skickades, välj minst en användare"
 
-#: source/php/Admin/Main.php:157
+#: source/php/Admin/Main.php:148
+msgid "Broken links plugin not found"
+msgstr "Tillägget Broken links hittades ej"
+
+#: source/php/Admin/Main.php:149
+msgid ""
+"This plugin depends on broken links in order to display a list of broken "
+"links. To enable this view please install and activate broken links."
+msgstr ""
+"Detta tillägget kräver att tillägget Broken links är aktiverat för att kunna "
+"presentera en lista över brutna länkar. För att aktivera denna vy, vänligen "
+"installera och aktivera tillägget Broken links."
+
+#: source/php/Admin/Main.php:164
 msgid "Next scheduled check for broken links"
 msgstr "Nästa schemalagda kontroll av brutna länkar"
 
-#: source/php/Admin/Main.php:168
+#: source/php/Admin/Main.php:175
 msgid "Analysed pages"
 msgstr "Analyserade sidor"
 
-#: source/php/Admin/Main.php:182
+#: source/php/Admin/Main.php:189
 msgid "Fetch visitorstaticstics for all pages"
 msgstr "Hämta besökarstatistik för alla sidor"
 
-#: source/php/Admin/Main.php:220
+#: source/php/Admin/Main.php:227
 msgid "Update of visitor statistics complete"
 msgstr "Uppdatering av besökarstatistik genomförd"
 
-#: source/php/Admin/Main.php:223
+#: source/php/Admin/Main.php:230
 msgid "error"
 msgstr "fel"
 
-#: source/php/Admin/Main.php:225
+#: source/php/Admin/Main.php:232
 msgid "Something went wrong"
 msgstr "Något gick fel"
 
@@ -239,7 +201,7 @@ msgstr "Besökare"
 
 #: source/php/Admin/Metabox.php:47 source/php/Admin/Metabox.php:56
 #: source/php/Admin/Metabox.php:65 source/php/Admin/Metabox.php:74
-#: source/php/Util/ListTable.php:101 source/php/Util/ListTable.php:107
+#: source/php/Util/ListTable.php:103 source/php/Util/ListTable.php:109
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
@@ -257,39 +219,52 @@ msgstr "Statistik från"
 msgid "Settings"
 msgstr "Inställningar"
 
+#: source/php/Util/BrokenLinks.php:40
+msgid ""
+"Broken links plugin is missing. For best experience using this plugin we "
+"recommend you activate Broken links"
+msgstr ""
+"Tillägget Broken links saknas. Detta tillägg är starkt beroende av Broken "
+"links, för bästa upplevelse rekommenderas att tillägget installeras och "
+"aktiveras"
+
+#: source/php/Util/BrokenLinks.php:41
+msgid "Broken links repository"
+msgstr "Källkod för Broken links"
+
 #: source/php/Util/ListTable.php:59
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Util/ListTable.php:77
+#: source/php/Util/ListTable.php:78
 msgid "Show only pages with broken links"
 msgstr "Visa endast sidor med trasiga länkar"
 
-#: source/php/Util/ListTable.php:88
+#: source/php/Util/ListTable.php:90
 msgid "Post"
 msgstr "Inlägg"
 
-#: source/php/Util/ListTable.php:89
+#: source/php/Util/ListTable.php:91
 msgid "Web address"
 msgstr "Webbadress"
 
-#: source/php/Util/ListTable.php:90
+#: source/php/Util/ListTable.php:92
 msgid "Number of broken links"
 msgstr "Antal brutna länkar"
 
-#: source/php/Util/ListTable.php:93
+#: source/php/Util/ListTable.php:95
 msgid "Editor"
 msgstr "Redaktör"
 
-#: source/php/Util/ListTable.php:94
+#: source/php/Util/ListTable.php:96
 msgid "Author"
 msgstr "Författare"
 
-#: source/php/Util/ListTable.php:99 source/php/Util/ListTable.php:105
+#: source/php/Util/ListTable.php:101 source/php/Util/ListTable.php:107
 msgid "Visitor"
 msgstr "Besökare"
 
-#: source/php/Util/ListTable.php:109
+#: source/php/Util/ListTable.php:111
 msgid "Analysis updated"
 msgstr "Analys uppdaterad"
 
@@ -348,28 +323,6 @@ msgstr "Analysera webbplatsens innehåll"
 #. Author of the plugin/theme
 msgid "Johan Veeborn, Anders Rehn, Whitespace"
 msgstr ""
-
-#~ msgid "Broken links plugin not found"
-#~ msgstr "Tillägget Broken links hittades ej"
-
-#~ msgid ""
-#~ "This plugin depends on broken links in order to display a list of broken "
-#~ "links. To enable this view please install and activate broken links."
-#~ msgstr ""
-#~ "Detta tillägget kräver att tillägget Broken links är aktiverat för att "
-#~ "kunna presentera en lista över brutna länkar. För att aktivera denna vy, "
-#~ "vänligen installera och aktivera tillägget Broken links."
-
-#~ msgid ""
-#~ "Broken links plugin is missing. For best experience using this plugin we "
-#~ "recommend you activate Broken links"
-#~ msgstr ""
-#~ "Tillägget Broken links saknas. Detta tillägg är starkt beroende av Broken "
-#~ "links, för bästa upplevelse rekommenderas att tillägget installeras och "
-#~ "aktiveras"
-
-#~ msgid "Broken links repository"
-#~ msgstr "Källkod för Broken links"
 
 #~ msgid "Visa endast sidor med trasiga länkar"
 #~ msgstr "Visa endast sidor med brutna länkar"
