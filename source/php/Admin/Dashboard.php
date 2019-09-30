@@ -13,6 +13,7 @@ class Dashboard {
 	public function addDashboardWidgets() {
 		global $wp_meta_boxes;
 		$last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
+		$minimum_feedback_responses_threshold = Settings::validateAndGetMinFeedbackResponsesThreshold();
 		if (current_user_can('administrator')):
 			if (Matomo::$matomoIsActive) :
 				wp_add_dashboard_widget(
@@ -85,6 +86,37 @@ class Dashboard {
 			);
 		endif;
 
+		if (class_exists('\CustomerFeedback\App')):
+			wp_add_dashboard_widget(
+				'cife_customer_responses_top_user',
+				sprintf(
+					'%s (%s %d %s)',
+					__(
+						'Top 10 pages with most most positive feedback responses',
+						'content-insights-for-editors'
+					),
+					__('minimum', 'content-insights-for-editors'),
+					$minimum_feedback_responses_threshold,
+					__('votes', 'content-insights-for-editors')
+				),
+				array($this, 'userTopCustomerResponses')
+			);
+			wp_add_dashboard_widget(
+				'cife_customer_responses_bottom_user',
+				sprintf(
+					'%s (%s %d %s)',
+					__(
+						'Top 10 pages with least positive feedback responses',
+						'content-insights-for-editors'
+					),
+					__('minimum', 'content-insights-for-editors'),
+					$minimum_feedback_responses_threshold,
+					__('votes', 'content-insights-for-editors')
+				),
+				array($this, 'userBottomCustomerResponses')
+			);
+		endif;
+
 		if ($last_updated_threshold) {
 			wp_add_dashboard_widget(
 				'cife_rarely_updated_user',
@@ -143,6 +175,18 @@ class Dashboard {
 
 	public function adminRarelyUpdated() {
 		$this->renderRarelyUpdated(10);
+	}
+
+	/*
+		Customer responses
+	*/
+
+	public function userTopCustomerResponses() {
+		$this->renderCustomerResponses(10, get_current_user_id());
+	}
+
+	public function userBottomCustomerResponses() {
+		$this->renderCustomerResponses(10, get_current_user_id(), false);
 	}
 
 	/*
@@ -232,10 +276,22 @@ class Dashboard {
 					echo '<div class="cife-customer-feedback-wrapper">
 					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
 						round($value->feedback['yes']) .
-						'% <i class="cife-icon cife-icon--thumb-up"></i></span>
+						'<i class="cife-icon cife-icon--thumb-up"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
 						round($value->feedback['no']) .
-						'% <i class="cife-icon cife-icon--thumb-down"></i></span>
+						'<i class="cife-icon cife-icon--thumb-down"></i></span>
+					<span class="cife-customer-feedback cife-customer-feedback--comments">' .
+						$value->feedback['comments'] .
+						'<i class="cife-icon cife-icon--comments"></i>';
+						if($value->feedback['comments'] > 0) : echo '<a href="'.
+							admin_url(add_query_arg(array(
+								'post_id' => $value->ID,
+								'has-comment' => 'yes',
+								'after_date' => get_post_modified_time('U', true, $value->ID),
+							), 'edit.php?post_type=customer-feedback'))
+						.'" target="_blank">Visa kommentarer</a>';
+						endif;
+					echo '</span>
 					</div>';
 				endif;
 				echo '</td>
@@ -320,6 +376,75 @@ class Dashboard {
 					__('Click here to', 'content-insights-for-editors'),
 					admin_url('admin.php?page=content-insights-for-editors-page'),
 					__('view your pages', 'content-insights-for-editors')
+				);
+			}
+		endif;
+	}
+
+	public function renderCustomerResponses($take = 10, $userID = false, $desc = true) {
+		$pages = PostQuery::getPostWithCustomerFeedbackResponses($take, $desc, $userID);
+		if (count($pages) > 0):
+			echo "<table class='cife_table'>";
+			echo sprintf(
+				'<thead>
+				<tr>
+					<th style="text-align: left;">%s</th>
+					<th>%s</th>
+				</tr>
+				</thead>',
+				__('Page title', 'content-insights-for-editors'),
+				__('Weekly visitors', 'content-insights-for-editors')
+			);
+			echo '<tbody>';
+			foreach ($pages as $value) {
+				echo '<tr>
+                    <td>
+                        <a href="' .
+					get_edit_post_link($value->ID) .
+					'"><strong>' .
+					$value->title .
+					'</strong></a>';
+				if (isset($value->feedback)):
+					echo '<div class="cife-customer-feedback-wrapper">
+					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
+						round($value->feedback['yes']) .
+						'<i class="cife-icon cife-icon--thumb-up"></i></span>
+					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
+						round($value->feedback['no']) .
+						'<i class="cife-icon cife-icon--thumb-down"></i></span>
+					<span class="cife-customer-feedback cife-customer-feedback--comments">' .
+						$value->feedback['comments'] .
+						'<i class="cife-icon cife-icon--comments"></i>';
+						if($value->feedback['comments'] > 0) : echo '<a href="'.
+							admin_url(add_query_arg(array(
+								'post_id' => $value->ID,
+								'has-comment' => 'yes',
+								'after_date' => get_post_modified_time('U', true, $value->ID),
+							), 'edit.php?post_type=customer-feedback'))
+						.'" target="_blank">Visa kommentarer</a>';
+						endif;
+					echo '</span>
+					</div>';
+				endif;
+				echo '</td>
+                    <td>' .
+					$value->visitors .
+					'</td>
+                </tr>';
+			}
+			echo '</tbody></table>';
+		else:
+			echo sprintf(
+				'<h2>%s</h2>',
+				__('No pages found', 'content-insights-for-editors')
+			);
+			if ($userID) {
+				echo sprintf(
+					'<p>%s</p>',
+					__(
+						'We could not find any pages that has got enough votes',
+						'content-insights-for-editors'
+					)
 				);
 			}
 		endif;

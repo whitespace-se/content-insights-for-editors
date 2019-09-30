@@ -13,6 +13,7 @@ class App {
 		new Admin\BrokenLinkCron();
 		new Util\BrokenLinks();
 		new Util\Matomo();
+		new Util\Plugins\CustomerFeedback();
 
 		add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
 	}

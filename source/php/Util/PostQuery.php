@@ -164,8 +164,9 @@ class PostQuery {
 			foreach ($results as $res) {
 				$res->feedback = \CustomerFeedback\Responses::getResponses(
 					$res->ID,
-					'percent'
+					'count'
 				);
+				$res->feedback['comments'] = \CONTENT_INSIGHTS_FOR_EDITORS\Util\Plugins\CustomerFeedback::getResponsesCommentCount($res->ID);
 			}
 		}
 		return $results;
@@ -240,5 +241,73 @@ class PostQuery {
 		}
 		wp_reset_postdata();
 		return $pages;
+	}
+
+	public static function getPostWithCustomerFeedbackResponses(
+		$count = 10,
+		$desc = true,
+		$userID = false
+	) {
+		// SELECT posts.`ID`, COUNT(*) as count FROM `eslovwp1_postmeta` INNER JOIN `eslovwp1_posts` feedback ON `post_id` = `ID` 
+		// INNER JOIN `eslovwp1_posts` posts ON `meta_value` = posts.`ID` WHERE `meta_key` = 'customer_feedback_page_reference' 
+		// AND feedback.`post_date_gmt` > posts.`post_modified_gmt` GROUP BY `meta_value` HAVING count >= 5 ORDER BY count DESC, post_id DESC;
+		global $wpdb;
+		$postName = self::$postTbName;
+		$analyticsTable = Matomo::getDbTable();
+		$feedback = 'feedback';
+
+		$userSelectQuery = self::userSelectQuery();
+
+		$sql = "SELECT $postName.ID AS ID,
+				$postName.post_title AS title, 
+				COUNT(*) as count,
+                COALESCE(analytics.week_visitors, 0) AS visitors
+                FROM $wpdb->postmeta postmeta
+				INNER JOIN $wpdb->posts $feedback ON postmeta.post_id = $feedback.ID 
+				INNER JOIN $analyticsTable analytics ON postmeta.meta_value = analytics.post_id 
+				INNER JOIN $wpdb->posts $postName ON postmeta.meta_value = $postName.ID";
+				if ($userID !== false) {
+		$sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery";
+				}
+		$sql .= " WHERE postmeta.meta_key = 'customer_feedback_page_reference' 
+		AND $feedback.post_date_gmt > $postName.post_modified_gmt ";
+		if ($userID !== false) {
+			$sql .= $wpdb->prepare(' AND user.ID = %d', $userID);
+		}
+		$sql .= " GROUP BY postmeta.meta_value HAVING count >= 5 ORDER BY count DESC;";
+		$results = $wpdb->get_results($sql);
+		foreach ($results as &$res) {
+			$res->feedback = \CustomerFeedback\Responses::getResponses(
+				$res->ID,
+				'count'
+			);
+			$res->feedback['comments'] = \CONTENT_INSIGHTS_FOR_EDITORS\Util\Plugins\CustomerFeedback::getResponsesCommentCount($res->ID);
+		}
+		
+		if ($desc === true) {
+			usort($results, '\CONTENT_INSIGHTS_FOR_EDITORS\Util\PostQuery::sortByResponseFeedbackDESC');
+		} else {
+			usort($results, '\CONTENT_INSIGHTS_FOR_EDITORS\Util\PostQuery::sortByResponseFeedbackASC');
+		}
+		return array_slice($results, 0, $count);
+	}
+
+	public static function sortByResponseFeedbackDESC($a, $b) {
+		return self::sortByResponseFeedback($a, $b, 'yes');
+	}
+
+	public static function sortByResponseFeedbackASC($a, $b) {
+		return self::sortByResponseFeedback($a, $b, 'no');
+	}
+	public static function sortByResponseFeedback($a, $b, $key = 'yes') {
+		$percent = ($b->feedback[$key] / $b->count) * 100  - ($a->feedback[$key] / $a->count) * 100;
+		if ($percent === 1 || $percent === 0) { // when 100% or 0% we want the second sorting paramter to be the number of total votes
+			return ($b->count - $a->count);
+		}
+		// Give pages with a high number of responses a boost. A page with 0 positive feedbacks and 5 negative will score 100% negative.
+		// However a post with 1 positive and 25 negative does actually seem a bit worse than the first one but the score is 96%.
+		// Using a logarithmic function that will go between 0 and ~0.12 for x= [0...80] we can slightly push the 1 positive and 25 negative to become higher ranked than 0 positive and 5 negative
+		$boost = (1/16)*log10($b->count) * 100;
+		return round($percent + $boost);
 	}
 }
