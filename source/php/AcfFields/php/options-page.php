@@ -81,7 +81,7 @@ if (function_exists('acf_add_local_field_group')) {
 				'default_value' => '180',
 				'placeholder' => '',
 				'prepend' => '',
-				'append' => 'dagar',
+				'append' => __('days', 'content-insights-for-editors'),
 				'min' => 5,
 				'step' => 1,
 			),
@@ -181,4 +181,49 @@ if (function_exists('acf_add_local_field_group')) {
 		'active' => 1,
 		'description' => '',
 	));
+
+	if (class_exists('\CustomerFeedback\App')) {
+
+		acf_add_local_field(array(
+			'parent' => 'group_5d19aaf9c929e',
+			'key' => 'field_5d1c8cd5343f2',
+			'label' => '<h1>Customer Feedback</h1>',
+			'name' => '',
+			'type' => 'message',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => '',
+			'new_lines' => 'wpautop',
+			'esc_html' => 0,
+		));
+	
+		acf_add_local_field(array(
+			'parent' => 'group_5d19aaf9c929e',
+			'key' => 'field_5d1c8a1212bf6',
+			'label' => __('Customer feedback minimum responses', 'content-insights-for-editors'),
+			'name' => 'ws_minimum_feedback_responses',
+			'type' => 'number',
+			'instructions' =>
+			__('Set the threshold for how votes (yes/no) the page must have since last update.', 'content-insights-for-editors'),
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '25',
+				'class' => '',
+				'id' => '',
+			),
+			'default_value' => '5',
+			'placeholder' => '',
+			'prepend' => '',
+			'append' => __('votes', 'content-insights-for-editors'),
+			'min' => 5,
+			'step' => 1,
+		));
+	}
 }

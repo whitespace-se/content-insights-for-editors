@@ -27,6 +27,11 @@ class Settings {
 		return is_numeric($threshold) && $threshold > 0 ? $threshold : false;
 	}
 
+	public static function validateAndGetMinFeedbackResponsesThreshold() {
+		$threshold = get_field('ws_minimum_feedback_responses', 'options');
+		return is_numeric($threshold) && $threshold > 0 ? $threshold : 5;
+	}
+
 	public static function getSelectedPostTypes() {
 		$postTypes = get_field('analysed_post_types', 'options');
 		if ($postTypes && is_array($postTypes)) {

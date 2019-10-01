@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-05 14:25+0200\n"
-"PO-Revision-Date: 2019-09-05 14:25+0200\n"
+"POT-Creation-Date: 2019-09-30 15:19+0200\n"
+"PO-Revision-Date: 2019-09-30 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -62,6 +62,11 @@ msgstr ""
 "Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats skall "
 "vara innan pluginet flaggar sidan som föråldrad."
 
+#: source/php/AcfFields/php/options-page.php:84
+#: source/php/Admin/Dashboard.php:130
+msgid "days"
+msgstr "dagar"
+
 #: source/php/AcfFields/php/options-page.php:110
 msgid "ex. https://analys.yourdomain.se/"
 msgstr "ex. https://analys.dindoman.se/"
@@ -83,98 +88,133 @@ msgstr ""
 msgid "Matomo site id"
 msgstr ""
 
+#: source/php/AcfFields/php/options-page.php:209
+msgid "Customer feedback minimum responses"
+msgstr "Customer feedback minst antal svar"
+
+#: source/php/AcfFields/php/options-page.php:213
+msgid ""
+"Set the threshold for how votes (yes/no) the page must have since last "
+"update."
+msgstr ""
+"Ange tröskelvärdet för hur röster (Ja/Nej) sidan måste ha sedan senaste "
+"uppdateringen."
+
+#: source/php/AcfFields/php/options-page.php:224
+#: source/php/Admin/Dashboard.php:100 source/php/Admin/Dashboard.php:114
+msgid "votes"
+msgstr "röster"
+
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
 msgstr "Varannan vecka"
 
-#: source/php/Admin/Dashboard.php:21
+#: source/php/Admin/Dashboard.php:22
 msgid "Top 10 most visitied pages last 7 days (sitewide)"
 msgstr "Top 10 mest besökta sidorna senaste veckan (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:29
+#: source/php/Admin/Dashboard.php:30
 msgid "Top 10 most visitied pages last month (sitewide)"
 msgstr "Top 10 mest besökta sidorna senaste månaden (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:39
+#: source/php/Admin/Dashboard.php:40
 msgid "Top 10 pages with most number of broken links (sitewide)"
 msgstr "Top 10 sidor med flest trasiga länkar (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:51
+#: source/php/Admin/Dashboard.php:52
 msgid "Top 10 pages not updated in a while (sitewide)"
 msgstr "Top 10 sidor som ej uppdaterats på ett tag (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:64
+#: source/php/Admin/Dashboard.php:65
 msgid "Your top 10 pages most visited last month"
 msgstr "Dina top 10 mest besökta sidor senaste månaden"
 
-#: source/php/Admin/Dashboard.php:73
+#: source/php/Admin/Dashboard.php:74
 msgid "Your 10 least visited pages last month"
 msgstr "Dina top 10 minst besökta sidor senaste månaden"
 
-#: source/php/Admin/Dashboard.php:83
+#: source/php/Admin/Dashboard.php:84
 msgid "All your pages with broken links"
 msgstr "Alla dina sidor med brutna länkar"
 
-#: source/php/Admin/Dashboard.php:94
+#: source/php/Admin/Dashboard.php:95
+msgid "Top 10 pages with most most positive feedback responses"
+msgstr "Top 10 sidor med mest positiva feedbacksvar"
+
+#: source/php/Admin/Dashboard.php:98 source/php/Admin/Dashboard.php:112
+msgid "minimum"
+msgstr "minimum"
+
+#: source/php/Admin/Dashboard.php:109
+msgid "Top 10 pages with least positive feedback responses"
+msgstr "Top 10 sidor med minst positiva feedbacksvar"
+
+#: source/php/Admin/Dashboard.php:126
 msgid "All your pages not updated in the last"
 msgstr "Alla dina sidor som inte uppdaterats under de senaste"
 
-#: source/php/Admin/Dashboard.php:98
-msgid "days"
-msgstr "dagarna"
-
-#: source/php/Admin/Dashboard.php:176
+#: source/php/Admin/Dashboard.php:220
 msgid "No broken links found"
 msgstr "Inga brutna länkar hittades"
 
-#: source/php/Admin/Dashboard.php:181
+#: source/php/Admin/Dashboard.php:225
 msgid "Nice job, everything seems to be in order."
 msgstr "Bra jobb, allt verkar vara i ordning."
 
-#: source/php/Admin/Dashboard.php:187 source/php/Admin/Dashboard.php:263
-#: source/php/Admin/Dashboard.php:320
+#: source/php/Admin/Dashboard.php:231 source/php/Admin/Dashboard.php:319
+#: source/php/Admin/Dashboard.php:376
 msgid "Click here to"
 msgstr "Klicka här för att"
 
-#: source/php/Admin/Dashboard.php:189 source/php/Admin/Dashboard.php:322
+#: source/php/Admin/Dashboard.php:233 source/php/Admin/Dashboard.php:378
 msgid "view your pages"
 msgstr "visa dina sidor"
 
-#: source/php/Admin/Dashboard.php:218 source/php/Admin/Dashboard.php:284
-#: source/php/Util/MailFormatter.php:87 source/php/Util/MailFormatter.php:104
-#: source/php/Util/MailFormatter.php:121
+#: source/php/Admin/Dashboard.php:262 source/php/Admin/Dashboard.php:340
+#: source/php/Admin/Dashboard.php:395 source/php/Util/MailFormatter.php:87
+#: source/php/Util/MailFormatter.php:104 source/php/Util/MailFormatter.php:121
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: source/php/Admin/Dashboard.php:219 source/php/Util/MailFormatter.php:105
+#: source/php/Admin/Dashboard.php:263 source/php/Util/MailFormatter.php:105
 msgid "Number of visitors"
 msgstr "Antal besökare"
 
-#: source/php/Admin/Dashboard.php:220 source/php/Admin/Dashboard.php:285
+#: source/php/Admin/Dashboard.php:264 source/php/Admin/Dashboard.php:341
 #: source/php/Util/ListTable.php:93 source/php/Util/MailFormatter.php:122
 msgid "Last updated"
 msgstr "Senast uppdaterat"
 
-#: source/php/Admin/Dashboard.php:254
+#: source/php/Admin/Dashboard.php:310 source/php/Admin/Dashboard.php:439
 msgid "No pages found"
 msgstr "Inga sidor hittades"
 
-#: source/php/Admin/Dashboard.php:260 source/php/Util/MailFormatter.php:112
+#: source/php/Admin/Dashboard.php:316 source/php/Util/MailFormatter.php:112
 msgid "Seems like you are not the author of any pages yet."
 msgstr "Verkar som om du inte är författaren till några sidor ännu."
 
-#: source/php/Admin/Dashboard.php:265
+#: source/php/Admin/Dashboard.php:321
 msgid "create a new page"
 msgstr "skapa en ny sida"
 
-#: source/php/Admin/Dashboard.php:306
+#: source/php/Admin/Dashboard.php:362
 msgid "No old pages found"
 msgstr "Inga föråldrade sidor hittades"
 
-#: source/php/Admin/Dashboard.php:312
+#: source/php/Admin/Dashboard.php:368
 #, php-format
 msgid "Great! All of your pages have been updated within the last %d days."
 msgstr "Toppen! Alla dina sidor har uppdaterats inom de senaste %d dagarna."
+
+#: source/php/Admin/Dashboard.php:396
+#, fuzzy
+#| msgid "Visitors"
+msgid "Weekly visitors"
+msgstr "Besökare"
+
+#: source/php/Admin/Dashboard.php:445
+msgid "We could not find any pages that has got enough votes"
+msgstr ""
 
 #. Plugin Name of the plugin/theme
 #: source/php/Admin/Main.php:29 source/php/Admin/Main.php:30
@@ -276,7 +316,7 @@ msgstr "Sidvisningar"
 msgid "Statistics from"
 msgstr "Statistik från"
 
-#: source/php/Admin/Settings.php:64 source/php/Admin/Settings.php:69
+#: source/php/Admin/Settings.php:69 source/php/Admin/Settings.php:74
 msgid "Settings"
 msgstr "Inställningar"
 

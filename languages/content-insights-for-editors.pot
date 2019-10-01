@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-05 14:25+0200\n"
+"POT-Creation-Date: 2019-09-30 15:19+0200\n"
 "PO-Revision-Date: 2019-08-05 11:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,6 +56,11 @@ msgid ""
 "should be before the plugin flags the page as outdated."
 msgstr ""
 
+#: source/php/AcfFields/php/options-page.php:84
+#: source/php/Admin/Dashboard.php:130
+msgid "days"
+msgstr ""
+
 #: source/php/AcfFields/php/options-page.php:110
 msgid "ex. https://analys.yourdomain.se/"
 msgstr ""
@@ -75,97 +80,129 @@ msgstr ""
 msgid "Matomo site id"
 msgstr ""
 
+#: source/php/AcfFields/php/options-page.php:209
+msgid "Customer feedback minimum responses"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:213
+msgid ""
+"Set the threshold for how votes (yes/no) the page must have since last "
+"update."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:224
+#: source/php/Admin/Dashboard.php:100 source/php/Admin/Dashboard.php:114
+msgid "votes"
+msgstr ""
+
 #: source/php/Admin/BrokenLinkCron.php:58
 msgid "Every Second Week"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:21
+#: source/php/Admin/Dashboard.php:22
 msgid "Top 10 most visitied pages last 7 days (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:29
+#: source/php/Admin/Dashboard.php:30
 msgid "Top 10 most visitied pages last month (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:39
+#: source/php/Admin/Dashboard.php:40
 msgid "Top 10 pages with most number of broken links (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:51
+#: source/php/Admin/Dashboard.php:52
 msgid "Top 10 pages not updated in a while (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:64
+#: source/php/Admin/Dashboard.php:65
 msgid "Your top 10 pages most visited last month"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:73
+#: source/php/Admin/Dashboard.php:74
 msgid "Your 10 least visited pages last month"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:83
+#: source/php/Admin/Dashboard.php:84
 msgid "All your pages with broken links"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:94
+#: source/php/Admin/Dashboard.php:95
+msgid "Top 10 pages with most most positive feedback responses"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:98 source/php/Admin/Dashboard.php:112
+msgid "minimum"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:109
+msgid "Top 10 pages with least positive feedback responses"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:126
 msgid "All your pages not updated in the last"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:98
-msgid "days"
-msgstr ""
-
-#: source/php/Admin/Dashboard.php:176
+#: source/php/Admin/Dashboard.php:220
 msgid "No broken links found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:181
+#: source/php/Admin/Dashboard.php:225
 msgid "Nice job, everything seems to be in order."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:187 source/php/Admin/Dashboard.php:263
-#: source/php/Admin/Dashboard.php:320
+#: source/php/Admin/Dashboard.php:231 source/php/Admin/Dashboard.php:319
+#: source/php/Admin/Dashboard.php:376
 msgid "Click here to"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:189 source/php/Admin/Dashboard.php:322
+#: source/php/Admin/Dashboard.php:233 source/php/Admin/Dashboard.php:378
 msgid "view your pages"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:218 source/php/Admin/Dashboard.php:284
-#: source/php/Util/MailFormatter.php:87 source/php/Util/MailFormatter.php:104
+#: source/php/Admin/Dashboard.php:262 source/php/Admin/Dashboard.php:340
+#: source/php/Admin/Dashboard.php:395 source/php/Util/MailFormatter.php:87
+#: source/php/Util/MailFormatter.php:104
 #: source/php/Util/MailFormatter.php:121
 msgid "Page title"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:219 source/php/Util/MailFormatter.php:105
+#: source/php/Admin/Dashboard.php:263 source/php/Util/MailFormatter.php:105
 msgid "Number of visitors"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:220 source/php/Admin/Dashboard.php:285
+#: source/php/Admin/Dashboard.php:264 source/php/Admin/Dashboard.php:341
 #: source/php/Util/ListTable.php:93 source/php/Util/MailFormatter.php:122
 msgid "Last updated"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:254
+#: source/php/Admin/Dashboard.php:310 source/php/Admin/Dashboard.php:439
 msgid "No pages found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:260 source/php/Util/MailFormatter.php:112
+#: source/php/Admin/Dashboard.php:316 source/php/Util/MailFormatter.php:112
 msgid "Seems like you are not the author of any pages yet."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:265
+#: source/php/Admin/Dashboard.php:321
 msgid "create a new page"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:306
+#: source/php/Admin/Dashboard.php:362
 msgid "No old pages found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:312
+#: source/php/Admin/Dashboard.php:368
 #, php-format
 msgid "Great! All of your pages have been updated within the last %d days."
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:396
+msgid "Weekly visitors"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:445
+msgid "We could not find any pages that has got enough votes"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -263,7 +300,7 @@ msgstr ""
 msgid "Statistics from"
 msgstr ""
 
-#: source/php/Admin/Settings.php:64 source/php/Admin/Settings.php:69
+#: source/php/Admin/Settings.php:69 source/php/Admin/Settings.php:74
 msgid "Settings"
 msgstr ""
 

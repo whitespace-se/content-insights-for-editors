@@ -35,6 +35,10 @@
     content: '';
 }
 
+.cife-icon--comments:before {
+    content: "\f101";
+}
+
 .cife-customer-feedback-wrapper {
     display: block;
     margin: 5px 0;
@@ -47,4 +51,13 @@
 }
 .cife-customer-feedback--negative {
     color: #cc5151;
+}
+.cife-customer-feedback--comments {
+    color: #d16501;
+}
+.cife-customer-feedback--comments a {
+    background-color: #fdead6;
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: #d16501;
 }
