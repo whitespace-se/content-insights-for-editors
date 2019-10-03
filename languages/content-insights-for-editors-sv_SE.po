@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-09-30 15:19+0200\n"
-"PO-Revision-Date: 2019-09-30 15:20+0200\n"
+"POT-Creation-Date: 2019-10-03 11:40+0200\n"
+"PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -111,27 +111,27 @@ msgstr "Varannan vecka"
 
 #: source/php/Admin/Dashboard.php:22
 msgid "Top 10 most visitied pages last 7 days (sitewide)"
-msgstr "Top 10 mest besökta sidorna senaste veckan (alla redaktörer)"
+msgstr "Topp 10 mest besökta sidorna senaste veckan (alla redaktörer)"
 
 #: source/php/Admin/Dashboard.php:30
 msgid "Top 10 most visitied pages last month (sitewide)"
-msgstr "Top 10 mest besökta sidorna senaste månaden (alla redaktörer)"
+msgstr "Topp 10 mest besökta sidorna senaste månaden (alla redaktörer)"
 
 #: source/php/Admin/Dashboard.php:40
 msgid "Top 10 pages with most number of broken links (sitewide)"
-msgstr "Top 10 sidor med flest trasiga länkar (alla redaktörer)"
+msgstr "Topp 10 sidor med flest trasiga länkar (alla redaktörer)"
 
 #: source/php/Admin/Dashboard.php:52
 msgid "Top 10 pages not updated in a while (sitewide)"
-msgstr "Top 10 sidor som ej uppdaterats på ett tag (alla redaktörer)"
+msgstr "Topp 10 sidor som ej uppdaterats på ett tag (alla redaktörer)"
 
 #: source/php/Admin/Dashboard.php:65
 msgid "Your top 10 pages most visited last month"
-msgstr "Dina top 10 mest besökta sidor senaste månaden"
+msgstr "Dina topp 10 mest besökta sidor senaste månaden"
 
 #: source/php/Admin/Dashboard.php:74
 msgid "Your 10 least visited pages last month"
-msgstr "Dina top 10 minst besökta sidor senaste månaden"
+msgstr "Dina topp 10 minst besökta sidor senaste månaden"
 
 #: source/php/Admin/Dashboard.php:84
 msgid "All your pages with broken links"
@@ -139,7 +139,7 @@ msgstr "Alla dina sidor med brutna länkar"
 
 #: source/php/Admin/Dashboard.php:95
 msgid "Top 10 pages with most most positive feedback responses"
-msgstr "Top 10 sidor med mest positiva feedbacksvar"
+msgstr "Topp 10 sidor med mest positiva feedbacksvar"
 
 #: source/php/Admin/Dashboard.php:98 source/php/Admin/Dashboard.php:112
 msgid "minimum"
@@ -147,7 +147,7 @@ msgstr "minimum"
 
 #: source/php/Admin/Dashboard.php:109
 msgid "Top 10 pages with least positive feedback responses"
-msgstr "Top 10 sidor med minst positiva feedbacksvar"
+msgstr "Topp 10 sidor med minst positiva feedbacksvar"
 
 #: source/php/Admin/Dashboard.php:126
 msgid "All your pages not updated in the last"
@@ -214,7 +214,7 @@ msgstr "Besökare"
 
 #: source/php/Admin/Dashboard.php:445
 msgid "We could not find any pages that has got enough votes"
-msgstr ""
+msgstr "Vi kunde inte hitta några sidor som har fått tillräckligt med röster"
 
 #. Plugin Name of the plugin/theme
 #: source/php/Admin/Main.php:29 source/php/Admin/Main.php:30
@@ -389,7 +389,7 @@ msgstr "Goda nyheter! Inga brutna länkar hittade den här gången, fortsätt s�
 
 #: source/php/Util/MailFormatter.php:108
 msgid "Your top 10 pages most visited last week"
-msgstr "Dina top 10 mest besökta sidor senaste veckan"
+msgstr "Dina topp 10 mest besökta sidor senaste veckan"
 
 #: source/php/Util/MailFormatter.php:125
 msgid "Pages not updated in a while"
