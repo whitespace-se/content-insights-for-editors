@@ -7,6 +7,7 @@ class App {
 
 	public function __construct() {
 		new Admin\Main();
+		new Admin\Accessibility();
 		new Admin\Settings();
 		new Admin\Metabox();
 		new Admin\Dashboard();
