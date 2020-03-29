@@ -17,13 +17,7 @@
         "email": "code@whitespace.se"
       }
     ],
-    "autoload": {
-    },
     "require": {
-        "vlucas/phpdotenv": "^2.0.1"
-    },
-    "suggest": {
-        "advanced-custom-fields/advanced-custom-fields-pro": "Used by the plugin for settings pages",
-        "helsingborg-stad/broken-link-detector": "Needed for handling page and content scanning to find broken links."
+        "helsingborg-stad/broken-link-detector": "^2.0.1"
     }
 }
