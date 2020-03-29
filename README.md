@@ -35,7 +35,7 @@ The package can be downloaded manually and unzipped in the /wp-content/plugins/ 
 Add this to your composer.json
 
 ```
-composer create-project municipio/content-insights-for-editors
+composer require municipio/content-insights-for-editors
 ```
 
 Then run 
@@ -77,14 +77,14 @@ cife_notification_mail_list_sections
 add_action('cife_notification_mail_list_sections', function($sections){
     array_push($sections, [
         'section_header' => '', // string, Title rendered above section
-        'list' => array(
+        'list' => [
             [
                 'url' => '', // string, list item url
                 'title' => '', // string, list item title
                 'value' => 0, // mixed, Value to display in the second column (OPTIONAL)
             ],
             ...
-        ),
+        ],
         'list_header' => ['title' => '', 'value' => ''], // array, Explaining list.title and list.value 
         'no_items_text' => '', // string, Replace list if empty
     ]);
