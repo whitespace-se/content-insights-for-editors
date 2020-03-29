@@ -32,16 +32,10 @@ Content Insights for Editors uses matomo for visitor statistics and [helsingborg
 
 The package can be downloaded manually and unzipped in the /wp-content/plugins/ directory or by using composer. 
 
-Add this to your composer.json
+Install by running the following command:
 
 ```
 composer require municipio/content-insights-for-editors
-```
-
-Then run 
-
-```
-composer install
 ```
 
 Example of how composer works [here](https://wpackagist.org/)
@@ -182,7 +176,7 @@ And this to install helsingborg-stad/broken-link-detector
 
 "require": {
     ...
-    "helsingborg-stad/broken-link-detector": ">=1.0.0",
+    "helsingborg-stad/broken-link-detector": "^1.3",
 },
 ````
 
