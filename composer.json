@@ -1,5 +1,5 @@
 {
-    "name": "whitespace-se/content-insights-for-editors",
+    "name": "municipio/content-insights-for-editors",
     "description": "Content Insights for Editors is a WordPress plugin.",
     "type": "wordpress-plugin",
     "license": "MIT",
@@ -23,7 +23,7 @@
         "vlucas/phpdotenv": "^2.0.1"
     },
     "suggest": {
-        "advanced-custom-fields/advanced-custom-fields-pro": "Used by the plugin for settingspages",
+        "advanced-custom-fields/advanced-custom-fields-pro": "Used by the plugin for settings pages",
         "helsingborg-stad/broken-link-detector": "Needed for handling page and content scanning to find broken links."
     }
 }

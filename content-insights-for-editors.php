@@ -3,8 +3,8 @@
 /**
  * Plugin Name:       Content Insights for Editors
  * Description:       Analyse content for your website
- * Version:           1.1.4
- * Author:            Johan Veeborn, Anders Rehn, Whitespace
+ * Version:           1.1.5
+ * Author:            Whitespace
  * Text Domain:       content-insights-for-editors
  * Domain Path:       /languages
  */
@@ -42,7 +42,7 @@ $loader->addPrefix(
 $loader->register();
 
 add_action('plugins_loaded', function () {
-	if ( !function_exists( 'register_fields_posttype_select' ) ) {
+	if (!function_exists('register_fields_posttype_select')) {
 		require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH .
 			'plugins/acf-post-type-field/acf-posttype-select.php';
 	}
@@ -53,7 +53,8 @@ add_action('plugins_loaded', function () {
 
 register_deactivation_hook(__FILE__, 'cife_decativation');
 if (!function_exists('cife_decativation')) {
-	function cife_decativation() {
+	function cife_decativation()
+	{
 		wp_clear_scheduled_hook('cife_cron_mail');
 	}
 }

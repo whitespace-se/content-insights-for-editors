@@ -35,37 +35,7 @@ The package can be downloaded manually and unzipped in the /wp-content/plugins/ 
 Add this to your composer.json
 
 ```
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:whitespace-se/content-insights-for-editors.git",
-        "no-api": true
-    },
-    ...
-]
-
-"require": {
-    ...
-    "content-insights-for-editors": "1.0.0"
-},
-```
-
-To install helsingborg-stad/broken-link-detector
-
-```
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:helsingborg-stad/broken-link-detector.git",
-        "no-api": true
-    },
-    ...
-]
-
-"require": {
-    ...
-    "helsingborg-stad/broken-link-detector": ">=1.0.0",
-},
+composer create-project municipio/content-insights-for-editors
 ```
 
 Then run 
@@ -238,9 +208,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Johan Veeborn** and **Anders Rehn**
-
-See also the list of [contributors](https://github.com/whitespace-se/content-insights-for-editors/graphs/contributors) who participated in this project.
+See the list of [contributors](https://github.com/whitespace-se/content-insights-for-editors/graphs/contributors) who participated in this project.
 
 ## License
 
