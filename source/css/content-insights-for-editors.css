@@ -1,19 +1,18 @@
 .cife_table {
-    width:100%;
+    width: 100%;
     border-spacing: 0;
 }
 
-.cife_table th{
+.cife_table th {
     padding: 5px;
     text-align: left;
 }
 
-
-.cife_table td{
-    padding:5px;
+.cife_table td {
+    padding: 5px;
 }
 
-.cife_table tr:nth-child(odd){
+.cife_table tr:nth-child(odd) {
     background-color: #f5f5f5;
 }
 
@@ -28,11 +27,11 @@
 }
 
 .cife-icon--thumb-up:before {
-    content: '';
+    content: "";
 }
 
 .cife-icon--thumb-down:before {
-    content: '';
+    content: "";
 }
 
 .cife-icon--comments:before {

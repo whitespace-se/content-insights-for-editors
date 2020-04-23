@@ -1,23 +1,23 @@
 {
-    "name": "municipio/content-insights-for-editors",
-    "description": "Content Insights for Editors is a WordPress plugin.",
-    "type": "wordpress-plugin",
-    "license": "MIT",
-    "homepage": "https://whitespace.se/en/open-source/",
-    "keywords": [
-      "content insights",
-      "broken links",
-      "editors",
-      "matomo",
-      "analytics"
-    ],
-    "authors": [
-      {
-        "name": "Whitespace Dev",
-        "email": "code@whitespace.se"
-      }
-    ],
-    "require": {
-        "helsingborg-stad/broken-link-detector": "^1.3"
-    }
+	"name": "municipio/content-insights-for-editors",
+	"description": "Content Insights for Editors is a WordPress plugin.",
+	"type": "wordpress-plugin",
+	"license": "MIT",
+	"homepage": "https://whitespace.se/en/open-source/",
+	"keywords": [
+		"content insights",
+		"broken links",
+		"editors",
+		"matomo",
+		"analytics"
+	],
+	"authors": [
+		{
+			"name": "Whitespace Dev",
+			"email": "code@whitespace.se"
+		}
+	],
+	"require": {
+		"helsingborg-stad/broken-link-detector": "^1.3"
+	}
 }

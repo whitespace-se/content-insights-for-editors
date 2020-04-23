@@ -1,13 +1,20 @@
+printWidth: 80
+tabWidth: 2
+useTabs: false
+
+semi: true
+singleQuote: false
+quoteProps: as-needed
+jsxSingleQuote: false
+
+trailingComma: all
 bracketSpacing: true
 jsxBracketSameLine: false
-printWidth: 80
-semi: true
-singleQuote: true
-tabWidth: 2
-trailingComma: all
-useTabs: true
-overrides:
-  - files: ['*.php']
-    options:
-      parser: php
-      braceStyle: 1tbs
+arrowParens: always
+
+proseWrap: always
+htmlWhitespaceSensitivity: ignore
+
+# PHP
+braceStyle: 1tbs
+trailingCommaPHP: php7.2
