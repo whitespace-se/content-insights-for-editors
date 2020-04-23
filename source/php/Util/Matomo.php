@@ -5,7 +5,7 @@ namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
 
 class Matomo {
-  private static $dbTable = 'conten_insights_for_editors';
+  private static $dbTable = 'content_insights_for_editors';
   private static $wpdb = null;
 
   public static $installChecked = false;
