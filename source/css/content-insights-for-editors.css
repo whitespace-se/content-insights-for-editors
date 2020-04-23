@@ -1,62 +1,62 @@
 .cife_table {
-    width: 100%;
-    border-spacing: 0;
+  width: 100%;
+  border-spacing: 0;
 }
 
 .cife_table th {
-    padding: 5px;
-    text-align: left;
+  padding: 5px;
+  text-align: left;
 }
 
 .cife_table td {
-    padding: 5px;
+  padding: 5px;
 }
 
 .cife_table tr:nth-child(odd) {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .cife-icon:before {
-    font-family: "dashicons";
-    font-style: normal;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    vertical-align: top;
-    margin-right: 5px;
-    margin-right: 0.5rem;
+  font-family: "dashicons";
+  font-style: normal;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  vertical-align: top;
+  margin-right: 5px;
+  margin-right: 0.5rem;
 }
 
 .cife-icon--thumb-up:before {
-    content: "";
+  content: "";
 }
 
 .cife-icon--thumb-down:before {
-    content: "";
+  content: "";
 }
 
 .cife-icon--comments:before {
-    content: "\f101";
+  content: "\f101";
 }
 
 .cife-customer-feedback-wrapper {
-    display: block;
-    margin: 5px 0;
+  display: block;
+  margin: 5px 0;
 }
 .cife-customer-feedback {
-    display: inline-block;
+  display: inline-block;
 }
 .cife-customer-feedback--positive {
-    color: #56a54f;
+  color: #56a54f;
 }
 .cife-customer-feedback--negative {
-    color: #cc5151;
+  color: #cc5151;
 }
 .cife-customer-feedback--comments {
-    color: #d16501;
+  color: #d16501;
 }
 .cife-customer-feedback--comments a {
-    background-color: #fdead6;
-    border-radius: 5px;
-    padding: 2px 5px;
-    color: #d16501;
+  background-color: #fdead6;
+  border-radius: 5px;
+  padding: 2px 5px;
+  color: #d16501;
 }

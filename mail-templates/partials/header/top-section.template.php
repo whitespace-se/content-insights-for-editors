@@ -17,7 +17,7 @@
 <div align="center" class="img-container center autowidth fullwidth" style="padding-right: 0px;padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]-->
 <div style="font-size:1px;line-height:25px"> </div><img align="center" alt="Image" border="0" class="center autowidth fullwidth" src="<?php echo CONTENT_INSIGHTS_FOR_EDITORS_URL .
-	'/source/images/rounder-up.png'; ?>" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 600px; display: block;" title="Image" width="600"/>
+  '/source/images/rounder-up.png'; ?>" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 600px; display: block;" title="Image" width="600"/>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 <!--[if (!mso)&(!IE)]><!-->

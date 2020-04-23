@@ -9,10 +9,10 @@
 <div style="color:#0D0D0D;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:150%;padding-top:20px;padding-right:30px;padding-bottom:10px;padding-left:30px;">
 <div style="font-size: 12px; line-height: 18px; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; color: #0D0D0D;">
 <p style="font-size: 14px; line-height: 42px; text-align: left; margin: 0;"><span style="font-size: 28px;"><?php echo $_htmlvars[
-	'intro_header'
+  'intro_header'
 ]; ?></span></p>
 <p style="font-size: 14px; line-height: 20px; text-align: left; margin: 0;"><?php echo $_htmlvars[
-	'intro_text'
+  'intro_text'
 ]; ?></p>
 </div>
 </div>
