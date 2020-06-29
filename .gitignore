@@ -1,3 +1,4 @@
 vendor/
 !vendor/Psr4ClassLoader.php
 .phpintel
+node_modules
