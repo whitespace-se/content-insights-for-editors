@@ -11,6 +11,7 @@
 		"matomo",
 		"analytics"
 	],
+	"minimum-stability": "dev",
 	"authors": [
 		{
 			"name": "Whitespace Dev",
