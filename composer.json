@@ -17,6 +17,13 @@
 			"email": "code@whitespace.se"
 		}
 	],
+	"repositiories": [
+               {
+			"type": "vcs",
+			"url": "git@github.com:whitespace-se/broken-link-detector.git",
+			"no-api": true
+		},
+	],
 	"require": {
 		"helsingborg-stad/broken-link-detector": "^1.3"
 	}
