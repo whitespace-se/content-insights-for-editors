@@ -25,6 +25,6 @@
 		},
 	],
 	"require": {
-		"helsingborg-stad/broken-link-detector": "^1.3"
+		"helsingborg-stad/broken-link-detector": "dev-whitespace"
 	}
 }
