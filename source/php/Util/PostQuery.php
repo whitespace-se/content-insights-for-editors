@@ -151,6 +151,10 @@ class PostQuery {
     }
     $sql .= " LEFT JOIN $analyticsTable analytics ON $postName.ID = analytics.post_id";
     $sql .= " WHERE $postName.post_status = 'publish' AND $postName.post_type != 'revision'";
+
+    // Don’t include Modularity modules
+    $sql .= " AND $postName.post_type NOT LIKE 'mod-%'";
+    
     if ($userID !== false) {
       if (Settings::getUseAlternateUserField()) {
         $stmt =
