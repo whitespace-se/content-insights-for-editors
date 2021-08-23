@@ -57,16 +57,16 @@ class Matomo {
 
   public function adminNoticeWarnMatomo() {
     ?>
-    <div class="notice notice-warning">
-      <p><?php _e('Matomo is not configured', 'content-insights-for-editors'); ?></p>
-      <a href="<?php echo admin_url(
+		<div class="notice notice-warning">
+			<p><?php _e('Matomo is not configured', 'content-insights-for-editors'); ?></p>
+			<a href="<?php echo admin_url(
      'admin.php?page=content-insights-for-editors-page-settings'
    ); ?>"><?php _e(
   'Configure settings for Matomo',
   'content-insights-for-editors'
 ); ?></a>
-    </div>
-    <?php
+		</div>
+		<?php
   }
 
   public function schedule() {
@@ -108,22 +108,7 @@ class Matomo {
     $this->aggregateWeekAndMonth($result, $week_result, 'week');
     $this->aggregateWeekAndMonth($result, $month_result, 'month');
 
-    $return_data = array();
-    foreach($result as $url_path => $result_data){
-        $post_id =
-        $url_path == '/'
-            ? get_option('page_on_front')
-            : url_to_postid($url_path);
-        if(empty($return_data[$post_id])){
-            $return_data[$post_id] = $result_data;
-        } else {
-            $return_data[$post_id]->week_visitors += $result_data->week_visitors;
-            $return_data[$post_id]->week_pageviews += $result_data->week_pageviews;
-            $return_data[$post_id]->month_visitors += $result_data->month_visitors;
-            $return_data[$post_id]->month_pageviews += $result_data->month_pageviews;
-        }
-    }
-    return $return_data;
+    return $result;
   }
 
   private function aggregateWeekAndMonth(&$result, $values, $prefix) {
@@ -139,7 +124,13 @@ class Matomo {
         continue;
       }
 
+      $post_id =
+        $value['label'] == '/'
+          ? get_option('page_on_front')
+          : url_to_postid($value['label']);
+
       $result[$value['label']] = (object) [
+        'post_id' => $post_id,
         'url_path' => $value['label'],
         $prefix . '_visitors' => $value['nb_visits'],
         $prefix . '_pageviews' => $value['nb_hits'],
