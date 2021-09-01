@@ -29,13 +29,11 @@ class PostQuery {
 
     return "$postName.post_author = user.ID";
   }
-	
-  public static function getBrokenLinks(
-    $postId = false
-    ) {
+
+  public static function getBrokenLinks($postId = false) {
     global $wpdb;
     $brokenLinksTable = BrokenLinks::$dbTable;
-    $sql = "SELECT url FROM $brokenLinksTable WHERE post_id=".(int)$postId;
+    $sql = "SELECT url FROM $brokenLinksTable WHERE post_id=" . (int) $postId;
     return $wpdb->get_results($sql);
   }
 
@@ -154,7 +152,7 @@ class PostQuery {
 
     // Don’t include Modularity modules
     $sql .= " AND $postName.post_type NOT LIKE 'mod-%'";
-    
+
     if ($userID !== false) {
       if (Settings::getUseAlternateUserField()) {
         $stmt =

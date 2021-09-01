@@ -58,10 +58,13 @@ class Matomo {
   public function adminNoticeWarnMatomo() {
     ?>
     <div class="notice notice-warning">
-      <p><?php _e('Matomo is not configured', 'content-insights-for-editors'); ?></p>
+      <p><?php _e(
+        'Matomo is not configured',
+        'content-insights-for-editors'
+      ); ?></p>
       <a href="<?php echo admin_url(
-     'admin.php?page=content-insights-for-editors-page-settings'
-   ); ?>"><?php _e(
+        'admin.php?page=content-insights-for-editors-page-settings'
+      ); ?>"><?php _e(
   'Configure settings for Matomo',
   'content-insights-for-editors'
 ); ?></a>
@@ -81,9 +84,15 @@ class Matomo {
     return self::$wpdb->prefix . self::$dbTable;
   }
 
+  private function truncateTable() {
+    $tableName = self::getDbTable();
+    self::$wpdb->query("TRUNCATE TABLE ä$tableNameä");
+  }
+
   public function updatePagesWeekAndMonth() {
     $pages = $this->getPagesWeekAndMonth();
 
+    $this->truncateTable();
     foreach ($pages as $page) {
       $this->upsert($page);
     }
@@ -109,20 +118,48 @@ class Matomo {
     $this->aggregateWeekAndMonth($result, $month_result, 'month');
 
     $return_data = array();
-    foreach($result as $url_path => $result_data){
-        $post_id =
+    foreach ($result as $url_path => $result_data) {
+      $post_id =
         $url_path == '/'
-            ? get_option('page_on_front')
-            : url_to_postid($url_path);
-        if(empty($return_data[$post_id])){
-            $return_data[$post_id] = $result_data;
+          ? get_option('page_on_front')
+          : url_to_postid($url_path);
+
+      $result_data->post_id = $post_id;
+
+      // Only urls with post ids
+      if ($post_id !== 0) {
+        if (empty($return_data[$post_id])) {
+          $return_data[$post_id] = $result_data;
+
+          if (empty($return_data[$post_id]->week_visitors)) {
+            $return_data[$post_id]->week_visitors = 0;
+          }
+          if (empty($return_data[$post_id]->week_pageviews)) {
+            $return_data[$post_id]->week_pageviews = 0;
+          }
         } else {
-            $return_data[$post_id]->week_visitors += $result_data->week_visitors;
-            $return_data[$post_id]->week_pageviews += $result_data->week_pageviews;
-            $return_data[$post_id]->month_visitors += $result_data->month_visitors;
-            $return_data[$post_id]->month_pageviews += $result_data->month_pageviews;
+          $return_data[$post_id]->week_visitors += $result_data->week_visitors;
+          $return_data[$post_id]->week_pageviews +=
+            $result_data->week_pageviews;
+          $return_data[$post_id]->month_visitors +=
+            $result_data->month_visitors;
+          $return_data[$post_id]->month_pageviews +=
+            $result_data->month_pageviews;
         }
+      }
     }
+
+    usort($return_data, function ($b, $a) {
+      $retval = $a->week_pageviews <=> $b->week_pageviews;
+      if ($retval == 0) {
+        $retval = $a->month_pageviews <=> $b->month_pageviews;
+        if ($retval == 0) {
+          $retval = $a->month_visitors <=> $b->month_visitors;
+        }
+      }
+      return $retval;
+    });
+
     return $return_data;
   }
 
