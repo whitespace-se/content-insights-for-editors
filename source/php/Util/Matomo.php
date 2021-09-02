@@ -212,7 +212,6 @@ class Matomo {
     $queryString = urldecode(http_build_query($query));
 
     $url = $this->matomoUrl . '?' . $queryString;
-    print $url . '\n';
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
