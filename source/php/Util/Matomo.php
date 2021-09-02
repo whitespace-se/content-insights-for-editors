@@ -86,13 +86,13 @@ class Matomo {
 
   private function truncateTable() {
     $tableName = self::getDbTable();
-    self::$wpdb->query("TRUNCATE TABLE '$tableName'");
+    self::$wpdb->query("TRUNCATE TABLE $tableName");
   }
 
   public function updatePagesWeekAndMonth() {
+    $this->truncateTable();
     $pages = $this->getPagesWeekAndMonth();
 
-    $this->truncateTable();
     foreach ($pages as $page) {
       $this->upsert($page);
     }
@@ -103,15 +103,15 @@ class Matomo {
     $this->parameters['period'] = 'range';
     $this->parameters['expanded'] = 0;
     $this->parameters['flat'] = 1;
-    $this->parameters['filter_limit'] = 2000;
+    $this->parameters['filter_limit'] = 1000;
 
     $this->parameters['date'] = $this->getDateRangeStr(7);
 
-    $week_result = $this->request();
+    $week_result = $this->requestPager();
 
     $this->parameters['date'] = $this->getDateRangeStr(30);
 
-    $month_result = $this->request();
+    $month_result = $this->requestPager();
 
     $result = array();
     $this->aggregateWeekAndMonth($result, $week_result, 'week');
@@ -188,10 +188,31 @@ class Matomo {
     return date('Y-m-d', strtotime("-$days days")) . ',' . date('Y-m-d');
   }
 
-  private function request() {
-    $queryString = urldecode(http_build_query($this->parameters));
+  private function requestPager() {
+    $filter = array();
+    $filter['filter_offset'] = 0;
+
+    $pager = true;
+    $i = 1;
+    $data = array();
+    while ($pager) {
+      $response = $this->request($filter);
+      if (empty($response)) {
+        $pager = false;
+      }
+      $data = array_merge($data, $response);
+      $filter['filter_offset'] = $this->parameters['filter_limit'] * $i++;
+    }
+    return $data;
+  }
+
+  private function request($filter) {
+    $query = array_merge($this->parameters, $filter);
+
+    $queryString = urldecode(http_build_query($query));
 
     $url = $this->matomoUrl . '?' . $queryString;
+    print $url . '\n';
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
