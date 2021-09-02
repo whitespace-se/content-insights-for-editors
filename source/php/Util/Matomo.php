@@ -86,7 +86,7 @@ class Matomo {
 
   private function truncateTable() {
     $tableName = self::getDbTable();
-    self::$wpdb->query("TRUNCATE TABLE ä$tableNameä");
+    self::$wpdb->query("TRUNCATE TABLE '$tableName'");
   }
 
   public function updatePagesWeekAndMonth() {
