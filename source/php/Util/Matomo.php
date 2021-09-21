@@ -57,16 +57,19 @@ class Matomo {
 
   public function adminNoticeWarnMatomo() {
     ?>
-		<div class="notice notice-warning">
-			<p><?php _e('Matomo is not configured', 'content-insights-for-editors'); ?></p>
-			<a href="<?php echo admin_url(
-     'admin.php?page=content-insights-for-editors-page-settings'
-   ); ?>"><?php _e(
+    <div class="notice notice-warning">
+      <p><?php _e(
+        'Matomo is not configured',
+        'content-insights-for-editors'
+      ); ?></p>
+      <a href="<?php echo admin_url(
+        'admin.php?page=content-insights-for-editors-page-settings'
+      ); ?>"><?php _e(
   'Configure settings for Matomo',
   'content-insights-for-editors'
 ); ?></a>
-		</div>
-		<?php
+    </div>
+    <?php
   }
 
   public function schedule() {
@@ -81,7 +84,13 @@ class Matomo {
     return self::$wpdb->prefix . self::$dbTable;
   }
 
+  private function truncateTable() {
+    $tableName = self::getDbTable();
+    self::$wpdb->query("TRUNCATE TABLE $tableName");
+  }
+
   public function updatePagesWeekAndMonth() {
+    $this->truncateTable();
     $pages = $this->getPagesWeekAndMonth();
 
     foreach ($pages as $page) {
@@ -94,21 +103,64 @@ class Matomo {
     $this->parameters['period'] = 'range';
     $this->parameters['expanded'] = 0;
     $this->parameters['flat'] = 1;
-    $this->parameters['filter_limit'] = 2000;
+    $this->parameters['filter_limit'] = 1000;
 
     $this->parameters['date'] = $this->getDateRangeStr(7);
 
-    $week_result = $this->request();
+    $week_result = $this->requestPager();
 
     $this->parameters['date'] = $this->getDateRangeStr(30);
 
-    $month_result = $this->request();
+    $month_result = $this->requestPager();
 
     $result = array();
     $this->aggregateWeekAndMonth($result, $week_result, 'week');
     $this->aggregateWeekAndMonth($result, $month_result, 'month');
 
-    return $result;
+    $return_data = array();
+    foreach ($result as $url_path => $result_data) {
+      $post_id =
+        $url_path == '/'
+          ? get_option('page_on_front')
+          : url_to_postid($url_path);
+
+      $result_data->post_id = $post_id;
+
+      // Only urls with post ids
+      if ($post_id !== 0) {
+        if (empty($return_data[$post_id])) {
+          $return_data[$post_id] = $result_data;
+
+          if (empty($return_data[$post_id]->week_visitors)) {
+            $return_data[$post_id]->week_visitors = 0;
+          }
+          if (empty($return_data[$post_id]->week_pageviews)) {
+            $return_data[$post_id]->week_pageviews = 0;
+          }
+        } else {
+          $return_data[$post_id]->week_visitors += $result_data->week_visitors;
+          $return_data[$post_id]->week_pageviews +=
+            $result_data->week_pageviews;
+          $return_data[$post_id]->month_visitors +=
+            $result_data->month_visitors;
+          $return_data[$post_id]->month_pageviews +=
+            $result_data->month_pageviews;
+        }
+      }
+    }
+
+    usort($return_data, function ($b, $a) {
+      $retval = $a->week_pageviews <=> $b->week_pageviews;
+      if ($retval == 0) {
+        $retval = $a->month_pageviews <=> $b->month_pageviews;
+        if ($retval == 0) {
+          $retval = $a->month_visitors <=> $b->month_visitors;
+        }
+      }
+      return $retval;
+    });
+
+    return $return_data;
   }
 
   private function aggregateWeekAndMonth(&$result, $values, $prefix) {
@@ -124,13 +176,7 @@ class Matomo {
         continue;
       }
 
-      $post_id =
-        $value['label'] == '/'
-          ? get_option('page_on_front')
-          : url_to_postid($value['label']);
-
       $result[$value['label']] = (object) [
-        'post_id' => $post_id,
         'url_path' => $value['label'],
         $prefix . '_visitors' => $value['nb_visits'],
         $prefix . '_pageviews' => $value['nb_hits'],
@@ -142,8 +188,28 @@ class Matomo {
     return date('Y-m-d', strtotime("-$days days")) . ',' . date('Y-m-d');
   }
 
-  private function request() {
-    $queryString = urldecode(http_build_query($this->parameters));
+  private function requestPager() {
+    $filter = array();
+    $filter['filter_offset'] = 0;
+
+    $pager = true;
+    $i = 1;
+    $data = array();
+    while ($pager) {
+      $response = $this->request($filter);
+      if (empty($response)) {
+        $pager = false;
+      }
+      $data = array_merge($data, $response);
+      $filter['filter_offset'] = $this->parameters['filter_limit'] * $i++;
+    }
+    return $data;
+  }
+
+  private function request($filter) {
+    $query = array_merge($this->parameters, $filter);
+
+    $queryString = urldecode(http_build_query($query));
 
     $url = $this->matomoUrl . '?' . $queryString;
 
