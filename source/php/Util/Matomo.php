@@ -164,23 +164,25 @@ class Matomo {
   }
 
   private function aggregateWeekAndMonth(&$result, $values, $prefix) {
-    foreach ($values as $value) {
-      if (array_key_exists($value['label'], $result)) {
-        $result[$value['label']] = (object) array_merge(
-          (array) $result[$value['label']],
-          [
-            $prefix . '_visitors' => $value['nb_visits'],
-            $prefix . '_pageviews' => $value['nb_hits'],
-          ]
-        );
-        continue;
-      }
+    if(!empty($values)) {
+      foreach ($values as $value) {
+        if (array_key_exists($value['label'], $result)) {
+          $result[$value['label']] = (object) array_merge(
+            (array) $result[$value['label']],
+            [
+              $prefix . '_visitors' => $value['nb_visits'],
+              $prefix . '_pageviews' => $value['nb_hits'],
+            ]
+          );
+          continue;
+        }
 
-      $result[$value['label']] = (object) [
-        'url_path' => $value['label'],
-        $prefix . '_visitors' => $value['nb_visits'],
-        $prefix . '_pageviews' => $value['nb_hits'],
-      ];
+        $result[$value['label']] = (object) [
+          'url_path' => $value['label'],
+          $prefix . '_visitors' => $value['nb_visits'],
+          $prefix . '_pageviews' => $value['nb_hits'],
+        ];
+      }
     }
   }
 
@@ -200,7 +202,7 @@ class Matomo {
       if (empty($response)) {
         $pager = false;
       }
-      $data = array_merge($data, $response);
+      $data = is_array($response) ? array_merge($data, $response) : $data;
       $filter['filter_offset'] = $this->parameters['filter_limit'] * $i++;
     }
     return $data;
