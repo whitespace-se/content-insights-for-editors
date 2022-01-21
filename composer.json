@@ -2,7 +2,7 @@
   "name": "municipio/content-insights-for-editors",
   "description": "Content Insights for Editors is a WordPress plugin.",
   "type": "wordpress-plugin",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "homepage": "https://whitespace.se/en/open-source/",
   "keywords": [
     "content insights",
