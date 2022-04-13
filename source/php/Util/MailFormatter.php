@@ -74,8 +74,6 @@ class MailFormatter {
         'This is a short summary of all pages you are the author to that contains broken links, pages that has not been updated in a while and your most visited pages this week.',
         'content-insights-for-editors'
       ),
-      'button_cta_text' => null,
-      'button_cta_url' => null,
     ];
 
     $sections = array();
