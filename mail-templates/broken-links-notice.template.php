@@ -50,6 +50,14 @@
               include $template;
             endforeach; ?>
 
+                        <?php if (
+              isset($_htmlvars['button_cta_text']) &&
+              isset($_htmlvars['button_cta_url'])
+            ) :
+              include CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH .
+                '/partials/cta-button.template.php';
+            endif; ?>
+
                         <?php include CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH .
               '/partials/footer-section.template.php'; ?>
 
