@@ -12,7 +12,7 @@
                                         <tr>
                                             <td align="center" class="footer " valign="middle">
                                                 <img src="<?php echo $_htmlvars['logo']; ?>" class="fr-fii fr-dib"
-                                                    width="640" style="margin: initial; width: 100%;">
+                                                    width="320" style="margin: initial; width: 100%;">
                                             </td>
                                         </tr>
                                     </tbody>
