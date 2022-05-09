@@ -145,6 +145,12 @@ class MailFormatter {
 
     $_htmlvars = apply_filters('cife_notification_mail_vars', $_htmlvars);
 
+    $siteData['url'] = get_bloginfo('url');
+    $siteData['name'] = get_bloginfo('name');
+    if($siteData['name'] && $siteData['url']) {
+      $_htmlvars['intro_text'] = "Detta är en kort sammanfattning av alla sidor som du är författare till på <a href='".$siteData[url]."'>".$siteData[name]."</a> och innehåller brutna länkar, sidor som inte har uppdaterats på ett tag samt dina mest besökta sidor denna vecka.";
+    }
+
     $email_to = $userData->user_email;
     $email_subject = __(
       'Summary of your pages content',
