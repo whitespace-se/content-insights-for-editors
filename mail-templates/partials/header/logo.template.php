@@ -7,7 +7,7 @@
                     <tbody>
                         <tr>
                             <td class="footer" valign="middle" align="center">
-                                <table align="center" width="100%">
+                                <table align="center" width="320">
                                     <tbody>
                                         <tr>
                                             <td align="center" class="footer " valign="middle">
