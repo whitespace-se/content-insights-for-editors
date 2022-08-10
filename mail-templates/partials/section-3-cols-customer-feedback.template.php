@@ -20,29 +20,24 @@
                                         <tr>
                                             <td style="padding: 5px 0px; width: 31.7277%;"><span
                                                     style="color: rgb(85, 85, 85);"><span
-                                                        style="font-size: 18px;"><?php echo $_sectionVars['list_header']['title'] ?:
-                                                                                                                                              ''; ?></span></span>
+                                                        style="font-size: 18px;"><?php echo $_sectionVars['list_header']['title'] ?: ''; ?></span></span>
                                             </td>
                                             <td style="width: 33.3333%; text-align: center;"><span
                                                     style="color: rgb(85, 85, 85);"><span
-                                                        style="font-size: 18px;"><?php echo $_sectionVars['list_header']['feedback'] ?:
-                                                                                                                                                ''; ?></span></span>
+                                                        style="font-size: 18px;"><?php echo $_sectionVars['list_header']['feedback'] ?: ''; ?></span></span>
                                             </td>
                                             <td style="padding: 5px 0px; text-align: right; width: 34.8105%;"><span
                                                     style="color: rgb(85, 85, 85);"><span
-                                                        style="font-size: 18px;"><?php echo $_sectionVars['list_header']['value'] ?:
-                                                                                                                                                                  ''; ?></span>
+                                                        style="font-size: 18px;"><?php echo $_sectionVars['list_header']['value'] ?: ''; ?></span>
                                                     <br>
                                                 </span>
                                             </td>
                                         </tr>
                                         <?php foreach ($_sectionVars['list'] as $item) : ?>
                                         <tr>
-                                            <td style="padding: 5px 0px; width: 31.7277%;"><span
-                                                    style="color: rgb(85, 85, 85);"><a
-                                                        href="<?php echo $item['url']; ?>" rel="noopener"
-                                                        style="text-decoration: underline; color: #5b2c82;"
-                                                        target="_blank"><?php echo $item['title']; ?></a></span></td>
+                                            <td style="padding: 5px 0px; width: 31.7277%;">
+                                                <a href="<?php echo $item['url']; ?>" rel="noopener" target="_blank"><?php echo $item['title']; ?></a>
+                                            </td>
                                             <td style="padding: 5px 0px; width: 33.3333%; text-align: center;">
                                                 <table cellpadding="0" cellspacing="0" style="width: 100%">
                                                     <tbody>

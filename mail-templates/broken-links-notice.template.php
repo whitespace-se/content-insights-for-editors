@@ -24,8 +24,7 @@
         <?php include CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH .
       '/partials/header/preamble.template.php'; ?>
 
-        <table width="640" cellspacing="0" cellpadding="0" class="bw-table_content" style="background-color:#ffffff;"
-            bgcolor="#ffffff">
+        <table width="640" cellspacing="0" cellpadding="0" class="bw-table_content" style="background-color:#ffffff;" bgcolor="#ffffff">
             <tbody>
                 <tr>
                     <td style="background-color:#ffffff; padding-top:0px; padding-bottom:0px;" class="">
