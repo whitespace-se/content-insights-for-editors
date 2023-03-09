@@ -24,7 +24,7 @@ class PostQuery {
     $postName = self::$postTbName;
     if (Settings::getUseAlternateUserField()) {
       global $wpdb;
-      return "(SELECT meta_value FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = user.ID OR (post.post_author = user.ID)";
+      return "(SELECT meta_value FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = user.ID OR ((SELECT count(1) FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = 0 AND post.post_author = user.ID)";
     }
 
     return "$postName.post_author = user.ID";
