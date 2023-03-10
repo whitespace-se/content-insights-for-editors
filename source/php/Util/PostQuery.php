@@ -24,7 +24,7 @@ class PostQuery {
     $postName = self::$postTbName;
     if (Settings::getUseAlternateUserField()) {
       global $wpdb;
-      return "(SELECT meta_value FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor' AND post.post_type = 'page') = user.ID OR (post.post_author = user.ID AND post.post_type != 'page')";
+      return "(SELECT meta_value FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = user.ID OR ((SELECT count(1) FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = 0 AND post.post_author = user.ID)";
     }
 
     return "$postName.post_author = user.ID";
@@ -51,8 +51,8 @@ class PostQuery {
     $userSelectQuery = self::userSelectQuery();
 
     $sql = "SELECT $postName.ID AS ID,
-                        $postName.post_title AS title, 
-                        $postName.post_name AS url, 
+                        $postName.post_title AS title,
+                        $postName.post_name AS url,
                         COUNT(links.id) AS length,
                         $postName.post_modified AS modified,
                         user.display_name AS author,
@@ -142,7 +142,7 @@ class PostQuery {
     $timespanRow = esc_sql(sprintf('%s_visitors', $timespan));
     $sql = "SELECT $postName.ID AS ID,
                         $postName.post_title AS title,
-                        COALESCE(analytics.$timespanRow, 0) AS visitors 
+                        COALESCE(analytics.$timespanRow, 0) AS visitors
 				FROM $wpdb->posts $postName";
     if ($userID !== false && Settings::getUseAlternateUserField()) {
       $sql .= " LEFT JOIN $wpdb->postmeta postmeta ON $postName.ID = postmeta.post_id";
@@ -199,7 +199,7 @@ class PostQuery {
                         user.display_name AS author,
                         COUNT(links.id) AS broken_links
 				FROM $wpdb->posts $postName";
-    $sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery 
+    $sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery
 				INNER JOIN $brokenLinksTable links ON $postName.ID = links.post_id";
     if ($userID !== false) {
       $sql .= $wpdb->prepare(' WHERE user.ID = %d', $userID);
@@ -274,17 +274,17 @@ class PostQuery {
     $userSelectQuery = self::userSelectQuery();
 
     $sql = "SELECT $postName.ID AS ID,
-				$postName.post_title AS title, 
+				$postName.post_title AS title,
 				COUNT(*) as count,
                 COALESCE(analytics.week_visitors, 0) AS visitors
                 FROM $wpdb->postmeta postmeta
-				INNER JOIN $wpdb->posts $feedback ON postmeta.post_id = $feedback.ID 
-				INNER JOIN $analyticsTable analytics ON postmeta.meta_value = analytics.post_id 
+				INNER JOIN $wpdb->posts $feedback ON postmeta.post_id = $feedback.ID
+				INNER JOIN $analyticsTable analytics ON postmeta.meta_value = analytics.post_id
 				INNER JOIN $wpdb->posts $postName ON postmeta.meta_value = $postName.ID";
     if ($userID !== false) {
       $sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery";
     }
-    $sql .= " WHERE postmeta.meta_key = 'customer_feedback_page_reference' 
+    $sql .= " WHERE postmeta.meta_key = 'customer_feedback_page_reference'
 		AND $feedback.post_date_gmt > $postName.post_modified_gmt ";
     if ($userID !== false) {
       $sql .= $wpdb->prepare(' AND user.ID = %d', $userID);
