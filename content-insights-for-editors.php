@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Content Insights for Editors
  * Description:       Analyse content for your website
- * Version:           2.1.0
+ * Version:           2.2.0
  * Author:            Whitespace
  * Text Domain:       content-insights-for-editors
  * Domain Path:       /languages

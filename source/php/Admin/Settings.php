@@ -41,6 +41,9 @@ class Settings {
     }
     return false;
   }
+  public static function getIncludePrivatePages() {
+    return boolval(get_field('include_private_pages', 'options'));
+  }
 
   public static function getUseAlternateUserField() {
     return boolval(get_field('use_alternate_user_field', 'options'));

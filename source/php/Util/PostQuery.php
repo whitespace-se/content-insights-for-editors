@@ -148,7 +148,11 @@ class PostQuery {
       $sql .= " LEFT JOIN $wpdb->postmeta postmeta ON $postName.ID = postmeta.post_id";
     }
     $sql .= " LEFT JOIN $analyticsTable analytics ON $postName.ID = analytics.post_id";
-    $sql .= " WHERE $postName.post_status = 'publish' AND $postName.post_type != 'revision'";
+    if (Settings::getIncludePrivatePages()) {
+      $sql .= " WHERE ($postName.post_status = 'publish' OR $postName.post_status = 'private') AND $postName.post_type != 'revision'";
+    } else {
+      $sql .= " WHERE $postName.post_status = 'publish' AND $postName.post_type != 'revision'";
+    }
 
     // Don’t include Modularity modules
     $sql .= " AND $postName.post_type NOT LIKE 'mod-%'";
@@ -230,6 +234,9 @@ class PostQuery {
       'order' => 'ASC',
       'orderby' => 'post_modified',
     );
+    if (Settings::getIncludePrivatePages()) {
+      $args['post_status'] = array('publish', 'private');
+    }
     if ($userID) {
       if (Settings::getUseAlternateUserField()) {
         $args['meta_query'] = $args['meta_query'] ?: array();

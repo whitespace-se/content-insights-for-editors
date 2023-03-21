@@ -43,7 +43,7 @@ class Main {
   }
 
   public function addGetValues($where_posts) {
-    $where_posts['post_status'] = 'publish';
+    $where_posts['post_status'] = Settings::getIncludePrivatePages() ? array('publish', 'private') : 'publish';
 
     return $where_posts;
   }

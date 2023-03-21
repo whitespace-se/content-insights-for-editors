@@ -25,6 +25,31 @@ if (function_exists('acf_add_local_field_group')) {
         'readonly' => 0,
       ),
       array(
+        'key' => 'field_5d19cd83d7edf',
+        'label' => __(
+          'Include private pages',
+          'content-insights-for-editors'
+        ),
+        'name' => 'include_private_pages',
+        'type' => 'true_false',
+        'instructions' => __(
+          'By default data for private pages is excluded, this option allows it to be displayed.',
+          'content-insights-for-editors'
+        ),
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => array(
+          'width' => '',
+          'class' => '',
+          'id' => '',
+        ),
+        'message' => '',
+        'default_value' => 0,
+        'ui' => 0,
+        'ui_on_text' => '',
+        'ui_off_text' => '',
+      ),
+      array(
         'key' => 'field_5d19cd83d7edd',
         'label' => __(
           'Use alternative user field',
