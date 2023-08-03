@@ -2,6 +2,7 @@
 
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 
+use CONTENT_INSIGHTS_FOR_EDITORS\App;
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
 
 class PostQuery {
@@ -32,7 +33,7 @@ class PostQuery {
 
   public static function getBrokenLinks($postId = false) {
     global $wpdb;
-    $brokenLinksTable = BrokenLinks::$dbTable;
+    $brokenLinksTable = App::$bldTable;
     $sql = "SELECT url FROM $brokenLinksTable WHERE post_id=" . (int) $postId;
     return $wpdb->get_results($sql);
   }
@@ -44,7 +45,7 @@ class PostQuery {
     $limit = false
   ) {
     global $wpdb;
-    $brokenLinksTable = BrokenLinks::$dbTable;
+    $brokenLinksTable = App::$bldTable;
     $analyticsTable = Matomo::getDbTable();
     $postName = self::$postTbName;
 
@@ -194,7 +195,7 @@ class PostQuery {
   public static function getMostBrokenLinksPosts($count = 10, $userID = false) {
     global $wpdb;
     $postName = self::$postTbName;
-    $brokenLinksTable = BrokenLinks::$dbTable;
+    $brokenLinksTable = BrokenLinks::$bldTable;
 
     $userSelectQuery = self::userSelectQuery();
 

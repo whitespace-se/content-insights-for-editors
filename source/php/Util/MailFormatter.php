@@ -32,13 +32,11 @@ class MailFormatter {
   public static function formatAndSendMail($userID) {
     $logo = apply_filters('cife_notification_mail_logo_url', null);
     $userData = get_userdata($userID);
-    if (class_exists('\BrokenLinkDetector\App')):
-      $brokenLinks = PostQuery::getListPosts($userID, true);
-      $brokenLinksMapped = array_map(
-        '\CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter::mapArrayBase',
-        $brokenLinks
-      );
-    endif;
+    $brokenLinks = PostQuery::getListPosts($userID, true);
+    $brokenLinksMapped = array_map(
+      '\CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter::mapArrayBase',
+      $brokenLinks
+    );
     $last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
     $time = sprintf('-%d days', $last_updated_threshold);
     $rarelyUpdated = PostQuery::getPagesModifiedAfter($time, 10, $userID);
@@ -79,8 +77,7 @@ class MailFormatter {
     ];
 
     $sections = array();
-    if (class_exists('\BrokenLinkDetector\App')):
-      $sections[] = [
+    $sections[] = [
         'id' => 'broken-links',
         'list' => $brokenLinksMapped,
         'list_header' => [
@@ -92,7 +89,6 @@ class MailFormatter {
           'content-insights-for-editors'
         ),
       ];
-    endif;
     if (Matomo::$matomoIsActive) {
       $sections[] = [
         'id' => 'most-viewed',

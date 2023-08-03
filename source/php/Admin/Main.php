@@ -4,9 +4,9 @@ namespace CONTENT_INSIGHTS_FOR_EDITORS\Admin;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\PostQuery;
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter;
-use CONTENT_INSIGHTS_FOR_EDITORS\Util\BrokenLinks;
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\ListTable;
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\Matomo;
+use CONTENT_INSIGHTS_FOR_EDITORS\App;
 
 class Main {
   public static $MENU_SLUG = 'content-insights-for-editors-page';
@@ -135,34 +135,20 @@ class Main {
   }
 
   public function render() {
-    if (class_exists('\BrokenLinkDetector\App')):
-      $PageList = new ListTable();
+    $PageList = new ListTable();
 
-      echo '<div class="wrap nestedpages">';
-      $this->renderTableHeader();
-      $PageList->prepare_items();
-      $PageList->display();
-      echo '</div>';
-    else:
-      echo '<div>';
-      echo '<h2>' .
-        __('Broken links plugin not found', 'content-insights-for-editors') .
-        '</h2>';
-      echo '<p>' .
-        __(
-          'This plugin depends on broken links in order to display a list of broken links. To enable this view please install and activate broken links.',
-          'content-insights-for-editors'
-        ) .
-        '</p>';
-      echo '</div>';
-    endif;
+    echo '<div class="wrap nestedpages">';
+    $this->renderTableHeader();
+    $PageList->prepare_items();
+    $PageList->display();
+    echo '</div>';
   }
 
   private function renderTableHeader() {
     $nextRun = '';
     if (
-      !is_null(BrokenLinks::$nextScheduledRun) &&
-      !empty(BrokenLinks::$nextScheduledRun)
+      !is_null(App::$nextScheduledRun) &&
+      !empty(App::$nextScheduledRun)
     ) {
       $nextRun = '<p>';
       $nextRun .= sprintf(
@@ -171,7 +157,7 @@ class Main {
           'Next scheduled check for broken links',
           'content-insights-for-editors'
         ),
-        BrokenLinks::$nextScheduledRun
+        App::$nextScheduledRun
       );
       $nextRun .= '</p>';
     }

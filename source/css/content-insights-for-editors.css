@@ -60,3 +60,17 @@
   padding: 2px 5px;
   color: #d16501;
 }
+.broken-link-detector-label {
+  background-color: #ff0000;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #fff;
+  display: inline-block;
+  font-size: 11px;
+  height: 2em;
+  line-height: 21px;
+  min-width: 24px;
+  padding: 0 8px;
+  text-align: center;
+  margin-top: 5px;
+}

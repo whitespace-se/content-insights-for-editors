@@ -24,12 +24,9 @@ Content Insights for Editors is a WordPress plugin
 
 - [WordPress](https://wordpress.com/)
 - [ACF](https://www.advancedcustomfields.com/)
-- [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
 - [matomo](https://matomo.org/)
 
-Content Insights for Editors uses matomo for visitor statistics and
-[helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-for analysing content.
+Content Insights for Editors uses matomo for visitor statistics.
 
 ### Installing
 
@@ -153,12 +150,9 @@ notes on how to use the plugin in production.
 
 - [WordPress](https://wordpress.com/)
 - [ACF](https://www.advancedcustomfields.com/)
-- [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
 - [matomo](https://matomo.org/)
 
-Content Insights for Editors uses matomo for visitor statistics and
-[helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-for analysing content.
+Content Insights for Editors uses matomo for visitor statistics.
 
 ### Local installation
 
@@ -181,24 +175,6 @@ Add this to your composer.json
 "require": {
     ...
     "content-insights-for-editors": "dev-master"
-},
-```
-
-And this to install helsingborg-stad/broken-link-detector
-
-```
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:helsingborg-stad/broken-link-detector.git",
-        "no-api": true
-    },
-    ...
-]
-
-"require": {
-    ...
-    "helsingborg-stad/broken-link-detector": "^1.3",
 },
 ```
 
@@ -234,3 +210,33 @@ who participated in this project.
 
 This project is licensed under the MIT License - see the
 [LICENSE.md](LICENSE.md) file for details
+
+# Broken Link Detector
+Detects and fixes (if possible) broken links in post_content. 
+
+## Enable log mode 
+Define the constant BROKEN_LINKS_LOG to true to enable extended logging. This will write curl messages and errors to the default logfile. 
+
+## Bypass for domains
+You can bypass checks (automatically consider valid) by adding domains to the 'brokenLinks/External/ExceptedDomains' filter. The filter requires that you provide your domains in the same format as parse_url($url, PHP_URL_HOST) returns. It's therefore recommended that you filter all your domains trough this function. 
+
+```php
+add_filter('brokenLinks/External/ExceptedDomains',function($array) {
+    return array(
+        parse_url("http://agresso/agresso/", PHP_URL_HOST),
+        parse_url("http://qlikviewserver/qlikview/index.htm", PHP_URL_HOST),
+        parse_url("http://serviceportalen/", PHP_URL_HOST),
+        parse_url("http://a002163:81/login/login.asp", PHP_URL_HOST),
+        parse_url("http://serviceportalen/Default.aspx", PHP_URL_HOST),
+        parse_url("http://cmg/BluStarWeb/Start", PHP_URL_HOST),
+        parse_url("http://surveyreport/admin", PHP_URL_HOST),
+        parse_url("http://klarspraket/", PHP_URL_HOST),
+        parse_url("http://guideochtips/", PHP_URL_HOST),
+        parse_url("http://hbgquiz/index.php/category/?id=3", PHP_URL_HOST),
+        parse_url("http://agresso/agresso/", PHP_URL_HOST),
+        parse_url("http://a002490/efact/", PHP_URL_HOST),
+        parse_url("http://a002064/Kurser/", PHP_URL_HOST),
+        parse_url("http://a002064/kursbokning/", PHP_URL_HOST)
+    ); 
+}, 10);
+```

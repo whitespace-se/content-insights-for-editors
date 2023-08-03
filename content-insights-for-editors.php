@@ -15,23 +15,24 @@ if (!defined('WPINC')) {
 }
 define('CONTENT_INSIGHTS_FOR_EDITORS_PATH', plugin_dir_path(__FILE__));
 define('CONTENT_INSIGHTS_FOR_EDITORS_URL', plugins_url('', __FILE__));
-define(
-  'CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH',
-  CONTENT_INSIGHTS_FOR_EDITORS_PATH . '/mail-templates'
-);
+define('CONTENT_INSIGHTS_FOR_EDITORS_TEMPLATE_PATH', CONTENT_INSIGHTS_FOR_EDITORS_PATH . '/templates');
+define('CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH', CONTENT_INSIGHTS_FOR_EDITORS_PATH . '/mail-templates');
 
 add_action('plugins_loaded', function () {
-  load_plugin_textdomain(
-    'content-insights-for-editors',
-    false,
-    dirname(plugin_basename(__FILE__)) . '/languages'
-  );
+  load_plugin_textdomain('content-insights-for-editors', false, dirname(plugin_basename(__FILE__)) . '/languages');
+  load_plugin_textdomain('broken-link-detector', false, plugin_basename(dirname(__FILE__)) . '/languages');
 });
-require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH .
-  'source/php/Vendor/Psr4ClassLoader.php';
+require_once __DIR__ . '/source/php/Vendor/admin-notice-helper.php';
+require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'Public.php';
+require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 if (!class_exists('WP_List_Table')) {
   require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
+require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'vendor/autoload.php';
+
+register_activation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::install');
+register_deactivation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::uninstall');
+
 // Instantiate and register the autoloader
 $loader = new CONTENT_INSIGHTS_FOR_EDITORS\Vendor\Psr4ClassLoader();
 $loader->addPrefix(
@@ -66,4 +67,4 @@ if (!function_exists('cife_decativation')) {
 }
 
 // Start application
-new \CONTENT_INSIGHTS_FOR_EDITORS\App();
+$cifeApp = new \CONTENT_INSIGHTS_FOR_EDITORS\App();

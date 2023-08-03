@@ -26,14 +26,6 @@ msgstr ""
 msgid "Analyzed posttypes"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:30
-msgid "Include private pages"
-msgstr ""
-
-#: source/php/AcfFields/php/options-page.php:36
-msgid "By default data for private pages is excluded, this option allows it to be displayed."
-msgstr ""
-
 #: source/php/AcfFields/php/options-page.php:29
 msgid "Use alternative user field"
 msgstr ""
