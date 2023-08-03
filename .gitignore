@@ -1,4 +1,6 @@
 vendor/
 !vendor/Psr4ClassLoader.php
+!vendor/admin-notice.php
+!vendor/admin-notice-helper.php
 .phpintel
 node_modules
