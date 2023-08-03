@@ -22,7 +22,7 @@ add_action('plugins_loaded', function () {
   load_plugin_textdomain('content-insights-for-editors', false, dirname(plugin_basename(__FILE__)) . '/languages');
   load_plugin_textdomain('broken-link-detector', false, plugin_basename(dirname(__FILE__)) . '/languages');
 });
-require_once __DIR__ . '/source/php/Vendor/admin-notice-helper.php';
+
 require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'Public.php';
 require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 if (!class_exists('WP_List_Table')) {
