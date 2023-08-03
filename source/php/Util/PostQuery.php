@@ -195,7 +195,7 @@ class PostQuery {
   public static function getMostBrokenLinksPosts($count = 10, $userID = false) {
     global $wpdb;
     $postName = self::$postTbName;
-    $brokenLinksTable = BrokenLinks::$bldTable;
+    $brokenLinksTable = App::$bldTable;
 
     $userSelectQuery = self::userSelectQuery();
 
