@@ -1,6 +1,6 @@
 <?php
 
-namespace BrokenLinkDetector\Vendor;
+namespace CONTENT_INSIGHTS_FOR_EDITORS\Vendor;
 
 /**
  * A PSR-4 compatible class loader.
