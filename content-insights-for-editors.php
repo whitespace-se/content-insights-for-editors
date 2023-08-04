@@ -28,7 +28,7 @@ if (!class_exists('WP_List_Table')) {
   require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'Public.php';
-require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'vendor/autoload.php';
+// require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'vendor/autoload.php';
 
 // Instantiate and register the autoloader
 $loader = new CONTENT_INSIGHTS_FOR_EDITORS\Vendor\Psr4ClassLoader();
