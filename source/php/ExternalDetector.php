@@ -161,7 +161,7 @@ class ExternalDetector
         global $wpdb;
 
         $inserted = array();
-        $tableName = App::$dbTable;
+        $tableName = App::$bldTable;
 
         if (is_numeric($postId)) {
             $wpdb->delete($tableName, array('post_id' => $postId), array('%d'));

@@ -34,7 +34,7 @@ class ListTable extends \WP_List_Table
         App::checkInstall();
 
         global $wpdb;
-        $tableName = App::$dbTable;
+        $tableName = App::$bldTable;
 
         $sql = "SELECT
                     links.*,
@@ -62,7 +62,7 @@ class ListTable extends \WP_List_Table
     public static function getBrokenLinksCount($postId = false)
     {
         global $wpdb;
-        $tableName = App::$dbTable;
+        $tableName = App::$bldTable;
         $sql = "SELECT
                     COUNT(*) AS length
                 FROM $tableName links
