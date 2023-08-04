@@ -249,6 +249,7 @@ class App {
         self::$wpdb->query($sql);
 
         delete_option('broken-links-detector-db-version');
+        wp_clear_scheduled_hook('cife_cron_mail');
     }
 
     /**

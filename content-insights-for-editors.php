@@ -23,25 +23,17 @@ add_action('plugins_loaded', function () {
   load_plugin_textdomain('broken-link-detector', false, plugin_basename(dirname(__FILE__)) . '/languages');
 });
 
-require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'Public.php';
 require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 if (!class_exists('WP_List_Table')) {
   require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
-
-register_activation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::install');
-register_deactivation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::uninstall');
+require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'Public.php';
+require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'vendor/autoload.php';
 
 // Instantiate and register the autoloader
 $loader = new CONTENT_INSIGHTS_FOR_EDITORS\Vendor\Psr4ClassLoader();
-$loader->addPrefix(
-  'CONTENT_INSIGHTS_FOR_EDITORS',
-  CONTENT_INSIGHTS_FOR_EDITORS_PATH
-);
-$loader->addPrefix(
-  'CONTENT_INSIGHTS_FOR_EDITORS',
-  CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/'
-);
+$loader->addPrefix('CONTENT_INSIGHTS_FOR_EDITORS', CONTENT_INSIGHTS_FOR_EDITORS_PATH);
+$loader->addPrefix('CONTENT_INSIGHTS_FOR_EDITORS', CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/');
 $loader->register();
 
 add_action(
@@ -58,12 +50,8 @@ add_action(
   99
 );
 
-register_deactivation_hook(__FILE__, 'cife_decativation');
-if (!function_exists('cife_decativation')) {
-  function cife_decativation() {
-    wp_clear_scheduled_hook('cife_cron_mail');
-  }
-}
+register_activation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::install');
+register_deactivation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::uninstall');
 
 // Start application
 new \CONTENT_INSIGHTS_FOR_EDITORS\App();
