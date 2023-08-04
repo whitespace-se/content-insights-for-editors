@@ -28,7 +28,6 @@ require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'source/php/Vendor/Psr4ClassLoa
 if (!class_exists('WP_List_Table')) {
   require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
-require_once CONTENT_INSIGHTS_FOR_EDITORS_PATH . 'vendor/autoload.php';
 
 register_activation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::install');
 register_deactivation_hook(__FILE__, '\CONTENT_INSIGHTS_FOR_EDITORS\App::uninstall');
@@ -67,4 +66,4 @@ if (!function_exists('cife_decativation')) {
 }
 
 // Start application
-$cifeApp = new \CONTENT_INSIGHTS_FOR_EDITORS\App();
+new \CONTENT_INSIGHTS_FOR_EDITORS\App();
