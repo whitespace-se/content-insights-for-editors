@@ -5,30 +5,31 @@ if (!class_exists('WP_List_Table')) {
 
 class CIFE_Content_Insights_Table extends WP_List_Table {
     
+    private $time_periods = ['day', 'week', 'month', 'year'];
+
     public function __construct() {
         parent::__construct([
             'singular' => 'content_insight',
             'plural'   => 'content_insights',
-            'ajax'     => false
+            'ajax'     => false,
+            'screen'   => isset($GLOBALS['hook_suffix']) ? get_current_screen() : null,
         ]);
     }
 
     public function get_columns() {
-        return [
-            'cb'              => '<input type="checkbox" />',
-            // 'post_title'      => 'Post Title',
+        $columns = [
             'domain'          => 'Domain',
             'url_path'        => 'URL Path',
-            'day_visitors'    => 'Daily',
-            'day_pageviews'   => 'Views',
-            'week_visitors'   => 'Weekly',
-            'week_pageviews'  => 'Views',
-            'month_visitors'  => 'Monthly',
-            'month_pageviews' => 'Views',
-            'year_visitors'   => 'Yearly',
-            'year_pageviews'  => 'Views',
-            'updated_date'    => 'Last Updated'
         ];
+
+        foreach ($this->time_periods as $period) {
+            $columns["{$period}_visitors"] = ucfirst($period) . ' Visitors';
+            $columns["{$period}_pageviews"] = ucfirst($period) . ' Views';
+        }
+
+        $columns['updated_date'] = 'Last Updated';
+
+        return $columns;
     }
 
     public function prepare_items() {
@@ -36,9 +37,11 @@ class CIFE_Content_Insights_Table extends WP_List_Table {
         $urls_table = $wpdb->prefix . 'content_insights_urls';
         $posts_table = $wpdb->prefix . 'content_insights_posts';
 
-        $per_page = 20;
+        $per_page = $this->get_items_per_page('cife_insights_per_page', 20);
+        $current_page = $this->get_pagenum();
+
         $columns = $this->get_columns();
-        $hidden = [];
+        $hidden = $this->get_hidden_columns();
         $sortable = $this->get_sortable_columns();
 
         $this->_column_headers = [$columns, $hidden, $sortable];
@@ -63,22 +66,17 @@ class CIFE_Content_Insights_Table extends WP_List_Table {
 
         $total_items = $wpdb->get_var("SELECT COUNT(1) FROM ($query) AS combined_table");
 
-        $paged = isset($_REQUEST['paged']) ? max(0, intval($_REQUEST['paged']) - 1) : 0;
-        $total_pages = ceil($total_items / $per_page);
-
         $this->set_pagination_args([
             'total_items' => $total_items,
             'per_page'    => $per_page,
-            'total_pages' => $total_pages
+            'total_pages' => ceil($total_items / $per_page)
         ]);
 
-        $this->items = $wpdb->get_results($query . $wpdb->prepare(" LIMIT %d OFFSET %d", $per_page, $paged * $per_page), ARRAY_A);
+        $this->items = $wpdb->get_results($query . $wpdb->prepare(" LIMIT %d OFFSET %d", $per_page, ($current_page - 1) * $per_page), ARRAY_A);
     }
 
     public function column_default($item, $column_name) {
         switch ($column_name) {
-            case 'post_title':
-                return $item['post_title'] ? $item['post_title'] : 'N/A';
             case 'domain':
                 return $item['domain'];
             case 'url_path':
@@ -93,30 +91,28 @@ class CIFE_Content_Insights_Table extends WP_List_Table {
             case 'year_pageviews':
                 return number_format($item[$column_name]);
             case 'updated_date':
-                return date('Y-m-d H:i:s', strtotime($item[$column_name]));
+                return date('Y-m-d', strtotime($item[$column_name]));
             default:
                 return print_r($item, true);
         }
     }
 
     public function get_sortable_columns() {
-        return [
-            // 'post_title'      => ['post_title', false],
+        $sortable_columns = [
             'domain'          => ['domain', false],
             'url_path'        => ['url_path', false],
-            'day_visitors'    => ['day_visitors', false],
-            'day_pageviews'   => ['day_pageviews', false],
-            'week_visitors'   => ['week_visitors', false],
-            'week_pageviews'  => ['week_pageviews', false],
-            'month_visitors'  => ['month_visitors', false],
-            'month_pageviews' => ['month_pageviews', true],  // Set as the default sort column
-            'year_visitors'   => ['year_visitors', false],
-            'year_pageviews'  => ['year_pageviews', false],
             'updated_date'    => ['updated_date', false]
         ];
+
+        foreach ($this->time_periods as $period) {
+            $sortable_columns["{$period}_visitors"] = ["{$period}_visitors", false];
+            $sortable_columns["{$period}_pageviews"] = ["{$period}_pageviews", $period === 'month'];
+        }
+
+        return $sortable_columns;
     }
 
-    public function column_cb($item) {
-        return sprintf('<input type="checkbox" name="content_insight[]" value="%s" />', $item['id']);
+    public function get_hidden_columns() {
+        return get_hidden_columns($this->screen);
     }
 }

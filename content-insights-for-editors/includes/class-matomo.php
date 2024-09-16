@@ -273,7 +273,7 @@ class CIFE_Matomo {
                 if (!isset($merged_data[$key])) {
                     $merged_data[$key] = array(
                         'domain' => $domain,
-                        'url_path' => ltrim($path, '/') . ($filter_query_vars ? '' : $query),
+                        'url_path' => $path . ($filter_query_vars ? '' : $query),
                         'day_visitors' => 0,
                         'day_pageviews' => 0,
                         'week_visitors' => 0,
