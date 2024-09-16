@@ -1,0 +1,13 @@
+/* Custom admin styles */
+.wrap h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.form-table th {
+    width: 200px;
+}
+
+.form-table td {
+    padding: 10px 0;
+}

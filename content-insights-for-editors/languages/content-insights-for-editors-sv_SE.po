@@ -1,0 +1,56 @@
+msgid "Content Insights Settings"
+msgstr "Innehållsinsikter Inställningar"
+
+msgid "Analyzed Post Types"
+msgstr "Analyserade Inläggstyper"
+
+msgid "Enter the post types to analyze, separated by commas."
+msgstr "Ange de inläggstyper som ska analyseras, separerade med kommatecken."
+
+msgid "Include Private Pages"
+msgstr "Inkludera privata sidor"
+
+msgid "Check to include private pages in the analysis."
+msgstr "Kryssa för att inkludera privata sidor i analysen."
+
+msgid "Use Alternative User Field"
+msgstr "Använd alternativ användarfält"
+
+msgid "Check to use the Editor field for user filtering instead of the Author."
+msgstr "Kryssa för att använda redaktörsfältet för användarfiltrering istället för författaren."
+
+msgid "Enable Automatic Mailing for Broken Links"
+msgstr "Aktivera automatisk e-post för brutna länkar"
+
+msgid "Check to enable automatic mailing for broken links."
+msgstr "Kryssa för att aktivera automatisk e-post för brutna länkar."
+
+msgid "Obsolete Pages Threshold"
+msgstr "Tröskel för föråldrade sidor"
+
+msgid "Set the threshold for how many days a page must be outdated."
+msgstr "Ställ in tröskeln för hur många dagar en sida måste vara föråldrad."
+
+msgid "Matomo API URL"
+msgstr "Matomo API-URL"
+
+msgid "Enter the URL for your Matomo API."
+msgstr "Ange URL:en för din Matomo API."
+
+msgid "Matomo API Key"
+msgstr "Matomo API-nyckel"
+
+msgid "Enter your Matomo API key."
+msgstr "Ange din Matomo API-nyckel."
+
+msgid "Matomo Site ID"
+msgstr "Matomo Webbplats-ID"
+
+msgid "Enter your Matomo Site ID."
+msgstr "Ange ditt Matomo Webbplats-ID."
+
+msgid "Minimum Feedback Responses"
+msgstr "Minimala feedbacksvar"
+
+msgid "Set the minimum number of feedback responses required."
+msgstr "Ställ in det minimiantal feedbacksvar som krävs."
