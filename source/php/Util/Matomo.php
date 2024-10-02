@@ -210,17 +210,20 @@ class Matomo {
 
   private function request($filter) {
     $query = array_merge($this->parameters, $filter);
-
-    $queryString = urldecode(http_build_query($query));
-
-    $url = $this->matomoUrl . '?' . $queryString;
+    
+    $url = $this->matomoUrl;
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+
     $result = curl_exec($ch);
+
+    curl_close($ch);
 
     return json_decode($result, true);
   }
