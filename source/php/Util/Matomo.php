@@ -22,6 +22,10 @@ class Matomo {
 
     self::checkInstall();
 
+    add_action('init', [$this, 'init']);
+  }
+
+  public function init() {
     $this->matomoUrl = Settings::getMatomoApiUrl();
 
     $this->parameters['module'] = 'API';
