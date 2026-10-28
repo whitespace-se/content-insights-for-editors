@@ -1,6 +1,6 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.2-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.3-test');
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';
@@ -58,6 +58,23 @@ function sanitize_key($key) {
 }
 
 function get_post_types($args = array(), $output = 'names') {
+  if ($output === 'objects') {
+    $labels = array(
+      'post' => 'Posts',
+      'page' => 'Pages',
+      'attachment' => 'Media',
+      'external_page' => 'External pages',
+      'modal-content' => 'Modal Content',
+    );
+    $postTypes = array();
+    foreach ($GLOBALS['cife_test_post_types'] as $postType) {
+      $postTypes[$postType] = (object) array(
+        'name' => $postType,
+        'label' => isset($labels[$postType]) ? $labels[$postType] : $postType,
+      );
+    }
+    return $postTypes;
+  }
   return $GLOBALS['cife_test_post_types'];
 }
 

@@ -30,4 +30,24 @@ class SettingsTest extends TestCase {
 
     $this->assertSame(array('page'), Settings::getAnalysedPostTypes());
   }
+
+  public function testPreparesStandardAcfSelectWithFilteredChoices() {
+    $reflection = new ReflectionClass(Settings::class);
+    $settings = $reflection->newInstanceWithoutConstructor();
+
+    $field = $settings->prepareAnalysedPostTypesField(array(
+      'type' => 'posttype_select',
+      'choices' => array('attachment' => 'Media'),
+    ));
+
+    $this->assertSame('select', $field['type']);
+    $this->assertSame(array(
+      'post' => 'Posts',
+      'page' => 'Pages',
+    ), $field['choices']);
+    $this->assertSame(1, $field['multiple']);
+    $this->assertSame(1, $field['allow_null']);
+    $this->assertSame(1, $field['ui']);
+    $this->assertSame(0, $field['ajax']);
+  }
 }

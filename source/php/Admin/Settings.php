@@ -7,6 +7,29 @@ class Settings {
     add_action('admin_menu', array($this, 'init'));
 
     add_filter('cife_posts_where_statments', array($this, 'addSettingsValues'));
+    add_filter(
+      'acf/load_field/key=field_5d19ab0cbbc00',
+      array($this, 'prepareAnalysedPostTypesField')
+    );
+  }
+
+  public function prepareAnalysedPostTypesField($field) {
+    $choices = array();
+    $excluded = self::getExcludedPostTypes();
+    foreach ((array) get_post_types(array('public' => true), 'objects') as $postType) {
+      if (!is_object($postType) || in_array($postType->name, $excluded, true)) {
+        continue;
+      }
+      $choices[$postType->name] = $postType->label;
+    }
+
+    $field['type'] = 'select';
+    $field['choices'] = $choices;
+    $field['multiple'] = 1;
+    $field['allow_null'] = 1;
+    $field['ui'] = 1;
+    $field['ajax'] = 0;
+    return $field;
   }
 
   public function addSettingsValues($where_posts) {
@@ -60,10 +83,11 @@ class Settings {
   }
 
   public static function getExcludedPostTypes() {
-    return array_values(array_unique((array) apply_filters(
+    $postTypes = (array) apply_filters(
       'cife_excluded_analysed_post_types',
       array('attachment', 'revision', 'external_page', 'modal-content')
-    )));
+    );
+    return array_values(array_unique(array_map('sanitize_key', $postTypes)));
   }
 
   public static function getUseAlternateUserField() {
