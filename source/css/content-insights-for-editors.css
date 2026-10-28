@@ -31,6 +31,23 @@
   text-align: right;
 }
 
+@media screen and (min-width: 783px) {
+  .acf-field.cife-settings-field > .acf-label {
+    min-height: 72px;
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .acf-fields > .acf-field.cife-settings-field {
+    clear: both;
+    width: 100% !important;
+  }
+
+  .acf-field.cife-settings-field > .acf-label {
+    min-height: 0;
+  }
+}
+
 .cife-icon:before {
   font-family: "dashicons";
   font-style: normal;

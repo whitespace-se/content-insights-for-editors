@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-"
 "for-editors\n"
-"POT-Creation-Date: 2026-10-28T10:35:44+00:00\n"
+"POT-Creation-Date: 2026-10-28T11:04:22+00:00\n"
 "PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -45,99 +45,83 @@ msgstr "Whitespace"
 msgid "Analyzed post types"
 msgstr "Analyserade posttyper"
 
-#: source/php/AcfFields/php/options-page.php:29
+#: source/php/AcfFields/php/options-page.php:12
+msgid ""
+"Choose standalone content types. Modules and modal content are included with "
+"their parent page."
+msgstr "Välj fristående innehållstyper. Moduler och modalt innehåll ingår i den överordnade sidan."
+
+#: source/php/AcfFields/php/options-page.php:30
 msgid "Use alternative user field"
 msgstr "Använd alternativt användarfält"
 
-#: source/php/AcfFields/php/options-page.php:35
-msgid ""
-"Uses the Editor field (page_meta_maineditor) for user filtering, instead of "
-"Author used by default."
-msgstr ""
-"Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
-"istället för Författare som används som standard."
+#: source/php/AcfFields/php/options-page.php:36
+msgid "Use Municipio’s main editor for pages instead of the WordPress author."
+msgstr "Använd Municipios huvudredaktör för sidor i stället för WordPress-författaren."
 
-#: source/php/AcfFields/php/options-page.php:54
+#: source/php/AcfFields/php/options-page.php:55
 msgid "Enable automatic summary emails"
 msgstr "Aktivera automatiska sammanfattningsmejl"
 
-#: source/php/AcfFields/php/options-page.php:60
-msgid ""
-"Sends authors, editors and administrators a summary every two weeks covering "
-"internal broken links, external links due for review, outdated content and "
-"available visitor statistics."
-msgstr ""
-"Skickar varannan vecka en sammanfattning till författare, redaktörer och "
-"administratörer med brutna interna länkar, externa länkar som behöver "
-"granskas, inaktuellt innehåll och tillgänglig besöksstatistik."
+#: source/php/AcfFields/php/options-page.php:61
+msgid "Email content owners a CIFE summary every two weeks."
+msgstr "Mejla innehållsansvariga en CIFE-sammanfattning varannan vecka."
 
-#: source/php/AcfFields/php/options-page.php:79
-msgid "Obsolete pages"
-msgstr "Föråldrade sidor"
+#: source/php/AcfFields/php/options-page.php:80
+msgid "Outdated content"
+msgstr "Inaktuellt innehåll"
 
-#: source/php/AcfFields/php/options-page.php:82
-msgid ""
-"Set the threshold for how many days a page that has not been updated should "
-"be before the plugin flags the page as outdated."
-msgstr ""
-"Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats skall "
-"vara innan pluginet flaggar sidan som föråldrad."
+#: source/php/AcfFields/php/options-page.php:83
+msgid "Flag content not updated within this period."
+msgstr "Flagga innehåll som inte har uppdaterats inom perioden."
 
-#: source/php/AcfFields/php/options-page.php:96
-#: source/php/AcfFields/php/options-page.php:112
+#: source/php/AcfFields/php/options-page.php:97
+#: source/php/AcfFields/php/options-page.php:113
 #: source/php/Admin/Dashboard.php:139
 msgid "days"
 msgstr "dagar"
 
-#: source/php/AcfFields/php/options-page.php:102
-msgid "External link review interval"
-msgstr "Granskningsintervall för externa länkar"
+#: source/php/AcfFields/php/options-page.php:103
+msgid "External link review"
+msgstr "Granskning av externa länkar"
 
-#: source/php/AcfFields/php/options-page.php:105
-msgid ""
-"Remind page owners to manually review external links after this many days."
-msgstr ""
-"Påminn sidansvariga att granska externa länkar manuellt efter så här många "
-"dagar."
+#: source/php/AcfFields/php/options-page.php:106
+msgid "Remind content owners to review external links after this period."
+msgstr "Påminn innehållsansvariga att granska externa länkar efter perioden."
 
-#: source/php/AcfFields/php/options-page.php:118
+#: source/php/AcfFields/php/options-page.php:119
 msgid "Matomo API URL"
 msgstr "URL till Matomos API"
 
-#: source/php/AcfFields/php/options-page.php:121
-msgid "ex. https://analys.yourdomain.se/"
-msgstr "ex. https://analys.dindoman.se/"
+#: source/php/AcfFields/php/options-page.php:122
+msgid "Example: https://analytics.example.com/"
+msgstr "Exempel: https://analys.exempel.se/"
 
-#: source/php/AcfFields/php/options-page.php:140
+#: source/php/AcfFields/php/options-page.php:141
 msgid "Matomo API key"
 msgstr "Matomo API-nyckel"
 
-#: source/php/AcfFields/php/options-page.php:143
-msgid ""
-"Visit admin for your Matomo installation. Under Platform -> API there is & "
-"token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
-"xxxxxxxxxxxxxxx"
-msgstr ""
-"Besök admin för din Matomoinstallation. Under Plattform -> API finns "
-"&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
+#: source/php/AcfFields/php/options-page.php:144
+msgid "Use the token_auth value from your Matomo profile."
+msgstr "Använd värdet token_auth från din Matomo-profil."
 
-#: source/php/AcfFields/php/options-page.php:162
+#: source/php/AcfFields/php/options-page.php:163
 msgid "Matomo site id"
 msgstr "Matomo-webbplats-ID"
 
-#: source/php/AcfFields/php/options-page.php:205
+#: source/php/AcfFields/php/options-page.php:166
+msgid "The numeric site ID in Matomo."
+msgstr "Webbplatsens numeriska ID i Matomo."
+
+#: source/php/AcfFields/php/options-page.php:206
 msgid "Customer feedback minimum responses"
 msgstr "Customer feedback minst antal svar"
 
-#: source/php/AcfFields/php/options-page.php:211
-msgid ""
-"Set the threshold for how votes (yes/no) the page must have since last "
-"update."
-msgstr ""
-"Ange tröskelvärdet för hur röster (Ja/Nej) sidan måste ha sedan senaste "
-"uppdateringen."
+#: source/php/AcfFields/php/options-page.php:212
+msgid "Minimum votes required before feedback is highlighted."
+msgstr "Minsta antal röster innan återkopplingen lyfts fram."
 
-#: source/php/AcfFields/php/options-page.php:225
+#: source/php/AcfFields/php/options-page.php:226
 #: source/php/Admin/Dashboard.php:109 source/php/Admin/Dashboard.php:123
 msgid "votes"
 msgstr "röster"
@@ -462,7 +446,7 @@ msgstr "Statistik från"
 msgid "No data yet"
 msgstr "Ingen data ännu"
 
-#: source/php/Admin/Settings.php:83 source/php/Admin/Settings.php:88
+#: source/php/Admin/Settings.php:90 source/php/Admin/Settings.php:95
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -575,6 +559,50 @@ msgstr "Matomo returnerade ett ogiltigt svar."
 #: source/php/Util/Matomo.php:222
 msgid "Matomo returned an error."
 msgstr "Matomo returnerade ett fel."
+
+#~ msgid ""
+#~ "Uses the Editor field (page_meta_maineditor) for user filtering, instead "
+#~ "of Author used by default."
+#~ msgstr ""
+#~ "Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
+#~ "istället för Författare som används som standard."
+
+#~ msgid ""
+#~ "Sends authors, editors and administrators a summary every two weeks "
+#~ "covering internal broken links, external links due for review, outdated "
+#~ "content and available visitor statistics."
+#~ msgstr ""
+#~ "Skickar varannan vecka en sammanfattning till författare, redaktörer och "
+#~ "administratörer med brutna interna länkar, externa länkar som behöver "
+#~ "granskas, inaktuellt innehåll och tillgänglig besöksstatistik."
+
+#~ msgid "Obsolete pages"
+#~ msgstr "Föråldrade sidor"
+
+#~ msgid ""
+#~ "Set the threshold for how many days a page that has not been updated "
+#~ "should be before the plugin flags the page as outdated."
+#~ msgstr ""
+#~ "Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats "
+#~ "skall vara innan pluginet flaggar sidan som föråldrad."
+
+#~ msgid "ex. https://analys.yourdomain.se/"
+#~ msgstr "ex. https://analys.dindoman.se/"
+
+#~ msgid ""
+#~ "Visit admin for your Matomo installation. Under Platform -> API there is "
+#~ "& token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
+#~ "xxxxxxxxxxxxxxx"
+#~ msgstr ""
+#~ "Besök admin för din Matomoinstallation. Under Plattform -> API finns "
+#~ "&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
+
+#~ msgid ""
+#~ "Set the threshold for how votes (yes/no) the page must have since last "
+#~ "update."
+#~ msgstr ""
+#~ "Ange tröskelvärdet för hur röster (Ja/Nej) sidan måste ha sedan senaste "
+#~ "uppdateringen."
 
 #~ msgid ""
 #~ "Sends email to all authors, editors and administrators every two weeks "

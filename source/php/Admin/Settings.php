@@ -42,7 +42,9 @@ class Settings {
           return false;
         }
       }
-      return $postTypes;
+      $postTypes = array_values(array_unique(array_map('sanitize_key', $postTypes)));
+      $postTypes = array_values(array_diff($postTypes, self::getExcludedPostTypes()));
+      return $postTypes ?: false;
     }
     return false;
   }
@@ -54,9 +56,14 @@ class Settings {
     }
 
     $postTypes = get_post_types(array('public' => true), 'names');
-    return array_values(
-      array_diff((array) $postTypes, array('attachment', 'revision'))
-    );
+    return array_values(array_diff((array) $postTypes, self::getExcludedPostTypes()));
+  }
+
+  public static function getExcludedPostTypes() {
+    return array_values(array_unique((array) apply_filters(
+      'cife_excluded_analysed_post_types',
+      array('attachment', 'revision', 'external_page', 'modal-content')
+    )));
   }
 
   public static function getUseAlternateUserField() {

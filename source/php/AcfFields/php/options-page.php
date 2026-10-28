@@ -9,12 +9,12 @@ if (function_exists('acf_add_local_field_group')) {
         'label' => __('Analyzed post types', 'content-insights-for-editors'),
         'name' => 'analysed_post_types',
         'type' => 'posttype_select',
-        'instructions' => '',
+        'instructions' => __('Choose standalone content types. Modules and modal content are included with their parent page.', 'content-insights-for-editors'),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '50',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'default_value' => '',
@@ -23,6 +23,7 @@ if (function_exists('acf_add_local_field_group')) {
         'placeholder' => '',
         'disabled' => 0,
         'readonly' => 0,
+        'excluded_post_types' => \CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings::getExcludedPostTypes(),
       ),
       array(
         'key' => 'field_5d19cd83d7edd',
@@ -33,14 +34,14 @@ if (function_exists('acf_add_local_field_group')) {
         'name' => 'use_alternate_user_field',
         'type' => 'true_false',
         'instructions' => __(
-          'Uses the Editor field (page_meta_maineditor) for user filtering, instead of Author used by default.',
+          'Use Municipio’s main editor for pages instead of the WordPress author.',
           'content-insights-for-editors'
         ),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '25',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'message' => '',
@@ -58,14 +59,14 @@ if (function_exists('acf_add_local_field_group')) {
         'name' => 'use_broken_links_cron',
         'type' => 'true_false',
         'instructions' => __(
-          'Sends authors, editors and administrators a summary every two weeks covering internal broken links, external links due for review, outdated content and available visitor statistics.',
+          'Email content owners a CIFE summary every two weeks.',
           'content-insights-for-editors'
         ),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '25',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'message' => '',
@@ -76,18 +77,18 @@ if (function_exists('acf_add_local_field_group')) {
       ),
       array(
         'key' => 'field_5d1c8f1232ba5',
-        'label' => __('Obsolete pages', 'content-insights-for-editors'),
+        'label' => __('Outdated content', 'content-insights-for-editors'),
         'name' => 'ws_minimum_last_updated_threshold',
         'type' => 'number',
         'instructions' => __(
-          'Set the threshold for how many days a page that has not been updated should be before the plugin flags the page as outdated.',
+          'Flag content not updated within this period.',
           'content-insights-for-editors'
         ),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '50',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'default_value' => '180',
@@ -99,13 +100,13 @@ if (function_exists('acf_add_local_field_group')) {
       ),
       array(
         'key' => 'field_cife_external_link_review_days',
-        'label' => __('External link review interval', 'content-insights-for-editors'),
+        'label' => __('External link review', 'content-insights-for-editors'),
         'name' => 'cife_external_link_review_days',
         'type' => 'number',
-        'instructions' => __('Remind page owners to manually review external links after this many days.', 'content-insights-for-editors'),
+        'instructions' => __('Remind content owners to review external links after this period.', 'content-insights-for-editors'),
         'required' => 0,
         'conditional_logic' => 0,
-        'wrapper' => array('width' => '50', 'class' => '', 'id' => ''),
+        'wrapper' => array('width' => '50', 'class' => 'cife-settings-field', 'id' => ''),
         'default_value' => 30,
         'placeholder' => '',
         'prepend' => '',
@@ -119,14 +120,14 @@ if (function_exists('acf_add_local_field_group')) {
         'name' => 'matomo_api_url',
         'type' => 'text',
         'instructions' => __(
-          'ex. https://analys.yourdomain.se/',
+          'Example: https://analytics.example.com/',
           'content-insights-for-editors'
         ),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '40',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'default_value' => '',
@@ -141,14 +142,14 @@ if (function_exists('acf_add_local_field_group')) {
         'name' => 'matomo_api_key',
         'type' => 'text',
         'instructions' => __(
-          'Visit admin for your Matomo installation. Under Platform -> API there is & token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to xxxxxxxxxxxxxxx',
+          'Use the token_auth value from your Matomo profile.',
           'content-insights-for-editors'
         ),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '45',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'default_value' => '',
@@ -162,12 +163,12 @@ if (function_exists('acf_add_local_field_group')) {
         'label' => __('Matomo site id', 'content-insights-for-editors'),
         'name' => 'matomo_id_site',
         'type' => 'number',
-        'instructions' => '',
+        'instructions' => __('The numeric site ID in Matomo.', 'content-insights-for-editors'),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
           'width' => '15',
-          'class' => '',
+          'class' => 'cife-settings-field',
           'id' => '',
         ),
         'default_value' => 1,
@@ -209,14 +210,14 @@ if (function_exists('acf_add_local_field_group')) {
       'name' => 'ws_minimum_feedback_responses',
       'type' => 'number',
       'instructions' => __(
-        'Set the threshold for how votes (yes/no) the page must have since last update.',
+        'Minimum votes required before feedback is highlighted.',
         'content-insights-for-editors'
       ),
       'required' => 0,
       'conditional_logic' => 0,
       'wrapper' => array(
         'width' => '50',
-        'class' => '',
+        'class' => 'cife-settings-field',
         'id' => '',
       ),
       'default_value' => '5',

@@ -46,6 +46,12 @@ Ownership continues to mean `post_author`, or `page_meta_maineditor` for pages
 when the alternate-user setting is enabled. Non-administrators can only see and
 review links on content they own; administrators see all content.
 
+The analyzed-content selector only contains standalone public content types.
+Media (`attachment`), Municipio external-page records (`external_page`), modal
+content (`modal-content`), and revisions are excluded from both new and existing
+saved selections. Modularity content—including modal modules—is extracted as a
+fragment of the parent page instead of being scanned and reported separately.
+
 ## External-link data and review lifecycle
 
 The migration is additive:
@@ -85,8 +91,8 @@ nonce-protected POST and also verifies ownership/capability server-side.
   complete, then replaces both per-page result sets.
 - Deleted or newly ineligible content is cleaned from both stores.
 - Existing CIFE settings and internal result rows require no data copy.
-- Version `2.4.1` includes the external-link review workflow and the compact
-  settings/metabox presentation for the staging iteration.
+- Version `2.4.2` includes the external-link workflow and responsive settings
+  and metabox presentation for the staging iteration.
 
 ## Release sequence
 

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Content Insights for Editors plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Insights for Editors 2.4.1\n"
+"Project-Id-Version: Content Insights for Editors 2.4.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-for-editors\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T10:35:44+00:00\n"
+"POT-Creation-Date: 2026-10-28T11:04:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: content-insights-for-editors\n"
@@ -35,73 +35,81 @@ msgstr ""
 msgid "Analyzed post types"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:29
+#: source/php/AcfFields/php/options-page.php:12
+msgid "Choose standalone content types. Modules and modal content are included with their parent page."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:30
 msgid "Use alternative user field"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:35
-msgid "Uses the Editor field (page_meta_maineditor) for user filtering, instead of Author used by default."
+#: source/php/AcfFields/php/options-page.php:36
+msgid "Use Municipio’s main editor for pages instead of the WordPress author."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:54
+#: source/php/AcfFields/php/options-page.php:55
 msgid "Enable automatic summary emails"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:60
-msgid "Sends authors, editors and administrators a summary every two weeks covering internal broken links, external links due for review, outdated content and available visitor statistics."
+#: source/php/AcfFields/php/options-page.php:61
+msgid "Email content owners a CIFE summary every two weeks."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:79
-msgid "Obsolete pages"
+#: source/php/AcfFields/php/options-page.php:80
+msgid "Outdated content"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:82
-msgid "Set the threshold for how many days a page that has not been updated should be before the plugin flags the page as outdated."
+#: source/php/AcfFields/php/options-page.php:83
+msgid "Flag content not updated within this period."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:96
-#: source/php/AcfFields/php/options-page.php:112
+#: source/php/AcfFields/php/options-page.php:97
+#: source/php/AcfFields/php/options-page.php:113
 #: source/php/Admin/Dashboard.php:139
 msgid "days"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:102
-msgid "External link review interval"
+#: source/php/AcfFields/php/options-page.php:103
+msgid "External link review"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:105
-msgid "Remind page owners to manually review external links after this many days."
+#: source/php/AcfFields/php/options-page.php:106
+msgid "Remind content owners to review external links after this period."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:118
+#: source/php/AcfFields/php/options-page.php:119
 msgid "Matomo API URL"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:121
-msgid "ex. https://analys.yourdomain.se/"
+#: source/php/AcfFields/php/options-page.php:122
+msgid "Example: https://analytics.example.com/"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:140
+#: source/php/AcfFields/php/options-page.php:141
 msgid "Matomo API key"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:143
-msgid "Visit admin for your Matomo installation. Under Platform -> API there is & token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to xxxxxxxxxxxxxxx"
+#: source/php/AcfFields/php/options-page.php:144
+msgid "Use the token_auth value from your Matomo profile."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:162
+#: source/php/AcfFields/php/options-page.php:163
 msgid "Matomo site id"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:205
+#: source/php/AcfFields/php/options-page.php:166
+msgid "The numeric site ID in Matomo."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:206
 msgid "Customer feedback minimum responses"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:211
-msgid "Set the threshold for how votes (yes/no) the page must have since last update."
+#: source/php/AcfFields/php/options-page.php:212
+msgid "Minimum votes required before feedback is highlighted."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:225
+#: source/php/AcfFields/php/options-page.php:226
 #: source/php/Admin/Dashboard.php:109
 #: source/php/Admin/Dashboard.php:123
 msgid "votes"
@@ -444,8 +452,8 @@ msgstr ""
 msgid "No data yet"
 msgstr ""
 
-#: source/php/Admin/Settings.php:83
-#: source/php/Admin/Settings.php:88
+#: source/php/Admin/Settings.php:90
+#: source/php/Admin/Settings.php:95
 msgid "Settings"
 msgstr ""
 

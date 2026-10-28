@@ -1,12 +1,14 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.1-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.2-test');
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';
 $GLOBALS['cife_test_internal_urls'] = array();
 $GLOBALS['cife_test_posts'] = array();
 $GLOBALS['cife_test_permalinks'] = array();
+$GLOBALS['cife_test_fields'] = array();
+$GLOBALS['cife_test_post_types'] = array('post', 'page', 'attachment', 'external_page', 'modal-content');
 
 function apply_filters($hook, $value) {
   $args = func_get_args();
@@ -45,6 +47,20 @@ function get_permalink($postId) {
     : false;
 }
 
+function get_field($name, $context = false) {
+  return array_key_exists($name, $GLOBALS['cife_test_fields'])
+    ? $GLOBALS['cife_test_fields'][$name]
+    : false;
+}
+
+function sanitize_key($key) {
+  return preg_replace('/[^a-z0-9_\-]/', '', strtolower((string) $key));
+}
+
+function get_post_types($args = array(), $output = 'names') {
+  return $GLOBALS['cife_test_post_types'];
+}
+
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/Repository.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/ExternalLinkRepository.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/InternalTargetRepository.php';
@@ -52,3 +68,4 @@ require_once dirname(__DIR__) . '/source/php/BrokenLinks/ContentProvider.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkExtractor.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkChecker.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/Scanner.php';
+require_once dirname(__DIR__) . '/source/php/Admin/Settings.php';

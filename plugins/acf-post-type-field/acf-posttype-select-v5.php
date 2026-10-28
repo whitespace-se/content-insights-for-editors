@@ -150,7 +150,7 @@ class acf_field_posttype_select extends acf_field {
     $els = array();
     // $choices = array();
 
-    $posttypes = $this->post_type_options();
+    $posttypes = $this->post_type_options($field);
     foreach ($posttypes as $pt) {
       $els[] = array(
         'type' => 'option',
@@ -202,11 +202,17 @@ class acf_field_posttype_select extends acf_field {
    *
    * @return array Array of post type names and labels
    */
-  private function post_type_options() {
+  private function post_type_options($field = array()) {
     $args = array('public' => true);
     $post_types = get_post_types($args, 'objects');
     $output = array();
+    $excluded = isset($field['excluded_post_types'])
+      ? (array) $field['excluded_post_types']
+      : array();
     foreach ($post_types as $post_type) {
+      if (in_array($post_type->name, $excluded, true)) {
+        continue;
+      }
       $output[] = array(
         'value' => $post_type->name,
         'label' => $post_type->label,
