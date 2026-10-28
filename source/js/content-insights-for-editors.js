@@ -18,6 +18,7 @@ jQuery(document).ready(function($) {
     $this.attr("disabled", true);
     var data = {
       action: "trigger_update_analytics",
+      nonce: WS_ANALYSIS.nonce,
     };
 
     jQuery.post(WS_ANALYSIS.ajaxurl, data, function(response) {

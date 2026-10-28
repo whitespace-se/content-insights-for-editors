@@ -83,8 +83,10 @@ class Metabox {
   }
 
   private function metaboxRow($label, $value) {
-    return "<tr>
-                    <td><b>$label:</b></td><td>$value</td>
-                </tr>";
+    return sprintf(
+      '<tr><td><b>%s:</b></td><td>%s</td></tr>',
+      esc_html($label),
+      esc_html($value ?? '')
+    );
   }
 }

@@ -21,12 +21,19 @@ Content Insights for Editors is a WordPress plugin
 
 ### Prerequisites
 
-* [WordPress](https://wordpress.com/)
+* PHP 8.1 or later
+* [WordPress](https://wordpress.org/)
 * [ACF](https://www.advancedcustomfields.com/)
-* [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-* [matomo](https://matomo.org/)
+* [Matomo](https://matomo.org/) for visitor statistics
 
-Content Insights for Editors uses matomo for visitor statistics and [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector) for analysing content.
+Content Insights for Editors includes its own scheduled broken-link checker. It
+uses the WordPress HTTP API and stores results in the existing
+`{$wpdb->prefix}broken_links_detector` table so upgrades from the former external
+detector retain their data.
+
+Checks run in resumable URL batches with a time limit. Definitive results are
+cached for six hours so links shared by navigation and modules are not requested
+once per page. Existing results are replaced only after a page has completed.
 
 ### Installing
 
@@ -54,7 +61,7 @@ cife_notification_mail_logo_url
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_logo_url', function($currentLogo) {
+add_filter('cife_notification_mail_logo_url', function($currentLogo) {
     $logo =  get_field('logotype', 'option');
     return  wp_get_attachment_url($logo['id']);
 });
@@ -68,7 +75,7 @@ cife_notification_mail_list_sections
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_list_sections', function($sections){
+add_filter('cife_notification_mail_list_sections', function($sections){
     array_push($sections, [
         'section_header' => '', // string, Title rendered above section
         'list' => [
@@ -94,12 +101,12 @@ cife_notification_mail_render_section
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_list_sections', function($template, $sectionVars){
-    if ($_sectionVars['id'] === 'most-viewed' && class_exists('\CustomerFeedback\App')) {
+add_filter('cife_notification_mail_render_section', function($template, $sectionVars){
+    if ($sectionVars['id'] === 'most-viewed' && class_exists('\CustomerFeedback\App')) {
         return CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH . '/partials/section-3-cols-customer-feedback.template.php';
     }
     return $template; // Absolute php file path
-});
+}, 10, 2);
 ```
 
 ### Customizing content of mail notification
@@ -120,7 +127,7 @@ cife_notification_mail_vars
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_vars', function($html_vars){
+add_filter('cife_notification_mail_vars', function($html_vars){
     $html_vars['logo'] = "..."; 
     return $html_vars;
 });
@@ -134,10 +141,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 * [WordPress](https://wordpress.com/)
 * [ACF](https://www.advancedcustomfields.com/)
-* [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-* [matomo](https://matomo.org/)
-
-Content Insights for Editors uses matomo for visitor statistics and [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector) for analysing content.
+* [Matomo](https://matomo.org/) when developing visitor-statistics features
 
 ### Local installation
 
@@ -162,28 +166,22 @@ Add this to your composer.json
 },
 ````
 
-And this to install helsingborg-stad/broken-link-detector
-
-````
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:helsingborg-stad/broken-link-detector.git",
-        "no-api": true
-    },
-    ...
-]
-
-"require": {
-    ...
-    "helsingborg-stad/broken-link-detector": "^1.3",
-},
-````
-
-Then run 
+Then run
 
 ````
 composer install
+````
+
+Run unit tests with:
+
+````
+composer test
+````
+
+The WordPress integration tests additionally require `WP_TESTS_DIR`:
+
+````
+WP_TESTS_DIR=/path/to/wordpress-tests-lib composer test:integration
 ````
 
 Example of how composer works [here](https://wpackagist.org/)

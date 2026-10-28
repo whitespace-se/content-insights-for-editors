@@ -3,7 +3,8 @@
 /**
  * Plugin Name:       Content Insights for Editors
  * Description:       Analyse content for your website
- * Version:           1.1.5
+ * Version:           2.3.0
+ * Requires PHP:      8.1
  * Author:            Whitespace
  * Text Domain:       content-insights-for-editors
  * Domain Path:       /languages
@@ -15,6 +16,7 @@ if (!defined('WPINC')) {
 }
 define('CONTENT_INSIGHTS_FOR_EDITORS_PATH', plugin_dir_path(__FILE__));
 define('CONTENT_INSIGHTS_FOR_EDITORS_URL', plugins_url('', __FILE__));
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.3.0');
 define(
 	'CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH',
 	CONTENT_INSIGHTS_FOR_EDITORS_PATH . '/mail-templates'
@@ -59,9 +61,15 @@ add_action(
 );
 
 register_deactivation_hook(__FILE__, 'cife_decativation');
+register_activation_hook(
+	__FILE__,
+	array('CONTENT_INSIGHTS_FOR_EDITORS\\Util\\BrokenLinks', 'activate')
+);
 if (!function_exists('cife_decativation')) {
 	function cife_decativation() {
-		wp_clear_scheduled_hook('cife_cron_mail');
+		\CONTENT_INSIGHTS_FOR_EDITORS\Admin\BrokenLinkCron::deactivate();
+		\CONTENT_INSIGHTS_FOR_EDITORS\Util\Matomo::deactivate();
+		\CONTENT_INSIGHTS_FOR_EDITORS\Util\BrokenLinks::deactivate();
 	}
 }
 

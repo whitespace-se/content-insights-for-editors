@@ -63,7 +63,7 @@ class Main {
     echo '<form method="post">';
     echo sprintf(
       '<input type="hidden" name="cife_notify_nonce" value="%s">',
-      $nonce
+      esc_attr($nonce)
     );
     $selectionHTML = wp_dropdown_users(array(
       'role__in' => ['administrator', 'editor', 'author'],
@@ -91,13 +91,22 @@ class Main {
 
   public function handleNotificationSubmit() {
     if (isset($_POST['cife_notify'])) {
-      $nonce = $_POST['cife_notify_nonce'];
+      if (!current_user_can('manage_options')) {
+        wp_die(esc_html__('You are not allowed to send these notifications.', 'content-insights-for-editors'));
+      }
+      $nonce = isset($_POST['cife_notify_nonce'])
+        ? sanitize_text_field(wp_unslash($_POST['cife_notify_nonce']))
+        : '';
       if (wp_verify_nonce($nonce, 'cife_notify_nonce')) {
         if (isset($_POST['cife_notify_authors'])) {
-          // Ensure array contains valid data
-          $authors = $this->validateNumericArray($_POST['cife_notify_authors'])
-            ? $_POST['cife_notify_authors']
-            : array();
+          $authors = array_values(
+            array_filter(
+              array_unique(
+                array_map('absint', (array) wp_unslash($_POST['cife_notify_authors']))
+              ),
+              'get_userdata'
+            )
+          );
           $successful = 0;
           foreach ($authors as $id) {
             if (MailFormatter::formatAndSendMail($id)) {
@@ -125,37 +134,36 @@ class Main {
     }
   }
 
-  private function validateNumericArray($array) {
-    foreach ($array as $a => $b) {
-      if (!is_int($a)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   public function render() {
-    if (class_exists('\BrokenLinkDetector\App')):
-      $PageList = new ListTable();
+    $PageList = new ListTable();
 
-      echo '<div class="wrap nestedpages">';
-      $this->renderTableHeader();
-      $PageList->prepare_items();
-      $PageList->display();
-      echo '</div>';
-    else:
-      echo '<div>';
-      echo '<h2>' .
-        __('Broken links plugin not found', 'content-insights-for-editors') .
-        '</h2>';
-      echo '<p>' .
-        __(
-          'This plugin depends on broken links in order to display a list of broken links. To enable this view please install and activate broken links.',
-          'content-insights-for-editors'
-        ) .
-        '</p>';
-      echo '</div>';
-    endif;
+    echo '<div class="wrap nestedpages">';
+    if (
+      isset($_GET['cife_scan_started']) &&
+      sanitize_key(wp_unslash($_GET['cife_scan_started'])) === '1'
+    ) {
+      echo '<div class="notice notice-success is-dismissible"><p>';
+      _e(
+        'The broken-link check has been scheduled and will continue in the background.',
+        'content-insights-for-editors'
+      );
+      echo '</p></div>';
+    }
+    if (
+      isset($_GET['cife_scan_error']) &&
+      sanitize_key(wp_unslash($_GET['cife_scan_error'])) === 'legacy_plugin'
+    ) {
+      echo '<div class="notice notice-error"><p>';
+      esc_html_e(
+        'The check could not start while the legacy Broken Link Detector plugin is active.',
+        'content-insights-for-editors'
+      );
+      echo '</p></div>';
+    }
+    $this->renderTableHeader();
+    $PageList->prepare_items();
+    $PageList->display();
+    echo '</div>';
   }
 
   private function renderTableHeader() {
@@ -171,7 +179,7 @@ class Main {
           'Next scheduled check for broken links',
           'content-insights-for-editors'
         ),
-        BrokenLinks::$nextScheduledRun
+        esc_html(BrokenLinks::$nextScheduledRun)
       );
       $nextRun .= '</p>';
     }
@@ -183,6 +191,18 @@ class Main {
     );
     echo $nextRun;
     echo '</div>';
+    if (current_user_can('manage_options')) {
+      echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
+      echo '<input type="hidden" name="action" value="cife_run_broken_link_scan">';
+      wp_nonce_field('cife_run_broken_link_scan');
+      submit_button(
+        __('Run broken-link check now', 'content-insights-for-editors'),
+        'secondary',
+        'submit',
+        false
+      );
+      echo '</form>';
+    }
     if (Matomo::$matomoIsActive):
       echo $this->btnTriggerUpdateAnalytics();
     endif;
@@ -202,14 +222,26 @@ class Main {
   }
 
   public function triggerUpdateAnalytics() {
+    if (!current_user_can('manage_options')) {
+      wp_send_json_error(
+        new \WP_Error('forbidden', __('You are not allowed to update analytics.', 'content-insights-for-editors')),
+        403
+      );
+    }
+    check_ajax_referer('cife_update_analytics', 'nonce');
+
     try {
       $analytics = new Matomo();
 
       $analytics->updatePagesWeekAndMonth();
 
       wp_send_json_success();
-    } catch (\Exception $e) {
-      $error = new \WP_Error('-1', $e->getMessage());
+    } catch (\Throwable $e) {
+      do_action('cife_matomo_update_error', $e);
+      $error = new \WP_Error(
+        'matomo_update_failed',
+        __('The visitor statistics could not be updated.', 'content-insights-for-editors')
+      );
       wp_send_json_error($error);
     }
 
@@ -229,6 +261,7 @@ class Main {
     );
     wp_localize_script('cife_js', 'WS_ANALYSIS', [
       'ajaxurl' => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('cife_update_analytics'),
       'strings' => [
         'update_complete' => __(
           'Update of visitor statistics complete',

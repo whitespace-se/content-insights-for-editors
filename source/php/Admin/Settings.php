@@ -42,6 +42,18 @@ class Settings {
     return false;
   }
 
+  public static function getAnalysedPostTypes() {
+    $postTypes = self::getSelectedPostTypes();
+    if ($postTypes) {
+      return array_values(array_unique(array_map('sanitize_key', $postTypes)));
+    }
+
+    $postTypes = get_post_types(array('public' => true), 'names');
+    return array_values(
+      array_diff((array) $postTypes, array('attachment', 'revision'))
+    );
+  }
+
   public static function getUseAlternateUserField() {
     return boolval(get_field('use_alternate_user_field', 'options'));
   }

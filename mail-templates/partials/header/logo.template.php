@@ -7,9 +7,7 @@
 <!--<![endif]-->
 <div align="left" class="img-container left autowidth" style="padding-right: 0px;padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="left"><![endif]-->
-<img align="left" alt="Image" border="0" class="left autowidth" src="<?php echo $_htmlvars[
-  'logo'
-]; ?>" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 200px; display: block;" title="Image" width="200"/>
+<img align="left" alt="Image" border="0" class="left autowidth" src="<?php echo esc_url($_htmlvars['logo']); ?>" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 200px; display: block;" title="Image" width="200"/>
 <div style="font-size:1px;line-height:20px"> </div>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>

@@ -17,7 +17,7 @@ class CustomerFeedback {
       return;
     }
     if (!empty($_GET['post_id'])) {
-      $postId = intval($_GET['post_id']);
+      $postId = absint(wp_unslash($_GET['post_id']));
       $metaQuery = $query->get('meta_query');
       $metaQuery[] = array(
         'key' => 'customer_feedback_page_reference',
@@ -28,7 +28,7 @@ class CustomerFeedback {
     }
 
     if (!empty($_GET['after_date'])) {
-      $modDateUnix = intval($_GET['after_date']);
+      $modDateUnix = absint(wp_unslash($_GET['after_date']));
       $modDate = date('Y-m-d H:i:s', $modDateUnix);
       $query->set('date_query', array(
         array(

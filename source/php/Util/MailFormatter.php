@@ -6,10 +6,17 @@ use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
 
 class MailFormatter {
   public static function mapArrayBase($post) {
+    $editUrl = get_edit_post_link($post->ID, 'raw');
+    if (!$editUrl) {
+      $editUrl = add_query_arg(
+        array('post' => (int) $post->ID, 'action' => 'edit'),
+        admin_url('post.php')
+      );
+    }
     return [
       'ID' => $post->ID,
       'post' => $post,
-      'url' => get_edit_post_link($post->ID),
+      'url' => $editUrl,
       'title' => get_the_title($post->ID),
     ];
   }
@@ -32,16 +39,20 @@ class MailFormatter {
   public static function formatAndSendMail($userID) {
     $logo = apply_filters('cife_notification_mail_logo_url', null);
     $userData = get_userdata($userID);
-    if (class_exists('\BrokenLinkDetector\App')):
-      $brokenLinks = PostQuery::getListPosts($userID, true);
-      $brokenLinksMapped = array_map(
-        '\CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter::mapArrayBase',
-        $brokenLinks
-      );
-    endif;
+    if (!$userData || !is_email($userData->user_email)) {
+      return false;
+    }
+    $brokenLinks = PostQuery::getListPosts($userID, true);
+    $brokenLinksMapped = array_map(
+      '\CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter::mapArrayBase',
+      $brokenLinks
+    );
     $last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
-    $time = sprintf('-%d days', $last_updated_threshold);
-    $rarelyUpdated = PostQuery::getPagesModifiedAfter($time, 10, $userID);
+    $rarelyUpdated = array();
+    if ($last_updated_threshold) {
+      $time = sprintf('-%d days', $last_updated_threshold);
+      $rarelyUpdated = PostQuery::getPagesModifiedAfter($time, 10, $userID);
+    }
     $rarelyUpdatedMapped = array_map(
       '\CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter::mapArrayBase',
       $rarelyUpdated
@@ -68,7 +79,7 @@ class MailFormatter {
       'intro_header' => sprintf(
         '%s %s,',
         __('Hi', 'content-insights-for-editors'),
-        $userData->first_name ?: $userData->nicename
+        $userData->first_name ?: $userData->display_name
       ),
       'intro_text' => __(
         'This is a short summary of all pages you are the author to that contains broken links, pages that has not been updated in a while and your most visited pages this week.',
@@ -79,20 +90,18 @@ class MailFormatter {
     ];
 
     $sections = array();
-    if (class_exists('\BrokenLinkDetector\App')):
-      $sections[] = [
-        'id' => 'broken-links',
-        'list' => $brokenLinksMapped,
-        'list_header' => [
-          'title' => __('Page title', 'content-insights-for-editors'),
-        ],
-        'section_header' => __('Broken links', 'content-insights-for-editors'),
-        'no_items_text' => __(
-          'Good news! No broken links found this time, keep up the good work.',
-          'content-insights-for-editors'
-        ),
-      ];
-    endif;
+    $sections[] = [
+      'id' => 'broken-links',
+      'list' => $brokenLinksMapped,
+      'list_header' => [
+        'title' => __('Page title', 'content-insights-for-editors'),
+      ],
+      'section_header' => __('Broken links', 'content-insights-for-editors'),
+      'no_items_text' => __(
+        'Good news! No broken links found this time, keep up the good work.',
+        'content-insights-for-editors'
+      ),
+    ];
     if (Matomo::$matomoIsActive) {
       $sections[] = [
         'id' => 'most-viewed',

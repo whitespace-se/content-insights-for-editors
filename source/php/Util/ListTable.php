@@ -20,23 +20,26 @@ class ListTable extends \WP_List_Table {
     $sortable = $this->get_sortable_columns();
 
     $userID = isset($_GET['author_id'])
-      ? $_GET['author_id']
+      ? absint(wp_unslash($_GET['author_id']))
       : get_current_user_id();
     $showOnlyBrokenLinks =
       !empty($_GET['show_only_broken_links']) &&
-      $_GET['show_only_broken_links'] == 'true';
-
-    $data = PostQuery::getListPosts($userID, $showOnlyBrokenLinks);
+      sanitize_key(wp_unslash($_GET['show_only_broken_links'])) === 'true';
 
     $perPage = 30;
     $currentPage = $this->get_pagenum();
-    $totalItems = count($data);
+    $data = PostQuery::getListPosts(
+      $userID,
+      $showOnlyBrokenLinks,
+      false,
+      $perPage,
+      ($currentPage - 1) * $perPage
+    );
+    $totalItems = PostQuery::getLastFoundRows();
     $this->set_pagination_args(array(
       'total_items' => $totalItems,
       'per_page' => $perPage,
     ));
-    $data = array_slice($data, ($currentPage - 1) * $perPage, $perPage);
-
     $this->_column_headers = array($columns, $hidden, $sortable);
     $this->items = $data;
   }
@@ -45,12 +48,12 @@ class ListTable extends \WP_List_Table {
     if ($which == 'top') {
 
       $selected_user = isset($_GET['author_id'])
-        ? $_GET['author_id']
+        ? absint(wp_unslash($_GET['author_id']))
         : get_current_user_id();
       $show_only_broken_links = '';
       if (
         !empty($_GET['show_only_broken_links']) &&
-        $_GET['show_only_broken_links'] == 'true'
+        sanitize_key(wp_unslash($_GET['show_only_broken_links'])) === 'true'
       ) {
         $show_only_broken_links = 'checked';
       }
@@ -71,15 +74,13 @@ class ListTable extends \WP_List_Table {
       ?>
             <div class="alignleft actions">
 				<?php wp_dropdown_users($args); ?>
-				<?php if (class_exists('\BrokenLinkDetector\App')): ?>
                 <label style="vertical-align: -webkit-baseline-middle;">
-                    <input type="checkbox" name="show_only_broken_links" value="true" <?php echo $show_only_broken_links; ?> />
+                    <input type="checkbox" name="show_only_broken_links" value="true" <?php echo esc_attr($show_only_broken_links); ?> />
                     <?php _e(
                       'Show only pages with broken links',
                       'content-insights-for-editors'
                     ); ?>
 				</label>
-				<?php endif; ?>
             </div>
             <?php
     }
@@ -142,26 +143,26 @@ class ListTable extends \WP_List_Table {
     switch ($column_name) {
       case 'title':
         return '<a href="' .
-          get_edit_post_link($item->ID) .
+          esc_url(get_edit_post_link($item->ID)) .
           '"><strong>' .
-          $item->title .
+          esc_html($item->title) .
           '</strong></a>';
 
       case 'url':
         return '<a target="_blank" href="' .
-          get_permalink($item->ID) .
+          esc_url(get_permalink($item->ID)) .
           '">' .
-          get_permalink($item->ID) .
+          esc_html(get_permalink($item->ID)) .
           '</a>';
       case 'author':
         return '<a href="mailto:' .
-          $item->author_email .
+          esc_attr($item->author_email) .
           '">' .
-          $item->author .
+          esc_html($item->author) .
           '</a>';
 
       default:
-        return $item->$column_name;
+        return isset($item->$column_name) ? esc_html($item->$column_name) : '';
     }
   }
 }

@@ -14,7 +14,7 @@ class Dashboard {
     global $wp_meta_boxes;
     $last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
     $minimum_feedback_responses_threshold = Settings::validateAndGetMinFeedbackResponsesThreshold();
-    if (current_user_can('administrator')):
+    if (current_user_can('manage_options')):
       if (Matomo::$matomoIsActive):
         wp_add_dashboard_widget(
           'cife_visitors_week_admin',
@@ -33,16 +33,14 @@ class Dashboard {
           array($this, 'adminTopTenLastMonth')
         );
       endif;
-      if (class_exists('\BrokenLinkDetector\App')):
-        wp_add_dashboard_widget(
-          'cife_broken_links_admin',
-          __(
-            'Top 10 pages with most number of broken links (sitewide)',
-            'content-insights-for-editors'
-          ),
-          array($this, 'adminTopTenBrokenLinks')
-        );
-      endif;
+      wp_add_dashboard_widget(
+        'cife_broken_links_admin',
+        __(
+          'Top 10 pages with most number of broken links (sitewide)',
+          'content-insights-for-editors'
+        ),
+        array($this, 'adminTopTenBrokenLinks')
+      );
       if ($last_updated_threshold) {
         wp_add_dashboard_widget(
           'cife_rarely_updated_admin',
@@ -78,13 +76,11 @@ class Dashboard {
       );
     endif;
 
-    if (class_exists('\BrokenLinkDetector\App')):
-      wp_add_dashboard_widget(
-        'cife_broken_links_user',
-        __('All your pages with broken links', 'content-insights-for-editors'),
-        array($this, 'userBrokenLinks')
-      );
-    endif;
+    wp_add_dashboard_widget(
+      'cife_broken_links_user',
+      __('All your pages with broken links', 'content-insights-for-editors'),
+      array($this, 'userBrokenLinks')
+    );
 
     if (class_exists('\CustomerFeedback\App')):
       wp_add_dashboard_widget(
@@ -200,16 +196,16 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($value->ID) .
+          esc_url(get_edit_post_link($value->ID)) .
           '"><strong>' .
-          $value->title .
+          esc_html($value->title) .
           '</strong></a>
                     </td>
                     <td>' .
-          $value->author .
+          esc_html($value->author) .
           '</td>
                     <td>' .
-          $value->broken_links .
+          absint($value->broken_links) .
           '</td>
                 </tr>';
       }
@@ -229,7 +225,7 @@ class Dashboard {
       echo sprintf(
         '<p>%s <a href="%s">%s</a></p>',
         __('Click here to', 'content-insights-for-editors'),
-        admin_url('admin.php?page=content-insights-for-editors-page'),
+        esc_url(admin_url('admin.php?page=content-insights-for-editors-page')),
         __('view your pages', 'content-insights-for-editors')
       );
     endif;
@@ -268,24 +264,24 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($value->ID) .
+          esc_url(get_edit_post_link($value->ID)) .
           '"><strong>' .
-          $value->title .
+          esc_html($value->title) .
           '</strong></a>';
         if (isset($value->feedback)):
           echo '<div class="cife-customer-feedback-wrapper">
 					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
-            round($value->feedback['yes']) .
+            esc_html(round($value->feedback['yes'])) .
             '<i class="cife-icon cife-icon--thumb-up"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
-            round($value->feedback['no']) .
+            esc_html(round($value->feedback['no'])) .
             '<i class="cife-icon cife-icon--thumb-down"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--comments">' .
-            $value->feedback['comments'] .
+            absint($value->feedback['comments']) .
             '<i class="cife-icon cife-icon--comments"></i>';
           if ($value->feedback['comments'] > 0):
             echo '<a href="' .
-              admin_url(
+              esc_url(admin_url(
                 add_query_arg(
                   array(
                     'post_id' => $value->ID,
@@ -298,7 +294,7 @@ class Dashboard {
                   ),
                   'edit.php?post_type=customer-feedback'
                 )
-              ) .
+              )) .
               '" target="_blank">Visa kommentarer</a>';
           endif;
           echo '</span>
@@ -306,10 +302,10 @@ class Dashboard {
         endif;
         echo '</td>
                     <td>' .
-          $value->visitors .
+          absint($value->visitors) .
           '</td>
 					<td>' .
-          get_the_modified_date('Y-m-d', $value->ID) .
+          esc_html(get_the_modified_date('Y-m-d', $value->ID)) .
           '</td>
                 </tr>';
       }
@@ -327,7 +323,7 @@ class Dashboard {
             'content-insights-for-editors'
           ),
           __('Click here to', 'content-insights-for-editors'),
-          admin_url('post-new.php?post_type=page'),
+          esc_url(admin_url('post-new.php?post_type=page')),
           __('create a new page', 'content-insights-for-editors')
         );
       }
@@ -355,13 +351,13 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($page->ID) .
+          esc_url(get_edit_post_link($page->ID)) .
           '"><strong>' .
-          $page->title .
+          esc_html($page->title) .
           '</strong></a>
 					</td>
 					<td style="width: 30%; text-align: right;">' .
-          $page->lastModified .
+          esc_html($page->lastModified) .
           '</td>
                 </tr>';
       }
@@ -374,6 +370,7 @@ class Dashboard {
       if ($userID) {
         echo '<p>' .
           sprintf(
+            /* translators: %d: number of days in the outdated-content threshold. */
             __(
               'Great! All of your pages have been updated within the last %d days.',
               'content-insights-for-editors'
@@ -384,7 +381,7 @@ class Dashboard {
         echo sprintf(
           '<p>%s <a href="%s">%s</a></p>',
           __('Click here to', 'content-insights-for-editors'),
-          admin_url('admin.php?page=content-insights-for-editors-page'),
+          esc_url(admin_url('admin.php?page=content-insights-for-editors-page')),
           __('view your pages', 'content-insights-for-editors')
         );
       }
@@ -418,24 +415,24 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($value->ID) .
+          esc_url(get_edit_post_link($value->ID)) .
           '"><strong>' .
-          $value->title .
+          esc_html($value->title) .
           '</strong></a>';
         if (isset($value->feedback)):
           echo '<div class="cife-customer-feedback-wrapper">
 					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
-            round($value->feedback['yes']) .
+            esc_html(round($value->feedback['yes'])) .
             '<i class="cife-icon cife-icon--thumb-up"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
-            round($value->feedback['no']) .
+            esc_html(round($value->feedback['no'])) .
             '<i class="cife-icon cife-icon--thumb-down"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--comments">' .
-            $value->feedback['comments'] .
+            absint($value->feedback['comments']) .
             '<i class="cife-icon cife-icon--comments"></i>';
           if ($value->feedback['comments'] > 0):
             echo '<a href="' .
-              admin_url(
+              esc_url(admin_url(
                 add_query_arg(
                   array(
                     'post_id' => $value->ID,
@@ -448,7 +445,7 @@ class Dashboard {
                   ),
                   'edit.php?post_type=customer-feedback'
                 )
-              ) .
+              )) .
               '" target="_blank">Visa kommentarer</a>';
           endif;
           echo '</span>
@@ -456,7 +453,7 @@ class Dashboard {
         endif;
         echo '</td>
                     <td>' .
-          $value->visitors .
+          absint($value->visitors) .
           '</td>
                 </tr>';
       }

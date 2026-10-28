@@ -5,6 +5,7 @@ namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
 
 class Matomo {
+  const CRON_HOOK = 'content-insights-for-editors-matomo';
   private static $dbTable = 'content_insights_for_editors';
   private static $wpdb = null;
 
@@ -35,10 +36,10 @@ class Matomo {
       add_action('admin_notices', array($this, 'adminNoticeWarnMatomo'));
     }
 
-    add_action('wp', array($this, 'schedule'));
-    add_action('content-insights-for-editors-matomo', array(
+    add_action('init', array($this, 'schedule'));
+    add_action(self::CRON_HOOK, array(
       $this,
-      'updatePagesWeekAndMonth',
+      'runScheduledUpdate',
     ));
   }
 
@@ -59,9 +60,9 @@ class Matomo {
     ?>
 		<div class="notice notice-warning">
 			<p><?php _e('Matomo is not configured', 'content-insights-for-editors'); ?></p>
-			<a href="<?php echo admin_url(
+			<a href="<?php echo esc_url(admin_url(
      'admin.php?page=content-insights-for-editors-page-settings'
-   ); ?>"><?php _e(
+   )); ?>"><?php _e(
   'Configure settings for Matomo',
   'content-insights-for-editors'
 ); ?></a>
@@ -70,11 +71,18 @@ class Matomo {
   }
 
   public function schedule() {
-    if (wp_next_scheduled('content-insights-for-editors-matomo')) {
+    if (!self::$matomoIsActive) {
+      wp_clear_scheduled_hook(self::CRON_HOOK);
       return;
     }
 
-    wp_schedule_event(time(), 'daily', 'content-insights-for-editors-matomo');
+    if (!wp_next_scheduled(self::CRON_HOOK)) {
+      wp_schedule_event(time() + MINUTE_IN_SECONDS, 'daily', self::CRON_HOOK);
+    }
+  }
+
+  public static function deactivate() {
+    wp_clear_scheduled_hook(self::CRON_HOOK);
   }
 
   public static function getDbTable() {
@@ -85,7 +93,25 @@ class Matomo {
     $pages = $this->getPagesWeekAndMonth();
 
     foreach ($pages as $page) {
+      $post = !empty($page->post_id) ? get_post($page->post_id) : null;
+      if (
+        !$post ||
+        $post->post_status !== 'publish' ||
+        !in_array($post->post_type, Settings::getAnalysedPostTypes(), true)
+      ) {
+        continue;
+      }
       $this->upsert($page);
+    }
+  }
+
+  public function runScheduledUpdate() {
+    try {
+      $this->updatePagesWeekAndMonth();
+      return true;
+    } catch (\Throwable $error) {
+      do_action('cife_matomo_update_error', $error);
+      return false;
     }
   }
 
@@ -112,6 +138,9 @@ class Matomo {
   }
 
   private function aggregateWeekAndMonth(&$result, $values, $prefix) {
+    if (!is_array($values)) {
+      return;
+    }
     foreach ($values as $value) {
       if (array_key_exists($value['label'], $result)) {
         $result[$value['label']] = (object) array_merge(
@@ -139,22 +168,62 @@ class Matomo {
   }
 
   private function getDateRangeStr($days) {
-    return date('Y-m-d', strtotime("-$days days")) . ',' . date('Y-m-d');
+    $timezone = wp_timezone();
+    $end = new \DateTimeImmutable('now', $timezone);
+    $start = $end->modify(sprintf('-%d days', absint($days)));
+    return $start->format('Y-m-d') . ',' . $end->format('Y-m-d');
   }
 
   private function request() {
-    $queryString = urldecode(http_build_query($this->parameters));
+    $url = esc_url_raw($this->matomoUrl);
+    if (!$url || !in_array(wp_parse_url($url, PHP_URL_SCHEME), array('http', 'https'), true)) {
+      throw new \RuntimeException(
+        __('The configured Matomo API URL is invalid.', 'content-insights-for-editors')
+      );
+    }
 
-    $url = $this->matomoUrl . '?' . $queryString;
+    $args = apply_filters(
+      'cife_matomo_http_args',
+      array(
+        'timeout' => 20,
+        'redirection' => 3,
+        'sslverify' => true,
+        'body' => $this->parameters,
+        'user-agent' => 'Content Insights for Editors/' . CONTENT_INSIGHTS_FOR_EDITORS_VERSION,
+      ),
+      $url
+    );
+    $response = wp_safe_remote_post($url, $args);
+    if (is_wp_error($response)) {
+      throw new \RuntimeException($response->get_error_message());
+    }
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch);
+    $status = (int) wp_remote_retrieve_response_code($response);
+    if ($status < 200 || $status >= 300) {
+      throw new \RuntimeException(
+        sprintf(
+          /* translators: %d: HTTP response status code returned by Matomo. */
+          __('Matomo returned HTTP status %d.', 'content-insights-for-editors'),
+          $status
+        )
+      );
+    }
 
-    return json_decode($result, true);
+    $result = json_decode(wp_remote_retrieve_body($response), true);
+    if (!is_array($result) || json_last_error() !== JSON_ERROR_NONE) {
+      throw new \RuntimeException(
+        __('Matomo returned an invalid response.', 'content-insights-for-editors')
+      );
+    }
+    if (isset($result['result']) && $result['result'] === 'error') {
+      throw new \RuntimeException(
+        isset($result['message'])
+          ? sanitize_text_field($result['message'])
+          : __('Matomo returned an error.', 'content-insights-for-editors')
+      );
+    }
+
+    return $result;
   }
 
   private function upsert($item) {
@@ -182,7 +251,7 @@ class Matomo {
       $item->week_pageviews ?? 0,
       $item->month_visitors ?? 0,
       $item->month_pageviews ?? 0,
-      date('Y-m-d H:i:s')
+      current_time('mysql')
     );
 
     self::$wpdb->query($sql);
