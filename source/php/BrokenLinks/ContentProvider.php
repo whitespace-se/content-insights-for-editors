@@ -64,6 +64,14 @@ class ContentProvider {
           $fragments[] = $content;
         }
       }
+
+      foreach ($this->getAcfFragments($moduleId) as $fragment) {
+        $fragments[] = $fragment;
+      }
+    }
+
+    foreach ($this->getAcfFragments($postId) as $fragment) {
+      $fragments[] = $fragment;
     }
 
     return apply_filters(
@@ -71,6 +79,111 @@ class ContentProvider {
       $fragments,
       $postId
     );
+  }
+
+  private function getAcfFragments($postId) {
+    if (!function_exists('get_field_objects')) {
+      return array();
+    }
+
+    $fields = get_field_objects($postId, true, true);
+    if (!is_array($fields)) {
+      return array();
+    }
+
+    $fragments = array();
+    foreach ($fields as $field) {
+      $this->collectAcfFieldFragments($field, $postId, $fragments);
+    }
+    return $fragments;
+  }
+
+  private function collectAcfFieldFragments($field, $postId, array &$fragments) {
+    if (!is_array($field) || empty($field['type'])) {
+      return;
+    }
+    if (!apply_filters('cife_broken_links_scan_acf_field', true, $field, $postId)) {
+      return;
+    }
+
+    $value = isset($field['value']) ? $field['value'] : null;
+    switch ($field['type']) {
+      case 'url':
+        $this->addUrlFragment($value, $fragments);
+        return;
+      case 'link':
+      case 'file':
+        if (is_array($value) && isset($value['url'])) {
+          $value = $value['url'];
+        } elseif ($field['type'] === 'file' && is_numeric($value) &&
+          function_exists('wp_get_attachment_url')) {
+          $value = wp_get_attachment_url((int) $value);
+        }
+        $this->addUrlFragment($value, $fragments);
+        return;
+      case 'wysiwyg':
+        if (is_string($value) && trim($value) !== '') {
+          $fragments[] = $value;
+        }
+        return;
+      case 'group':
+      case 'clone':
+        $this->collectAcfRow($field, $value, $postId, $fragments);
+        return;
+      case 'repeater':
+      case 'flexible_content':
+        if (!is_array($value)) {
+          return;
+        }
+        foreach ($value as $row) {
+          $this->collectAcfRow($field, $row, $postId, $fragments);
+        }
+        return;
+    }
+  }
+
+  private function collectAcfRow($field, $row, $postId, array &$fragments) {
+    if (!is_array($row)) {
+      return;
+    }
+
+    $subFields = isset($field['sub_fields']) && is_array($field['sub_fields'])
+      ? $field['sub_fields']
+      : array();
+    if ($field['type'] === 'flexible_content' && !empty($field['layouts'])) {
+      $subFields = array();
+      foreach ($field['layouts'] as $layout) {
+        if (!is_array($layout) || empty($layout['sub_fields'])) {
+          continue;
+        }
+        if (!empty($row['acf_fc_layout']) && isset($layout['name']) &&
+          $layout['name'] !== $row['acf_fc_layout']) {
+          continue;
+        }
+        $subFields = array_merge($subFields, $layout['sub_fields']);
+      }
+    }
+
+    foreach ($subFields as $subField) {
+      if (!is_array($subField) || empty($subField['name'])) {
+        continue;
+      }
+      $subField['value'] = isset($row[$subField['name']])
+        ? $row[$subField['name']]
+        : null;
+      $this->collectAcfFieldFragments($subField, $postId, $fragments);
+    }
+  }
+
+  private function addUrlFragment($url, array &$fragments) {
+    if (!is_string($url) || trim($url) === '') {
+      return;
+    }
+    $fragments[] = '<a href="' . htmlspecialchars(
+      trim($url),
+      ENT_QUOTES | ENT_HTML5,
+      'UTF-8'
+    ) . '"></a>';
   }
 
   private function getModularityModuleIds($postId) {

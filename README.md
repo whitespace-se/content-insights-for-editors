@@ -42,6 +42,11 @@ the sitewide inventory. A manual review can be marked with a checked date. The
 configurable review interval defaults to 30 days and feeds the dashboard and the
 existing manual and scheduled email summaries.
 
+Links are collected from normal post content, Modularity content and editorial
+ACF URL, Link, File and WYSIWYG fields, including fields nested in repeaters,
+groups and flexible content. Other ACF field types and arbitrary post metadata
+are not scanned.
+
 ### Installing
 
 The package can be downloaded manually and unzipped in the /wp-content/plugins/ directory or by using composer. 
@@ -59,6 +64,16 @@ When resources have been installed. The plugin can be activated by looking for a
 ### Hooks
 
 Here are the hooks for customizing the plugin
+
+### Excluding an ACF field from link collection
+
+```php
+cife_broken_links_scan_acf_field
+```
+
+Return `false` for an editorial ACF field that should not contribute links to
+CIFE. The filter receives the current decision, the ACF field definition and
+the post ID.
 
 ### Set the mail logo url
 ```php

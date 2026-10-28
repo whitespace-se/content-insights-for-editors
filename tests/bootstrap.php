@@ -1,6 +1,6 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.3-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.4-test');
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';
@@ -8,6 +8,8 @@ $GLOBALS['cife_test_internal_urls'] = array();
 $GLOBALS['cife_test_posts'] = array();
 $GLOBALS['cife_test_permalinks'] = array();
 $GLOBALS['cife_test_fields'] = array();
+$GLOBALS['cife_test_field_objects'] = array();
+$GLOBALS['cife_test_post_meta'] = array();
 $GLOBALS['cife_test_post_types'] = array('post', 'page', 'attachment', 'external_page', 'modal-content');
 
 function apply_filters($hook, $value) {
@@ -50,6 +52,26 @@ function get_permalink($postId) {
 function get_field($name, $context = false) {
   return array_key_exists($name, $GLOBALS['cife_test_fields'])
     ? $GLOBALS['cife_test_fields'][$name]
+    : false;
+}
+
+function get_field_objects($postId, $formatValue = true, $loadValue = true) {
+  return isset($GLOBALS['cife_test_field_objects'][$postId])
+    ? $GLOBALS['cife_test_field_objects'][$postId]
+    : false;
+}
+
+function get_post_meta($postId, $key = '', $single = false) {
+  if (!isset($GLOBALS['cife_test_post_meta'][$postId][$key])) {
+    return $single ? '' : array();
+  }
+  $value = $GLOBALS['cife_test_post_meta'][$postId][$key];
+  return $single ? $value : array($value);
+}
+
+function wp_get_attachment_url($postId) {
+  return isset($GLOBALS['cife_test_permalinks'][$postId])
+    ? $GLOBALS['cife_test_permalinks'][$postId]
     : false;
 }
 
