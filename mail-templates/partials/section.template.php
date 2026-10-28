@@ -23,7 +23,8 @@
         <li style="font-size: 12px; line-height: 14px; margin-bottom: 6px; margin-left: 0px;">
         <table style="width: 100%">
                 <tr>
-                    <td><a href="<?php echo esc_url($item['url']); ?>" rel="noopener" style="text-decoration: underline; color: #5b2c82;" target="_blank"><?php echo esc_html($item['title']); ?></a></td>
+                    <td><a href="<?php echo esc_url($item['url']); ?>" rel="noopener" style="text-decoration: underline; color: #5b2c82;" target="_blank"><?php echo esc_html($item['title']); ?></a>
+                    <?php if (!empty($item['secondary_url'])): ?><br><a href="<?php echo esc_url($item['secondary_url']); ?>" style="text-decoration: underline; color: #5b2c82;"><?php echo esc_html($item['secondary_title']); ?></a><?php endif; ?></td>
     <?php if (!empty($item['value'])): ?>
         <td style="text-align:right;">
             <?php echo esc_html($item['value']); ?>

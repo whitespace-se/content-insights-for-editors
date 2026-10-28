@@ -8,6 +8,7 @@ class App {
   public function __construct() {
     new Admin\Main();
     new Admin\Settings();
+    new Admin\ExternalLinks();
     new Admin\Metabox();
     new Admin\Dashboard();
     new Admin\BrokenLinkCron();

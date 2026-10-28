@@ -19,7 +19,7 @@ class ListTable extends \WP_List_Table {
     $hidden = $this->get_hidden_columns();
     $sortable = $this->get_sortable_columns();
 
-    $userID = isset($_GET['author_id'])
+    $userID = current_user_can('manage_options') && isset($_GET['author_id'])
       ? absint(wp_unslash($_GET['author_id']))
       : get_current_user_id();
     $showOnlyBrokenLinks =
@@ -58,7 +58,8 @@ class ListTable extends \WP_List_Table {
         $show_only_broken_links = 'checked';
       }
 
-      $args = array(
+      if (current_user_can('manage_options')) {
+        $args = array(
         'show_option_all' => __('All', 'content-insights-for-editors'),
         'role__in' => ['administrator', 'editor', 'author'],
         'orderby' => 'display_name',
@@ -70,10 +71,11 @@ class ListTable extends \WP_List_Table {
         'include_selected' => true,
         'name' => 'author_id',
         'blog_id' => $GLOBALS['blog_id'],
-      );
+        );
+      }
       ?>
             <div class="alignleft actions">
-				<?php wp_dropdown_users($args); ?>
+                <?php if (current_user_can('manage_options')) { wp_dropdown_users($args); } ?>
                 <label style="vertical-align: -webkit-baseline-middle;">
                     <input type="checkbox" name="show_only_broken_links" value="true" <?php echo esc_attr($show_only_broken_links); ?> />
                     <?php _e(

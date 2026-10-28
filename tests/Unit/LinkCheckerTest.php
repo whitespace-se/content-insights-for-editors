@@ -1,74 +1,69 @@
 <?php
 
 use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\LinkChecker;
+use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\InternalTargetRepository;
 use PHPUnit\Framework\TestCase;
 
 class LinkCheckerTest extends TestCase {
   protected function tearDown(): void {
     $GLOBALS['cife_test_filters'] = array();
     $GLOBALS['cife_test_internal_urls'] = array();
+    $GLOBALS['cife_test_posts'] = array();
   }
 
-  public function testClassifiesHttpStatuses() {
+  public function testSeparatesInternalAndExternalHosts() {
     $checker = new LinkChecker();
-
-    $this->assertSame(LinkChecker::REACHABLE, $checker->classifyStatus(204));
-    $this->assertSame(LinkChecker::REACHABLE, $checker->classifyStatus(301));
-    $this->assertSame(LinkChecker::REACHABLE, $checker->classifyStatus(401));
-    $this->assertSame(LinkChecker::BROKEN, $checker->classifyStatus(404));
-    $this->assertSame(LinkChecker::BROKEN, $checker->classifyStatus(410));
-    $this->assertSame(LinkChecker::INDETERMINATE, $checker->classifyStatus(429));
-    $this->assertSame(LinkChecker::INDETERMINATE, $checker->classifyStatus(503));
+    $this->assertTrue($checker->isInternal('https://example.test/a'));
+    $this->assertTrue($checker->isInternal('https://EXAMPLE.test/a'));
+    $this->assertFalse($checker->isInternal('https://external.test/a'));
   }
 
-  public function testFallsBackToGetWhenHeadIsUnsupported() {
-    $methods = array();
-    $checker = new LinkChecker(function ($method) use (&$methods) {
-      $methods[] = $method;
-      return array(
-        'response' => array('code' => $method === 'HEAD' ? 405 : 200),
-      );
-    });
-
-    $this->assertSame(
-      LinkChecker::REACHABLE,
-      $checker->check('https://external.test/resource')
-    );
-    $this->assertSame(array('HEAD', 'GET'), $methods);
+  public function testExternalUrlsAreAlwaysIndeterminateWithoutRequests() {
+    $checker = new LinkChecker();
+    $this->assertSame(LinkChecker::INDETERMINATE, $checker->check('https://external.test/a'));
   }
 
-  public function testTreatsTransportErrorsAsIndeterminate() {
-    $checker = new LinkChecker(function () {
-      return new WP_Error();
-    });
+  public function testPublishedInternalPostsAreReachableFromWordPressData() {
+    $url = 'https://example.test/known-page';
+    $GLOBALS['cife_test_internal_urls'][12] = $url;
+    $GLOBALS['cife_test_posts'][12] = (object) array('ID' => 12, 'post_status' => 'publish');
+    $this->assertSame(LinkChecker::REACHABLE, (new LinkChecker())->check($url));
+  }
 
+  public function testNonPublishedInternalPostsAreBroken() {
+    $url = 'https://example.test/draft-page';
+    $GLOBALS['cife_test_internal_urls'][13] = $url;
+    $GLOBALS['cife_test_posts'][13] = (object) array('ID' => 13, 'post_status' => 'draft');
+    $this->assertSame(LinkChecker::BROKEN, (new LinkChecker())->check($url));
+  }
+
+  public function testUnknownInternalRoutesAreIndeterminate() {
     $this->assertSame(
       LinkChecker::INDETERMINATE,
-      $checker->check('https://external.test/resource')
+      (new LinkChecker())->check('https://example.test/custom-route')
     );
   }
 
-  public function testSupportsLegacyExceptionDomainFilter() {
-    $GLOBALS['cife_test_filters']['brokenLinks/External/ExceptedDomains'] = function () {
-      return array('intranet.test');
+  public function testPreviouslyKnownInternalTargetBecomesBrokenWhenItDisappears() {
+    $history = new InMemoryInternalTargetRepository();
+    $url = 'https://example.test/deleted-page';
+    $history->remember($url, 99);
+    $this->assertSame(LinkChecker::BROKEN, (new LinkChecker($history))->check($url));
+  }
+
+  public function testInternalResolverCanBeExtendedByFilter() {
+    $GLOBALS['cife_test_filters']['cife_broken_links_internal_url_status'] = function () {
+      return LinkChecker::BROKEN;
     };
-    $checker = new LinkChecker(function () {
-      $this->fail('Excepted domains must not be requested.');
-    });
-
     $this->assertSame(
-      LinkChecker::REACHABLE,
-      $checker->check('https://intranet.test/page')
+      LinkChecker::BROKEN,
+      (new LinkChecker())->check('https://example.test/custom-route')
     );
   }
+}
 
-  public function testKnownInternalPostsAreReachableWithoutARequest() {
-    $url = 'https://example.test/known-page';
-    $GLOBALS['cife_test_internal_urls'][] = $url;
-    $checker = new LinkChecker(function () {
-      $this->fail('Known internal posts must not be requested.');
-    });
-
-    $this->assertSame(LinkChecker::REACHABLE, $checker->check($url));
-  }
+class InMemoryInternalTargetRepository extends InternalTargetRepository {
+  private $urls = array();
+  public function remember($url, $postId) { $this->urls[$url] = $postId; return true; }
+  public function wasKnown($url) { return isset($this->urls[$url]); }
 }

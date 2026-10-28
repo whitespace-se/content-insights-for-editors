@@ -3,6 +3,7 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
+use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ExternalLinkRepository;
 
 class MailFormatter {
   public static function mapArrayBase($post) {
@@ -47,6 +48,16 @@ class MailFormatter {
       '\CONTENT_INSIGHTS_FOR_EDITORS\Util\MailFormatter::mapArrayBase',
       $brokenLinks
     );
+    $externalLinksDue = (new ExternalLinkRepository())->getDueOccurrencesForUser($userID, 10);
+    $externalLinksMapped = array_map(function ($item) {
+      return array(
+        'url' => $item->url,
+        'title' => $item->url,
+        'value' => $item->review_due,
+        'secondary_url' => get_edit_post_link($item->post_id, 'raw'),
+        'secondary_title' => $item->post_title,
+      );
+    }, $externalLinksDue);
     $last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
     $rarelyUpdated = array();
     if ($last_updated_threshold) {
@@ -82,7 +93,7 @@ class MailFormatter {
         $userData->first_name ?: $userData->display_name
       ),
       'intro_text' => __(
-        'This is a short summary of all pages you are the author to that contains broken links, pages that has not been updated in a while and your most visited pages this week.',
+        'This summary covers internal broken links, external links requiring manual review, pages not updated in a while, and your most visited pages this week.',
         'content-insights-for-editors'
       ),
       'button_cta_text' => null,
@@ -101,6 +112,16 @@ class MailFormatter {
         'Good news! No broken links found this time, keep up the good work.',
         'content-insights-for-editors'
       ),
+    ];
+    $sections[] = [
+      'id' => 'external-links-due',
+      'list' => $externalLinksMapped,
+      'list_header' => [
+        'title' => __('External link and page', 'content-insights-for-editors'),
+        'value' => __('Review due', 'content-insights-for-editors'),
+      ],
+      'section_header' => __('External links requiring manual review', 'content-insights-for-editors'),
+      'no_items_text' => __('No external links currently require review.', 'content-insights-for-editors'),
     ];
     if (Matomo::$matomoIsActive) {
       $sections[] = [

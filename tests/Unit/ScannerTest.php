@@ -1,6 +1,7 @@
 <?php
 
 use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ContentProvider;
+use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ExternalLinkRepository;
 use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\LinkChecker;
 use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\LinkExtractor;
 use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\Repository;
@@ -8,134 +9,79 @@ use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\Scanner;
 use PHPUnit\Framework\TestCase;
 
 class ScannerTest extends TestCase {
-  protected function setUp(): void {
-    $GLOBALS['cife_test_transients'] = array();
-  }
-
-  public function testPreservesPreviousBrokenResultWhenRecheckIsIndeterminate() {
+  public function testChecksOnlyInternalLinksAndInventoriesExternalLinks() {
     $postId = 42;
     $GLOBALS['cife_test_posts'][$postId] = (object) array('ID' => $postId);
     $GLOBALS['cife_test_permalinks'][$postId] = 'https://example.test/page';
-
-    $repository = new InMemoryBrokenLinkRepository(
-      array('https://timeout.test/link', 'https://fixed.test/link')
-    );
-    $scanner = new Scanner(
-      $repository,
-      new FixedContentProvider(),
-      new FixedLinkExtractor(),
-      new FixedLinkChecker()
-    );
+    $broken = new InMemoryBrokenLinkRepository(array('https://example.test/timeout'));
+    $external = new InMemoryExternalLinkRepository();
+    $checker = new FixedInternalLinkChecker();
+    $scanner = new Scanner($broken, new FixedContentProvider(), new FixedLinkExtractor(), $checker, $external);
 
     $this->assertTrue($scanner->scanPost($postId));
-    $this->assertSame(
-      array('https://broken.test/link', 'https://timeout.test/link'),
-      $repository->saved
-    );
+    $this->assertSame(array('https://example.test/broken', 'https://example.test/timeout'), $broken->saved);
+    $this->assertSame(array('https://external.test/link'), $external->saved);
+    $this->assertSame(3, $checker->calls);
   }
 
-  public function testResumesAUrlBatchWithoutReplacingPartialResults() {
+  public function testResumesBothResultSetsWithoutSavingPartialData() {
     $postId = 43;
     $GLOBALS['cife_test_posts'][$postId] = (object) array('ID' => $postId);
-    $GLOBALS['cife_test_permalinks'][$postId] = 'https://example.test/batched-page';
-    $repository = new InMemoryBrokenLinkRepository(array());
-    $scanner = new Scanner(
-      $repository,
-      new FixedContentProvider(),
-      new FixedLinkExtractor(),
-      new FixedLinkChecker()
-    );
+    $GLOBALS['cife_test_permalinks'][$postId] = 'https://example.test/page';
+    $broken = new InMemoryBrokenLinkRepository(array());
+    $external = new InMemoryExternalLinkRepository();
+    $scanner = new Scanner($broken, new FixedContentProvider(), new FixedLinkExtractor(), new FixedInternalLinkChecker(), $external);
 
-    $first = $scanner->scanPostBatch($postId, 0, array(), 2);
+    $first = $scanner->scanPostBatch($postId, 0, array(), 2, null, array());
     $this->assertFalse($first['complete']);
-    $this->assertSame(2, $first['next_offset']);
-    $this->assertSame(array(), $repository->saved);
+    $this->assertSame(array('https://external.test/link'), $first['external_urls']);
+    $this->assertSame(array(), $broken->saved);
 
     $second = $scanner->scanPostBatch(
-      $postId,
-      $first['next_offset'],
-      $first['broken_urls'],
-      2
+      $postId, $first['next_offset'], $first['broken_urls'], 10, null, $first['external_urls']
     );
     $this->assertTrue($second['complete']);
-    $this->assertTrue($second['saved']);
-    $this->assertSame(array('https://broken.test/link'), $repository->saved);
-  }
-
-  public function testCachesDefinitiveResultsAcrossScannerInstances() {
-    $postId = 44;
-    $GLOBALS['cife_test_posts'][$postId] = (object) array('ID' => $postId);
-    $GLOBALS['cife_test_permalinks'][$postId] = 'https://example.test/cached-page';
-    $checker = new CountingLinkChecker();
-
-    (new Scanner(
-      new InMemoryBrokenLinkRepository(array()),
-      new FixedContentProvider(),
-      new FixedLinkExtractor(),
-      $checker
-    ))->scanPost($postId);
-    (new Scanner(
-      new InMemoryBrokenLinkRepository(array()),
-      new FixedContentProvider(),
-      new FixedLinkExtractor(),
-      $checker
-    ))->scanPost($postId);
-
-    $this->assertSame(4, $checker->calls);
+    $this->assertSame(array('https://example.test/broken'), $broken->saved);
+    $this->assertSame(array('https://external.test/link'), $external->saved);
   }
 }
 
 class InMemoryBrokenLinkRepository extends Repository {
   private $previous;
   public $saved = array();
+  public function __construct(array $previous) { $this->previous = $previous; }
+  public function getForPost($postId) { return $this->previous; }
+  public function replaceForPost($postId, array $urls) { $this->saved = $urls; return true; }
+  public function deleteForPost($postId) { return true; }
+}
 
-  public function __construct(array $previous) {
-    $this->previous = $previous;
-  }
-
-  public function getForPost($postId) {
-    return $this->previous;
-  }
-
-  public function replaceForPost($postId, array $urls) {
-    $this->saved = $urls;
-    return true;
-  }
+class InMemoryExternalLinkRepository extends ExternalLinkRepository {
+  public $saved = array();
+  public function replaceForPost($postId, array $urls) { $this->saved = $urls; return true; }
+  public function deleteForPost($postId) { return true; }
 }
 
 class FixedContentProvider extends ContentProvider {
-  public function getFragments($postId) {
-    return array('unused');
-  }
+  public function getFragments($postId) { return array('unused'); }
 }
 
 class FixedLinkExtractor extends LinkExtractor {
   public function extract(array $fragments, $baseUrl) {
     return array(
-      'https://broken.test/link',
-      'https://timeout.test/link',
-      'https://fixed.test/link',
+      'https://external.test/link',
+      'https://example.test/reachable',
+      'https://example.test/broken',
+      'https://example.test/timeout',
     );
   }
 }
 
-class FixedLinkChecker extends LinkChecker {
-  public function check($url) {
-    if (strpos($url, 'broken.test') !== false) {
-      return self::BROKEN;
-    }
-    if (strpos($url, 'timeout.test') !== false) {
-      return self::INDETERMINATE;
-    }
-    return self::REACHABLE;
-  }
-}
-
-class CountingLinkChecker extends FixedLinkChecker {
+class FixedInternalLinkChecker extends LinkChecker {
   public $calls = 0;
-
   public function check($url) {
     $this->calls++;
-    return parent::check($url);
+    if (strpos($url, '/broken') !== false) { return self::BROKEN; }
+    if (strpos($url, '/timeout') !== false) { return self::INDETERMINATE; }
+    return self::REACHABLE;
   }
 }

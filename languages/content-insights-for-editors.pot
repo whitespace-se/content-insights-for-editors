@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Content Insights for Editors plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Insights for Editors 2.3.0\n"
+"Project-Id-Version: Content Insights for Editors 2.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-for-editors\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T16:24:04+00:00\n"
+"POT-Creation-Date: 2026-10-28T10:05:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: content-insights-for-editors\n"
@@ -60,37 +60,46 @@ msgid "Set the threshold for how many days a page that has not been updated shou
 msgstr ""
 
 #: source/php/AcfFields/php/options-page.php:96
-#: source/php/Admin/Dashboard.php:126
+#: source/php/AcfFields/php/options-page.php:112
+#: source/php/Admin/Dashboard.php:139
 msgid "days"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:122
+#: source/php/AcfFields/php/options-page.php:102
+msgid "External link review interval"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:105
+msgid "Remind page owners to manually review external links after this many days."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:138
 msgid "ex. https://analys.yourdomain.se/"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:141
+#: source/php/AcfFields/php/options-page.php:157
 msgid "Matomo Api key"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:144
+#: source/php/AcfFields/php/options-page.php:160
 msgid "Visit admin for your Matomo installation. Under Platform -> API there is & token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to xxxxxxxxxxxxxxx"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:163
+#: source/php/AcfFields/php/options-page.php:179
 msgid "Matomo site id"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:225
+#: source/php/AcfFields/php/options-page.php:241
 msgid "Customer feedback minimum responses"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:231
+#: source/php/AcfFields/php/options-page.php:247
 msgid "Set the threshold for how votes (yes/no) the page must have since last update."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:245
-#: source/php/Admin/Dashboard.php:96
-#: source/php/Admin/Dashboard.php:110
+#: source/php/AcfFields/php/options-page.php:261
+#: source/php/Admin/Dashboard.php:109
+#: source/php/Admin/Dashboard.php:123
 msgid "votes"
 msgstr ""
 
@@ -98,120 +107,205 @@ msgstr ""
 msgid "Every Second Week"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:21
+#: source/php/Admin/Dashboard.php:22
 msgid "Top 10 most visitied pages last 7 days (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:29
+#: source/php/Admin/Dashboard.php:30
 msgid "Top 10 most visitied pages last month (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:38
+#: source/php/Admin/Dashboard.php:39
 msgid "Top 10 pages with most number of broken links (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:49
+#: source/php/Admin/Dashboard.php:47
+msgid "External links requiring review (sitewide)"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:55
 msgid "Top 10 pages not updated in a while (sitewide)"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:62
+#: source/php/Admin/Dashboard.php:68
 msgid "Your top 10 pages most visited last month"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:71
+#: source/php/Admin/Dashboard.php:77
 msgid "Your 10 least visited pages last month"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:81
+#: source/php/Admin/Dashboard.php:87
 msgid "All your pages with broken links"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:90
+#: source/php/Admin/Dashboard.php:93
+msgid "External links on your pages requiring review"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:103
 msgid "Top 10 pages with most most positive feedback responses"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:94
-#: source/php/Admin/Dashboard.php:108
+#: source/php/Admin/Dashboard.php:107
+#: source/php/Admin/Dashboard.php:121
 msgid "minimum"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:104
+#: source/php/Admin/Dashboard.php:117
 msgid "Top 10 pages with least positive feedback responses"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:121
+#: source/php/Admin/Dashboard.php:134
 msgid "All your pages not updated in the last"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:216
+#: source/php/Admin/Dashboard.php:192
+#: source/php/Util/MailFormatter.php:124
+msgid "No external links currently require review."
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:201
+msgid "Review external links"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:252
 msgid "No broken links found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:220
+#: source/php/Admin/Dashboard.php:256
 msgid "Nice job, everything seems to be in order."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:227
-#: source/php/Admin/Dashboard.php:325
-#: source/php/Admin/Dashboard.php:383
+#: source/php/Admin/Dashboard.php:263
+#: source/php/Admin/Dashboard.php:361
+#: source/php/Admin/Dashboard.php:419
 msgid "Click here to"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:229
-#: source/php/Admin/Dashboard.php:385
+#: source/php/Admin/Dashboard.php:265
+#: source/php/Admin/Dashboard.php:421
 msgid "view your pages"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:258
-#: source/php/Admin/Dashboard.php:346
-#: source/php/Admin/Dashboard.php:410
-#: source/php/Util/MailFormatter.php:97
-#: source/php/Util/MailFormatter.php:110
-#: source/php/Util/MailFormatter.php:127
+#: source/php/Admin/Dashboard.php:294
+#: source/php/Admin/Dashboard.php:382
+#: source/php/Admin/Dashboard.php:446
+#: source/php/Util/MailFormatter.php:108
+#: source/php/Util/MailFormatter.php:131
+#: source/php/Util/MailFormatter.php:148
 msgid "Page title"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:259
-#: source/php/Util/MailFormatter.php:111
+#: source/php/Admin/Dashboard.php:295
+#: source/php/Util/MailFormatter.php:132
 msgid "Number of visitors"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:260
-#: source/php/Admin/Dashboard.php:347
-#: source/php/Util/ListTable.php:94
-#: source/php/Util/MailFormatter.php:128
+#: source/php/Admin/Dashboard.php:296
+#: source/php/Admin/Dashboard.php:383
+#: source/php/Util/ListTable.php:96
+#: source/php/Util/MailFormatter.php:149
 msgid "Last updated"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:316
-#: source/php/Admin/Dashboard.php:464
+#: source/php/Admin/Dashboard.php:352
+#: source/php/Admin/Dashboard.php:500
 msgid "No pages found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:321
-#: source/php/Util/MailFormatter.php:117
+#: source/php/Admin/Dashboard.php:357
+#: source/php/Util/MailFormatter.php:138
 msgid "Seems like you are not the author of any pages yet."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:327
+#: source/php/Admin/Dashboard.php:363
 msgid "create a new page"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:368
+#: source/php/Admin/Dashboard.php:404
 msgid "No old pages found"
 msgstr ""
 
 #. translators: %d: number of days in the outdated-content threshold.
-#: source/php/Admin/Dashboard.php:374
+#: source/php/Admin/Dashboard.php:410
 msgid "Great! All of your pages have been updated within the last %d days."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:411
+#: source/php/Admin/Dashboard.php:447
 msgid "Weekly visitors"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:469
+#: source/php/Admin/Dashboard.php:505
 msgid "We could not find any pages that has got enough votes"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:18
+#: source/php/Admin/ExternalLinks.php:19
+#: source/php/Admin/ExternalLinks.php:38
+msgid "External links"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:28
+msgid "You are not allowed to view external links."
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:39
+msgid "CIFE never requests external URLs. Open a link yourself, verify it, then record the review date here."
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:41
+msgid "The external link was marked as checked."
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:45
+#: source/php/Util/ListTable.php:63
+msgid "All"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:46
+#: source/php/Util/MailFormatter.php:121
+msgid "Review due"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:49
+msgid "External link"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:50
+msgid "Appears on"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:51
+msgid "First seen"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:52
+msgid "Checked on"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:53
+msgid "Next review"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:54
+msgid "Action"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:60
+msgid "No external links found."
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:77
+msgid "Mark as checked"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:95
+msgid "You are not allowed to review this link."
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:100
+msgid "The external-link review could not be saved."
 msgstr ""
 
 #: source/php/Admin/Main.php:37
@@ -251,43 +345,39 @@ msgstr ""
 msgid "The broken-link check has been scheduled and will continue in the background."
 msgstr ""
 
-#: source/php/Admin/Main.php:157
-msgid "The check could not start while the legacy Broken Link Detector plugin is active."
-msgstr ""
-
-#: source/php/Admin/Main.php:178
+#: source/php/Admin/Main.php:167
 msgid "Next scheduled check for broken links"
 msgstr ""
 
-#: source/php/Admin/Main.php:190
+#: source/php/Admin/Main.php:179
 msgid "Analysed pages"
 msgstr ""
 
-#: source/php/Admin/Main.php:199
+#: source/php/Admin/Main.php:188
 msgid "Run broken-link check now"
 msgstr ""
 
-#: source/php/Admin/Main.php:215
+#: source/php/Admin/Main.php:204
 msgid "Fetch visitorstaticstics for all pages"
 msgstr ""
 
-#: source/php/Admin/Main.php:227
+#: source/php/Admin/Main.php:216
 msgid "You are not allowed to update analytics."
 msgstr ""
 
-#: source/php/Admin/Main.php:243
+#: source/php/Admin/Main.php:232
 msgid "The visitor statistics could not be updated."
 msgstr ""
 
-#: source/php/Admin/Main.php:266
+#: source/php/Admin/Main.php:255
 msgid "Update of visitor statistics complete"
 msgstr ""
 
-#: source/php/Admin/Main.php:270
+#: source/php/Admin/Main.php:259
 msgid "error"
 msgstr ""
 
-#: source/php/Admin/Main.php:271
+#: source/php/Admin/Main.php:260
 msgid "Something went wrong"
 msgstr ""
 
@@ -296,7 +386,7 @@ msgid "No data available"
 msgstr ""
 
 #: source/php/Admin/Metabox.php:39
-#: source/php/Util/MailFormatter.php:99
+#: source/php/Util/MailFormatter.php:110
 msgid "Broken links"
 msgstr ""
 
@@ -309,8 +399,8 @@ msgstr ""
 #: source/php/Admin/Metabox.php:56
 #: source/php/Admin/Metabox.php:65
 #: source/php/Admin/Metabox.php:74
-#: source/php/Util/ListTable.php:105
-#: source/php/Util/ListTable.php:111
+#: source/php/Util/ListTable.php:107
+#: source/php/Util/ListTable.php:113
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
@@ -325,85 +415,85 @@ msgstr ""
 msgid "Statistics from"
 msgstr ""
 
-#: source/php/Admin/Settings.php:78
 #: source/php/Admin/Settings.php:83
+#: source/php/Admin/Settings.php:88
 msgid "Settings"
 msgstr ""
 
-#: source/php/BrokenLinks/Scheduler.php:177
+#: source/php/BrokenLinks/Scheduler.php:178
 msgid "You are not allowed to run this check."
 msgstr ""
 
-#: source/php/Util/BrokenLinks.php:50
-msgid "The legacy Broken Link Detector plugin is active. CIFE will keep using its schedule until the legacy plugin is removed."
-msgstr ""
-
-#: source/php/Util/ListTable.php:62
-msgid "All"
-msgstr ""
-
-#: source/php/Util/ListTable.php:79
+#: source/php/Util/ListTable.php:81
 msgid "Show only pages with broken links"
 msgstr ""
 
-#: source/php/Util/ListTable.php:91
+#: source/php/Util/ListTable.php:93
 msgid "Post"
 msgstr ""
 
-#: source/php/Util/ListTable.php:92
+#: source/php/Util/ListTable.php:94
 msgid "Web address"
 msgstr ""
 
-#: source/php/Util/ListTable.php:93
+#: source/php/Util/ListTable.php:95
 msgid "Number of broken links"
 msgstr ""
 
-#: source/php/Util/ListTable.php:96
+#: source/php/Util/ListTable.php:98
 msgid "Editor"
 msgstr ""
 
-#: source/php/Util/ListTable.php:97
+#: source/php/Util/ListTable.php:99
 msgid "Author"
 msgstr ""
 
-#: source/php/Util/ListTable.php:103
-#: source/php/Util/ListTable.php:109
+#: source/php/Util/ListTable.php:105
+#: source/php/Util/ListTable.php:111
 msgid "Visitor"
 msgstr ""
 
-#: source/php/Util/ListTable.php:113
+#: source/php/Util/ListTable.php:115
 msgid "Analysis updated"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:81
+#: source/php/Util/MailFormatter.php:92
 msgid "Hi"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:84
-msgid "This is a short summary of all pages you are the author to that contains broken links, pages that has not been updated in a while and your most visited pages this week."
+#: source/php/Util/MailFormatter.php:95
+msgid "This summary covers internal broken links, external links requiring manual review, pages not updated in a while, and your most visited pages this week."
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:100
+#: source/php/Util/MailFormatter.php:111
 msgid "Good news! No broken links found this time, keep up the good work."
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:113
-msgid "Your top 10 pages most visited last week"
+#: source/php/Util/MailFormatter.php:120
+msgid "External link and page"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:130
-msgid "Pages not updated in a while"
+#: source/php/Util/MailFormatter.php:123
+msgid "External links requiring manual review"
 msgstr ""
 
 #: source/php/Util/MailFormatter.php:134
+msgid "Your top 10 pages most visited last week"
+msgstr ""
+
+#: source/php/Util/MailFormatter.php:151
+msgid "Pages not updated in a while"
+msgstr ""
+
+#: source/php/Util/MailFormatter.php:155
 msgid "Excellent all your pages have been updated recently!"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:147
+#: source/php/Util/MailFormatter.php:168
 msgid "Customer feedback"
 msgstr ""
 
-#: source/php/Util/MailFormatter.php:158
+#: source/php/Util/MailFormatter.php:179
 msgid "Summary of your pages content"
 msgstr ""
 

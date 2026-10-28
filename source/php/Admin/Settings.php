@@ -24,6 +24,11 @@ class Settings {
     return is_numeric($threshold) && $threshold > 0 ? $threshold : false;
   }
 
+  public static function validateAndGetExternalLinkReviewDays() {
+    $days = get_field('cife_external_link_review_days', 'options');
+    return is_numeric($days) && (int) $days > 0 ? (int) $days : 30;
+  }
+
   public static function validateAndGetMinFeedbackResponsesThreshold() {
     $threshold = get_field('ws_minimum_feedback_responses', 'options');
     return is_numeric($threshold) && $threshold > 0 ? $threshold : 5;
@@ -85,6 +90,7 @@ class Settings {
         ),
         'menu_slug' => Main::$MENU_SLUG . '-settings',
         'parent_slug' => Main::$MENU_SLUG,
+        'capability' => 'manage_options',
       ));
     }
   }

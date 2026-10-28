@@ -28,7 +28,7 @@ class Main {
     add_menu_page(
       __('Content Insights for Editors', 'content-insights-for-editors'),
       __('Content Insights for Editors', 'content-insights-for-editors'),
-      'manage_options',
+      'edit_posts',
       self::$MENU_SLUG,
       array($this, 'render')
     );
@@ -145,17 +145,6 @@ class Main {
       echo '<div class="notice notice-success is-dismissible"><p>';
       _e(
         'The broken-link check has been scheduled and will continue in the background.',
-        'content-insights-for-editors'
-      );
-      echo '</p></div>';
-    }
-    if (
-      isset($_GET['cife_scan_error']) &&
-      sanitize_key(wp_unslash($_GET['cife_scan_error'])) === 'legacy_plugin'
-    ) {
-      echo '<div class="notice notice-error"><p>';
-      esc_html_e(
-        'The check could not start while the legacy Broken Link Detector plugin is active.',
         'content-insights-for-editors'
       );
       echo '</p></div>';

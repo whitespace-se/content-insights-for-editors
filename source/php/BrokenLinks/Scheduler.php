@@ -43,10 +43,6 @@ class Scheduler {
   }
 
   public function ensureScheduled() {
-    if (class_exists('\\BrokenLinkDetector\\App')) {
-      return;
-    }
-
     if (wp_next_scheduled(self::LEGACY_HOOK)) {
       wp_clear_scheduled_hook(self::LEGACY_HOOK);
     }
@@ -57,10 +53,6 @@ class Scheduler {
   }
 
   public function startScan() {
-    if (class_exists('\\BrokenLinkDetector\\App')) {
-      return false;
-    }
-
     $existingState = get_option(self::STATE_OPTION);
     if (
       is_array($existingState) &&
@@ -123,6 +115,7 @@ class Scheduler {
           $state['current_post_id'] = (int) $postIds[0];
           $state['url_offset'] = 0;
           $state['broken_urls'] = array();
+          $state['external_urls'] = array();
         }
 
         $result = $scanner->scanPostBatch(
@@ -132,10 +125,14 @@ class Scheduler {
             ? $state['broken_urls']
             : array(),
           self::LINK_BATCH_SIZE,
-          $deadline
+          $deadline,
+          isset($state['external_urls']) && is_array($state['external_urls'])
+            ? $state['external_urls']
+            : array()
         );
         $state['url_offset'] = $result['next_offset'];
         $state['broken_urls'] = $result['broken_urls'];
+        $state['external_urls'] = $result['external_urls'];
 
         if (!$result['complete']) {
           break;
@@ -146,12 +143,16 @@ class Scheduler {
 
         $state['last_id'] = (int) $state['current_post_id'];
         $state['checked'] = isset($state['checked']) ? $state['checked'] + 1 : 1;
-        unset($state['current_post_id'], $state['url_offset'], $state['broken_urls']);
+        unset($state['current_post_id'], $state['url_offset'], $state['broken_urls'], $state['external_urls']);
       }
 
       if ($completeScan) {
         $repository = new Repository();
         $repository->deleteIneligible(
+          Settings::getAnalysedPostTypes(),
+          array('publish')
+        );
+        (new ExternalLinkRepository())->deleteIneligible(
           Settings::getAnalysedPostTypes(),
           array('publish')
         );
@@ -193,13 +194,11 @@ class Scheduler {
   public function deletePostResults($postId) {
     $repository = new Repository();
     $repository->deleteForPost($postId);
+    (new ExternalLinkRepository())->deleteForPost($postId);
   }
 
   public static function nextScheduledTimestamp() {
-    $hook = class_exists('\\BrokenLinkDetector\\App')
-      ? self::LEGACY_HOOK
-      : self::DAILY_HOOK;
-    return wp_next_scheduled($hook);
+    return wp_next_scheduled(self::DAILY_HOOK);
   }
 
   private function scheduleContinuation($delay) {

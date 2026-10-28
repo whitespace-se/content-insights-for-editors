@@ -2,119 +2,96 @@
 
 namespace CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks;
 
+/** Resolve same-site links using WordPress data only; never make HTTP requests. */
 class LinkChecker {
   const REACHABLE = 'reachable';
   const BROKEN = 'broken';
   const INDETERMINATE = 'indeterminate';
+  private $targetRepository;
 
-  private $requester;
+  public function __construct(InternalTargetRepository $targetRepository = null) {
+    $this->targetRepository = $targetRepository;
+  }
 
-  public function __construct($requester = null) {
-    $this->requester = $requester;
+  public function isInternal($url) {
+    $urlHost = $this->normaliseHost($url);
+    if (!$urlHost) {
+      return false;
+    }
+    foreach (array(home_url('/'), site_url('/')) as $siteUrl) {
+      if ($urlHost === $this->normaliseHost($siteUrl)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public function check($url) {
-    $host = parse_url($url, PHP_URL_HOST);
-    if (!$host) {
-      return self::BROKEN;
-    }
-
-    $exceptedDomains = apply_filters(
-      'cife_broken_links_excepted_domains',
-      apply_filters('brokenLinks/External/ExceptedDomains', array())
-    );
-
-    if (in_array($host, (array) $exceptedDomains, true)) {
-      return self::REACHABLE;
-    }
-
-    if ($this->isKnownInternalUrl($url)) {
-      return self::REACHABLE;
-    }
-
-    $response = $this->request('HEAD', $url);
-    if (is_wp_error($response)) {
+    if (!$this->isInternal($url)) {
       return self::INDETERMINATE;
     }
-
-    $status = (int) wp_remote_retrieve_response_code($response);
-    if (in_array($status, array(405, 501), true)) {
-      $response = $this->request('GET', $url);
-      if (is_wp_error($response)) {
-        return self::INDETERMINATE;
+    $filtered = apply_filters('cife_broken_links_internal_url_status', null, $url);
+    if (in_array($filtered, array(self::REACHABLE, self::BROKEN, self::INDETERMINATE), true)) {
+      return $filtered;
+    }
+    if ($this->isSiteRoot($url)) {
+      return self::REACHABLE;
+    }
+    $postId = (int) url_to_postid($url);
+    if ($postId > 0) {
+      $post = get_post($postId);
+      if ($this->targetRepository) {
+        $this->targetRepository->remember($url, $postId);
       }
-      $status = (int) wp_remote_retrieve_response_code($response);
+      return $post && $post->post_status === 'publish' ? self::REACHABLE : self::BROKEN;
     }
-
-    return $this->classifyStatus($status);
+    $uploadStatus = $this->checkUpload($url);
+    if ($uploadStatus !== null) {
+      return $uploadStatus;
+    }
+    return $this->targetRepository && $this->targetRepository->wasKnown($url)
+      ? self::BROKEN
+      : self::INDETERMINATE;
   }
 
-  public function classifyStatus($status) {
-    $reachableStatuses = apply_filters(
-      'cife_broken_links_reachable_statuses',
-      array(401, 403, 405, 406, 413)
-    );
-
-    if (($status >= 200 && $status < 400) || in_array($status, $reachableStatuses, true)) {
-      return self::REACHABLE;
-    }
-
-    if (in_array($status, array(408, 425, 429), true) || $status >= 500 || $status === 0) {
-      return self::INDETERMINATE;
-    }
-
-    return self::BROKEN;
-  }
-
-  private function request($method, $url) {
-    $args = apply_filters(
-      'cife_broken_links_http_args',
-      array(
-        'timeout' => 10,
-        'redirection' => 5,
-        'user-agent' => 'Content Insights for Editors/' . CONTENT_INSIGHTS_FOR_EDITORS_VERSION,
-        'limit_response_size' => $method === 'GET' ? 16384 : null,
-      ),
-      $url,
-      $method
-    );
-
-    if ($args['limit_response_size'] === null) {
-      unset($args['limit_response_size']);
-    }
-
-    if (is_callable($this->requester)) {
-      return call_user_func($this->requester, $method, $url, $args);
-    }
-
-    $siteHost = parse_url(get_site_url(), PHP_URL_HOST);
-    $urlHost = parse_url($url, PHP_URL_HOST);
-    $useSafeRequest = !$siteHost || !$urlHost || strcasecmp($siteHost, $urlHost) !== 0;
-    $useSafeRequest = apply_filters(
-      'cife_broken_links_use_safe_http',
-      $useSafeRequest,
-      $url
-    );
-
-    if ($method === 'GET') {
-      return $useSafeRequest
-        ? wp_safe_remote_get($url, $args)
-        : wp_remote_get($url, $args);
-    }
-
-    return $useSafeRequest
-      ? wp_safe_remote_head($url, $args)
-      : wp_remote_head($url, $args);
-  }
-
-  private function isKnownInternalUrl($url) {
-    $siteHost = parse_url(get_site_url(), PHP_URL_HOST);
-    $urlHost = parse_url($url, PHP_URL_HOST);
-
-    if (!$siteHost || !$urlHost || strcasecmp($siteHost, $urlHost) !== 0) {
+  private function normaliseHost($url) {
+    $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+    if ($host === '') {
       return false;
     }
+    $port = parse_url($url, PHP_URL_PORT);
+    $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+    if (!$port || ($scheme === 'http' && (int) $port === 80) || ($scheme === 'https' && (int) $port === 443)) {
+      $port = null;
+    }
+    return $host . ($port ? ':' . (int) $port : '');
+  }
 
-    return url_to_postid($url) > 0;
+  private function isSiteRoot($url) {
+    $path = (string) parse_url($url, PHP_URL_PATH);
+    $homePath = rtrim((string) parse_url(home_url('/'), PHP_URL_PATH), '/');
+    return rtrim($path, '/') === $homePath;
+  }
+
+  private function checkUpload($url) {
+    if (!function_exists('wp_upload_dir')) {
+      return null;
+    }
+    $uploads = wp_upload_dir(null, false);
+    if (!empty($uploads['error']) || empty($uploads['baseurl']) || empty($uploads['basedir'])) {
+      return null;
+    }
+    $urlPath = rawurldecode((string) parse_url($url, PHP_URL_PATH));
+    $basePath = rtrim(rawurldecode((string) parse_url($uploads['baseurl'], PHP_URL_PATH)), '/');
+    if ($basePath === '' || ($urlPath !== $basePath && strpos($urlPath, $basePath . '/') !== 0)) {
+      return null;
+    }
+    $relative = ltrim(substr($urlPath, strlen($basePath)), '/');
+    if ($relative === '' || strpos($relative, "\0") !== false || preg_match('#(^|/)\.\.(/|$)#', $relative)) {
+      return self::BROKEN;
+    }
+    return is_file(rtrim($uploads['basedir'], '/\\') . DIRECTORY_SEPARATOR . $relative)
+      ? self::REACHABLE
+      : self::BROKEN;
   }
 }

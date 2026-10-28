@@ -4,6 +4,7 @@ namespace CONTENT_INSIGHTS_FOR_EDITORS\Admin;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\PostQuery;
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\Matomo;
+use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ExternalLinkRepository;
 
 class Dashboard {
   function __construct() {
@@ -40,6 +41,11 @@ class Dashboard {
           'content-insights-for-editors'
         ),
         array($this, 'adminTopTenBrokenLinks')
+      );
+      wp_add_dashboard_widget(
+        'cife_external_links_due_admin',
+        __('External links requiring review (sitewide)', 'content-insights-for-editors'),
+        array($this, 'adminExternalLinksDue')
       );
       if ($last_updated_threshold) {
         wp_add_dashboard_widget(
@@ -81,6 +87,13 @@ class Dashboard {
       __('All your pages with broken links', 'content-insights-for-editors'),
       array($this, 'userBrokenLinks')
     );
+    if (current_user_can('edit_posts')) {
+      wp_add_dashboard_widget(
+        'cife_external_links_due_user',
+        __('External links on your pages requiring review', 'content-insights-for-editors'),
+        array($this, 'userExternalLinksDue')
+      );
+    }
 
     if (class_exists('\CustomerFeedback\App')):
       wp_add_dashboard_widget(
@@ -163,6 +176,29 @@ class Dashboard {
 
   public function userBrokenLinks() {
     $this->renderBrokenLinks(1000, get_current_user_id());
+  }
+
+  public function adminExternalLinksDue() {
+    $this->renderExternalLinksDue(false, 10);
+  }
+
+  public function userExternalLinksDue() {
+    $this->renderExternalLinksDue(get_current_user_id(), 100);
+  }
+
+  public function renderExternalLinksDue($userId, $take) {
+    $items = (new ExternalLinkRepository())->getDueOccurrencesForUser($userId, $take);
+    if (!$items) {
+      echo '<p>' . esc_html__('No external links currently require review.', 'content-insights-for-editors') . '</p>';
+      return;
+    }
+    echo '<table class="cife_table"><tbody>';
+    foreach ($items as $item) {
+      echo '<tr><td><a target="_blank" rel="noopener noreferrer" href="' . esc_url($item->url) . '">' . esc_html($item->url) . '</a><br>';
+      echo '<a href="' . esc_url(get_edit_post_link($item->post_id)) . '">' . esc_html($item->post_title) . '</a></td>';
+      echo '<td>' . esc_html($item->review_due) . '</td></tr>';
+    }
+    echo '</tbody></table><p><a href="' . esc_url(admin_url('admin.php?page=' . ExternalLinks::PAGE_SLUG . '&review_due=1')) . '">' . esc_html__('Review external links', 'content-insights-for-editors') . '</a></p>';
   }
 
   public function userRarelyUpdated() {

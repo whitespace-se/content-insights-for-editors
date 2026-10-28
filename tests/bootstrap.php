@@ -1,17 +1,12 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.3.0-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.0-test');
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';
 $GLOBALS['cife_test_internal_urls'] = array();
 $GLOBALS['cife_test_posts'] = array();
 $GLOBALS['cife_test_permalinks'] = array();
-$GLOBALS['cife_test_transients'] = array();
-
-if (!class_exists('WP_Error')) {
-  class WP_Error {}
-}
 
 function apply_filters($hook, $value) {
   $args = func_get_args();
@@ -25,18 +20,17 @@ function get_site_url() {
   return $GLOBALS['cife_test_site_url'];
 }
 
+function site_url($path = '') {
+  return rtrim($GLOBALS['cife_test_site_url'], '/') . '/' . ltrim($path, '/');
+}
+
+function home_url($path = '') {
+  return site_url($path);
+}
+
 function url_to_postid($url) {
-  return in_array($url, $GLOBALS['cife_test_internal_urls'], true) ? 1 : 0;
-}
-
-function is_wp_error($value) {
-  return $value instanceof WP_Error;
-}
-
-function wp_remote_retrieve_response_code($response) {
-  return isset($response['response']['code'])
-    ? $response['response']['code']
-    : 0;
+  $id = array_search($url, $GLOBALS['cife_test_internal_urls'], true);
+  return $id === false ? 0 : (is_int($id) ? $id : 1);
 }
 
 function get_post($postId) {
@@ -51,16 +45,9 @@ function get_permalink($postId) {
     : false;
 }
 
-function get_transient($key) {
-  return $GLOBALS['cife_test_transients'][$key] ?? false;
-}
-
-function set_transient($key, $value, $expiration) {
-  $GLOBALS['cife_test_transients'][$key] = $value;
-  return true;
-}
-
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/Repository.php';
+require_once dirname(__DIR__) . '/source/php/BrokenLinks/ExternalLinkRepository.php';
+require_once dirname(__DIR__) . '/source/php/BrokenLinks/InternalTargetRepository.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/ContentProvider.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkExtractor.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkChecker.php';

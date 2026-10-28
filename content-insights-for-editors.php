@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Content Insights for Editors
  * Description:       Analyse content for your website
- * Version:           2.3.0
+ * Version:           2.4.0
  * Requires PHP:      8.1
  * Author:            Whitespace
  * Text Domain:       content-insights-for-editors
@@ -16,7 +16,7 @@ if (!defined('WPINC')) {
 }
 define('CONTENT_INSIGHTS_FOR_EDITORS_PATH', plugin_dir_path(__FILE__));
 define('CONTENT_INSIGHTS_FOR_EDITORS_URL', plugins_url('', __FILE__));
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.3.0');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.0');
 define(
 	'CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH',
 	CONTENT_INSIGHTS_FOR_EDITORS_PATH . '/mail-templates'

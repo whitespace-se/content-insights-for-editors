@@ -20,7 +20,7 @@ class PostQuery {
     return '%s';
   }
 
-  private static function userSelectQuery() {
+  public static function userSelectQuery() {
     //FIX: When using municipio you may want to filter by "Redaktör" instead of "Author"
     $postName = self::$postTbName;
     if (Settings::getUseAlternateUserField()) {

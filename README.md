@@ -27,13 +27,20 @@ Content Insights for Editors is a WordPress plugin
 * [Matomo](https://matomo.org/) for visitor statistics
 
 Content Insights for Editors includes its own scheduled broken-link checker. It
-uses the WordPress HTTP API and stores results in the existing
+stores internal broken-link results in the existing
 `{$wpdb->prefix}broken_links_detector` table so upgrades from the former external
 detector retain their data.
 
-Checks run in resumable URL batches with a time limit. Definitive results are
-cached for six hours so links shared by navigation and modules are not requested
-once per page. Existing results are replaced only after a page has completed.
+Automatic validation is limited to URLs on the current WordPress site and makes
+no HTTP requests. Known WordPress content and uploads are resolved from local
+data; unknown custom routes remain indeterminate rather than being fetched or
+incorrectly reported as broken.
+
+External URLs are collected without being requested. Editors can review links
+from their own pages on the **External links** screen, while administrators see
+the sitewide inventory. A manual review can be marked with a checked date. The
+configurable review interval defaults to 30 days and feeds the dashboard and the
+existing manual and scheduled email summaries.
 
 ### Installing
 
