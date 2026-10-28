@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-"
 "for-editors\n"
-"POT-Creation-Date: 2026-10-28T10:05:07+00:00\n"
+"POT-Creation-Date: 2026-10-28T10:35:44+00:00\n"
 "PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,7 +42,7 @@ msgid "Whitespace"
 msgstr "Whitespace"
 
 #: source/php/AcfFields/php/options-page.php:9
-msgid "Analyzed posttypes"
+msgid "Analyzed post types"
 msgstr "Analyserade posttyper"
 
 #: source/php/AcfFields/php/options-page.php:29
@@ -58,16 +58,18 @@ msgstr ""
 "istället för Författare som används som standard."
 
 #: source/php/AcfFields/php/options-page.php:54
-msgid "Enable automatic mailing for broken links"
-msgstr "Aktivera automatiska utskick för brutna länkar"
+msgid "Enable automatic summary emails"
+msgstr "Aktivera automatiska sammanfattningsmejl"
 
 #: source/php/AcfFields/php/options-page.php:60
 msgid ""
-"Sends email to all authors, editors and administrators every two weeks with "
-"a report on their broken links."
+"Sends authors, editors and administrators a summary every two weeks covering "
+"internal broken links, external links due for review, outdated content and "
+"available visitor statistics."
 msgstr ""
-"Skickar mail till alla författare, redaktörer samt administratörer varannan "
-"vecka med en rapport om deras brutna länkar."
+"Skickar varannan vecka en sammanfattning till författare, redaktörer och "
+"administratörer med brutna interna länkar, externa länkar som behöver "
+"granskas, inaktuellt innehåll och tillgänglig besöksstatistik."
 
 #: source/php/AcfFields/php/options-page.php:79
 msgid "Obsolete pages"
@@ -98,15 +100,19 @@ msgstr ""
 "Påminn sidansvariga att granska externa länkar manuellt efter så här många "
 "dagar."
 
-#: source/php/AcfFields/php/options-page.php:138
+#: source/php/AcfFields/php/options-page.php:118
+msgid "Matomo API URL"
+msgstr "URL till Matomos API"
+
+#: source/php/AcfFields/php/options-page.php:121
 msgid "ex. https://analys.yourdomain.se/"
 msgstr "ex. https://analys.dindoman.se/"
 
-#: source/php/AcfFields/php/options-page.php:157
-msgid "Matomo Api key"
+#: source/php/AcfFields/php/options-page.php:140
+msgid "Matomo API key"
 msgstr "Matomo API-nyckel"
 
-#: source/php/AcfFields/php/options-page.php:160
+#: source/php/AcfFields/php/options-page.php:143
 msgid ""
 "Visit admin for your Matomo installation. Under Platform -> API there is & "
 "token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
@@ -115,15 +121,15 @@ msgstr ""
 "Besök admin för din Matomoinstallation. Under Plattform -> API finns "
 "&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
 
-#: source/php/AcfFields/php/options-page.php:179
+#: source/php/AcfFields/php/options-page.php:162
 msgid "Matomo site id"
 msgstr "Matomo-webbplats-ID"
 
-#: source/php/AcfFields/php/options-page.php:241
+#: source/php/AcfFields/php/options-page.php:205
 msgid "Customer feedback minimum responses"
 msgstr "Customer feedback minst antal svar"
 
-#: source/php/AcfFields/php/options-page.php:247
+#: source/php/AcfFields/php/options-page.php:211
 msgid ""
 "Set the threshold for how votes (yes/no) the page must have since last "
 "update."
@@ -131,7 +137,7 @@ msgstr ""
 "Ange tröskelvärdet för hur röster (Ja/Nej) sidan måste ha sedan senaste "
 "uppdateringen."
 
-#: source/php/AcfFields/php/options-page.php:261
+#: source/php/AcfFields/php/options-page.php:225
 #: source/php/Admin/Dashboard.php:109 source/php/Admin/Dashboard.php:123
 msgid "votes"
 msgstr "röster"
@@ -262,7 +268,8 @@ msgid "We could not find any pages that has got enough votes"
 msgstr "Vi kunde inte hitta några sidor som har fått tillräckligt med röster"
 
 #: source/php/Admin/ExternalLinks.php:18 source/php/Admin/ExternalLinks.php:19
-#: source/php/Admin/ExternalLinks.php:38
+#: source/php/Admin/ExternalLinks.php:42 source/php/Admin/Metabox.php:51
+#: source/php/Admin/Metabox.php:57
 msgid "External links"
 msgstr "Externa länkar"
 
@@ -270,7 +277,11 @@ msgstr "Externa länkar"
 msgid "You are not allowed to view external links."
 msgstr "Du har inte behörighet att visa externa länkar."
 
-#: source/php/Admin/ExternalLinks.php:39
+#: source/php/Admin/ExternalLinks.php:35
+msgid "You are not allowed to view external links for this page."
+msgstr "Du har inte behörighet att visa externa länkar för den här sidan."
+
+#: source/php/Admin/ExternalLinks.php:43
 msgid ""
 "CIFE never requests external URLs. Open a link yourself, verify it, then "
 "record the review date here."
@@ -278,55 +289,55 @@ msgstr ""
 "CIFE anropar aldrig externa webbadresser. Öppna länken själv, kontrollera "
 "den och registrera sedan granskningsdatumet här."
 
-#: source/php/Admin/ExternalLinks.php:41
+#: source/php/Admin/ExternalLinks.php:45
 msgid "The external link was marked as checked."
 msgstr "Den externa länken markerades som kontrollerad."
 
-#: source/php/Admin/ExternalLinks.php:45 source/php/Util/ListTable.php:63
+#: source/php/Admin/ExternalLinks.php:52 source/php/Util/ListTable.php:63
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Admin/ExternalLinks.php:46 source/php/Util/MailFormatter.php:121
+#: source/php/Admin/ExternalLinks.php:53 source/php/Util/MailFormatter.php:121
 msgid "Review due"
 msgstr "Granskning senast"
 
-#: source/php/Admin/ExternalLinks.php:49
+#: source/php/Admin/ExternalLinks.php:56
 msgid "External link"
 msgstr "Extern länk"
 
-#: source/php/Admin/ExternalLinks.php:50
+#: source/php/Admin/ExternalLinks.php:57
 msgid "Appears on"
 msgstr "Finns på"
 
-#: source/php/Admin/ExternalLinks.php:51
+#: source/php/Admin/ExternalLinks.php:58
 msgid "First seen"
 msgstr "Först upptäckt"
 
-#: source/php/Admin/ExternalLinks.php:52
+#: source/php/Admin/ExternalLinks.php:59
 msgid "Checked on"
 msgstr "Kontrollerad"
 
-#: source/php/Admin/ExternalLinks.php:53
+#: source/php/Admin/ExternalLinks.php:60
 msgid "Next review"
 msgstr "Nästa granskning"
 
-#: source/php/Admin/ExternalLinks.php:54
+#: source/php/Admin/ExternalLinks.php:61
 msgid "Action"
 msgstr "Åtgärd"
 
-#: source/php/Admin/ExternalLinks.php:60
+#: source/php/Admin/ExternalLinks.php:67
 msgid "No external links found."
 msgstr "Inga externa länkar hittades."
 
-#: source/php/Admin/ExternalLinks.php:77
+#: source/php/Admin/ExternalLinks.php:84
 msgid "Mark as checked"
 msgstr "Markera som kontrollerad"
 
-#: source/php/Admin/ExternalLinks.php:95
+#: source/php/Admin/ExternalLinks.php:102
 msgid "You are not allowed to review this link."
 msgstr "Du har inte behörighet att granska den här länken."
 
-#: source/php/Admin/ExternalLinks.php:100
+#: source/php/Admin/ExternalLinks.php:107
 msgid "The external-link review could not be saved."
 msgstr "Granskningen av den externa länken kunde inte sparas."
 
@@ -404,33 +415,52 @@ msgstr "fel"
 msgid "Something went wrong"
 msgstr "Något gick fel"
 
-#: source/php/Admin/Metabox.php:31
+#: source/php/Admin/Metabox.php:33
 msgid "No data available"
 msgstr "Ingen data fanns tillgänglig"
 
-#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:110
-msgid "Broken links"
-msgstr "Brutna länkar"
+#: source/php/Admin/Metabox.php:41
+msgid "Broken internal links"
+msgstr "Brutna interna länkar"
 
-#: source/php/Admin/Metabox.php:45 source/php/Admin/Metabox.php:63
+#. translators: %d: number of external links found on the current page.
+#: source/php/Admin/Metabox.php:53
+msgid "%d link"
+msgid_plural "%d links"
+msgstr[0] "%d länk"
+msgstr[1] "%d länkar"
+
+#: source/php/Admin/Metabox.php:62
+msgid "Visitor statistics"
+msgstr "Besöksstatistik"
+
+#: source/php/Admin/Metabox.php:63
+msgid "Matomo is not connected"
+msgstr "Matomo är inte anslutet"
+
+#: source/php/Admin/Metabox.php:70 source/php/Admin/Metabox.php:78
 msgid "Visitors"
 msgstr "Besökare"
 
-#: source/php/Admin/Metabox.php:47 source/php/Admin/Metabox.php:56
-#: source/php/Admin/Metabox.php:65 source/php/Admin/Metabox.php:74
+#: source/php/Admin/Metabox.php:70 source/php/Admin/Metabox.php:74
+#: source/php/Admin/Metabox.php:78 source/php/Admin/Metabox.php:82
 #: source/php/Util/ListTable.php:107 source/php/Util/ListTable.php:113
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
 msgstr[1] "dagar"
 
-#: source/php/Admin/Metabox.php:54 source/php/Admin/Metabox.php:72
+#: source/php/Admin/Metabox.php:74 source/php/Admin/Metabox.php:82
 msgid "Pageviews"
 msgstr "Sidvisningar"
 
-#: source/php/Admin/Metabox.php:79
+#: source/php/Admin/Metabox.php:86
 msgid "Statistics from"
 msgstr "Statistik från"
+
+#: source/php/Admin/Metabox.php:87 source/php/Admin/Metabox.php:110
+msgid "No data yet"
+msgstr "Ingen data ännu"
 
 #: source/php/Admin/Settings.php:83 source/php/Admin/Settings.php:88
 msgid "Settings"
@@ -482,8 +512,12 @@ msgid ""
 "review, pages not updated in a while, and your most visited pages this week."
 msgstr ""
 "Den här sammanfattningen tar upp brutna interna länkar, externa länkar som "
-"behöver granskas manuellt, sidor som inte har uppdaterats på ett tag och dina "
-"mest besökta sidor den här veckan."
+"behöver granskas manuellt, sidor som inte har uppdaterats på ett tag och "
+"dina mest besökta sidor den här veckan."
+
+#: source/php/Util/MailFormatter.php:110
+msgid "Broken links"
+msgstr "Brutna länkar"
 
 #: source/php/Util/MailFormatter.php:111
 msgid "Good news! No broken links found this time, keep up the good work."
@@ -541,6 +575,13 @@ msgstr "Matomo returnerade ett ogiltigt svar."
 #: source/php/Util/Matomo.php:222
 msgid "Matomo returned an error."
 msgstr "Matomo returnerade ett fel."
+
+#~ msgid ""
+#~ "Sends email to all authors, editors and administrators every two weeks "
+#~ "with a report on their broken links."
+#~ msgstr ""
+#~ "Skickar mail till alla författare, redaktörer samt administratörer "
+#~ "varannan vecka med en rapport om deras brutna länkar."
 
 #~ msgid ""
 #~ "The check could not start while the legacy Broken Link Detector plugin is "

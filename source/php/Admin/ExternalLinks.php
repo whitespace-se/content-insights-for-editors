@@ -30,17 +30,24 @@ class ExternalLinks {
     $repository = new ExternalLinkRepository();
     $userId = current_user_can('manage_options') ? false : get_current_user_id();
     $dueOnly = !empty($_GET['review_due']) && sanitize_key(wp_unslash($_GET['review_due'])) === '1';
+    $postId = isset($_GET['post_id']) ? absint(wp_unslash($_GET['post_id'])) : false;
+    if ($postId && !current_user_can('manage_options') && !current_user_can('edit_post', $postId)) {
+      wp_die(esc_html__('You are not allowed to view external links for this page.', 'content-insights-for-editors'));
+    }
     $page = isset($_GET['paged']) ? max(1, absint(wp_unslash($_GET['paged']))) : 1;
     $perPage = 50;
-    $items = $repository->getLinks($userId, $dueOnly, $perPage, ($page - 1) * $perPage);
-    $total = $repository->countLinks($userId, $dueOnly);
+    $items = $repository->getLinks($userId, $dueOnly, $perPage, ($page - 1) * $perPage, $postId);
+    $total = $repository->countLinks($userId, $dueOnly, $postId);
 
     echo '<div class="wrap"><h1>' . esc_html__('External links', 'content-insights-for-editors') . '</h1>';
     echo '<p>' . esc_html__('CIFE never requests external URLs. Open a link yourself, verify it, then record the review date here.', 'content-insights-for-editors') . '</p>';
     if (!empty($_GET['cife_link_checked'])) {
       echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('The external link was marked as checked.', 'content-insights-for-editors') . '</p></div>';
     }
-    $allUrl = admin_url('admin.php?page=' . self::PAGE_SLUG);
+    $allUrl = add_query_arg(
+      array_filter(array('page' => self::PAGE_SLUG, 'post_id' => $postId)),
+      admin_url('admin.php')
+    );
     $dueUrl = add_query_arg('review_due', '1', $allUrl);
     echo '<ul class="subsubsub"><li><a href="' . esc_url($allUrl) . '"' . (!$dueOnly ? ' class="current"' : '') . '>' . esc_html__('All', 'content-insights-for-editors') . '</a> | </li>';
     echo '<li><a href="' . esc_url($dueUrl) . '"' . ($dueOnly ? ' class="current"' : '') . '>' . esc_html__('Review due', 'content-insights-for-editors') . '</a></li></ul>';

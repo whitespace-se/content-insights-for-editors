@@ -6,14 +6,14 @@ if (function_exists('acf_add_local_field_group')) {
     'fields' => array(
       array(
         'key' => 'field_5d19ab0cbbc00',
-        'label' => __('Analyzed posttypes', 'content-insights-for-editors'),
+        'label' => __('Analyzed post types', 'content-insights-for-editors'),
         'name' => 'analysed_post_types',
         'type' => 'posttype_select',
         'instructions' => '',
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '',
+          'width' => '50',
           'class' => '',
           'id' => '',
         ),
@@ -39,38 +39,38 @@ if (function_exists('acf_add_local_field_group')) {
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '',
+          'width' => '25',
           'class' => '',
           'id' => '',
         ),
         'message' => '',
         'default_value' => 0,
-        'ui' => 0,
+        'ui' => 1,
         'ui_on_text' => '',
         'ui_off_text' => '',
       ),
       array(
         'key' => 'field_5d19cd83d4ea3',
         'label' => __(
-          'Enable automatic mailing for broken links',
+          'Enable automatic summary emails',
           'content-insights-for-editors'
         ),
         'name' => 'use_broken_links_cron',
         'type' => 'true_false',
         'instructions' => __(
-          'Sends email to all authors, editors and administrators every two weeks with a report on their broken links.',
+          'Sends authors, editors and administrators a summary every two weeks covering internal broken links, external links due for review, outdated content and available visitor statistics.',
           'content-insights-for-editors'
         ),
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '',
+          'width' => '25',
           'class' => '',
           'id' => '',
         ),
         'message' => '',
         'default_value' => 0,
-        'ui' => 0,
+        'ui' => 1,
         'ui_on_text' => '',
         'ui_off_text' => '',
       ),
@@ -86,7 +86,7 @@ if (function_exists('acf_add_local_field_group')) {
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '25',
+          'width' => '50',
           'class' => '',
           'id' => '',
         ),
@@ -105,7 +105,7 @@ if (function_exists('acf_add_local_field_group')) {
         'instructions' => __('Remind page owners to manually review external links after this many days.', 'content-insights-for-editors'),
         'required' => 0,
         'conditional_logic' => 0,
-        'wrapper' => array('width' => '25', 'class' => '', 'id' => ''),
+        'wrapper' => array('width' => '50', 'class' => '', 'id' => ''),
         'default_value' => 30,
         'placeholder' => '',
         'prepend' => '',
@@ -114,25 +114,8 @@ if (function_exists('acf_add_local_field_group')) {
         'step' => 1,
       ),
       array(
-        'key' => 'field_5d1c8cd534387',
-        'label' => '<h1>Matomo</h1>',
-        'name' => '',
-        'type' => 'message',
-        'instructions' => '',
-        'required' => 0,
-        'conditional_logic' => 0,
-        'wrapper' => array(
-          'width' => '',
-          'class' => '',
-          'id' => '',
-        ),
-        'message' => '',
-        'new_lines' => 'wpautop',
-        'esc_html' => 0,
-      ),
-      array(
         'key' => 'field_5d1c8d1235ea1',
-        'label' => 'Matomo Api URL',
+        'label' => __('Matomo API URL', 'content-insights-for-editors'),
         'name' => 'matomo_api_url',
         'type' => 'text',
         'instructions' => __(
@@ -142,7 +125,7 @@ if (function_exists('acf_add_local_field_group')) {
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '',
+          'width' => '40',
           'class' => '',
           'id' => '',
         ),
@@ -154,7 +137,7 @@ if (function_exists('acf_add_local_field_group')) {
       ),
       array(
         'key' => 'field_5d1c8d2b35ea2',
-        'label' => __('Matomo Api key', 'content-insights-for-editors'),
+        'label' => __('Matomo API key', 'content-insights-for-editors'),
         'name' => 'matomo_api_key',
         'type' => 'text',
         'instructions' => __(
@@ -164,7 +147,7 @@ if (function_exists('acf_add_local_field_group')) {
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '',
+          'width' => '45',
           'class' => '',
           'id' => '',
         ),
@@ -183,7 +166,7 @@ if (function_exists('acf_add_local_field_group')) {
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => array(
-          'width' => '',
+          'width' => '15',
           'class' => '',
           'id' => '',
         ),
@@ -218,25 +201,6 @@ if (function_exists('acf_add_local_field_group')) {
   if (class_exists('\CustomerFeedback\App')) {
     acf_add_local_field(array(
       'parent' => 'group_5d19aaf9c929e',
-      'key' => 'field_5d1c8cd5343f2',
-      'label' => '<h1>Customer Feedback</h1>',
-      'name' => '',
-      'type' => 'message',
-      'instructions' => '',
-      'required' => 0,
-      'conditional_logic' => 0,
-      'wrapper' => array(
-        'width' => '',
-        'class' => '',
-        'id' => '',
-      ),
-      'message' => '',
-      'new_lines' => 'wpautop',
-      'esc_html' => 0,
-    ));
-
-    acf_add_local_field(array(
-      'parent' => 'group_5d19aaf9c929e',
       'key' => 'field_5d1c8a1212bf6',
       'label' => __(
         'Customer feedback minimum responses',
@@ -251,7 +215,7 @@ if (function_exists('acf_add_local_field_group')) {
       'required' => 0,
       'conditional_logic' => 0,
       'wrapper' => array(
-        'width' => '25',
+        'width' => '50',
         'class' => '',
         'id' => '',
       ),

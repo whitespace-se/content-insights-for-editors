@@ -14,7 +14,7 @@ require_once $testsDirectory . '/includes/functions.php';
 
 tests_add_filter('muplugins_loaded', function () {
   if (!defined('CONTENT_INSIGHTS_FOR_EDITORS_VERSION')) {
-    define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.0-test');
+    define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.1-test');
   }
 
   require_once dirname(__DIR__, 2) . '/source/php/Vendor/Psr4ClassLoader.php';

@@ -1,6 +1,6 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.0-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.1-test');
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';

@@ -85,7 +85,8 @@ nonce-protected POST and also verifies ownership/capability server-side.
   complete, then replaces both per-page result sets.
 - Deleted or newly ineligible content is cleaned from both stores.
 - Existing CIFE settings and internal result rows require no data copy.
-- Version `2.4.0` distinguishes this behavior from the earlier staging build.
+- Version `2.4.1` includes the external-link review workflow and the compact
+  settings/metabox presentation for the staging iteration.
 
 ## Release sequence
 

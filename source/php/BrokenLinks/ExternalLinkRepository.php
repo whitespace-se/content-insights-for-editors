@@ -120,7 +120,7 @@ class ExternalLinkRepository {
     return $postId > 0 && user_can($userId, 'edit_post', $postId);
   }
 
-  public function getLinks($userId = false, $dueOnly = false, $limit = 50, $offset = 0) {
+  public function getLinks($userId = false, $dueOnly = false, $limit = 50, $offset = 0, $postId = false) {
     global $wpdb;
     $ownership = PostQuery::userSelectQuery();
     $sql = "SELECT DISTINCT link.* FROM " . self::linksTableName() . " link
@@ -137,6 +137,10 @@ class ExternalLinkRepository {
       $sql .= ' AND COALESCE(link.checked_at,link.first_seen)<%s';
       $arguments[] = $this->cutoff();
     }
+    if ($postId !== false) {
+      $sql .= ' AND occurrence.post_id=%d';
+      $arguments[] = (int) $postId;
+    }
     $sql .= ' ORDER BY COALESCE(link.checked_at,link.first_seen) ASC,link.id ASC LIMIT %d OFFSET %d';
     $arguments[] = max(1, (int) $limit);
     $arguments[] = max(0, (int) $offset);
@@ -148,7 +152,7 @@ class ExternalLinkRepository {
     return $items;
   }
 
-  public function countLinks($userId = false, $dueOnly = false) {
+  public function countLinks($userId = false, $dueOnly = false, $postId = false) {
     global $wpdb;
     $ownership = PostQuery::userSelectQuery();
     $sql = "SELECT COUNT(DISTINCT link.id) FROM " . self::linksTableName() . " link
@@ -164,7 +168,19 @@ class ExternalLinkRepository {
       $sql .= ' AND COALESCE(link.checked_at,link.first_seen)<%s';
       $arguments[] = $this->cutoff();
     }
+    if ($postId !== false) {
+      $sql .= ' AND occurrence.post_id=%d';
+      $arguments[] = (int) $postId;
+    }
     return (int) $wpdb->get_var($arguments ? $wpdb->prepare($sql, $arguments) : $sql);
+  }
+
+  public function countForPost($postId) {
+    global $wpdb;
+    return (int) $wpdb->get_var($wpdb->prepare(
+      'SELECT COUNT(DISTINCT link_id) FROM ' . self::occurrencesTableName() . ' WHERE post_id=%d',
+      $postId
+    ));
   }
 
   public function getDueOccurrencesForUser($userId, $limit = 10) {

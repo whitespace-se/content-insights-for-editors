@@ -105,6 +105,12 @@ class LegacyMigrationTest extends WP_UnitTestCase {
     global $wpdb;
     $this->assertSame(1, (int) $wpdb->get_var('SELECT COUNT(*) FROM ' . ExternalLinkRepository::linksTableName()));
     $this->assertSame(2, (int) $wpdb->get_var('SELECT COUNT(*) FROM ' . ExternalLinkRepository::occurrencesTableName()));
+    $this->assertSame(1, $repository->countForPost($firstPage));
+    $this->assertSame(1, $repository->countForPost($secondPage));
+
+    $this->assertTrue($repository->replaceForPost($firstPage, array()));
+    $this->assertSame(0, $repository->countForPost($firstPage));
+    $this->assertSame(1, $repository->countForPost($secondPage));
   }
 
   public function testExternalLinkReviewDateIsUpdatedWithoutChangingOccurrences() {

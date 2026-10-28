@@ -16,6 +16,21 @@
   background-color: #f5f5f5;
 }
 
+.cife-metabox-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.cife-metabox-table td {
+  padding: 4px 0;
+  vertical-align: top;
+}
+
+.cife-metabox-table td:last-child {
+  padding-left: 12px;
+  text-align: right;
+}
+
 .cife-icon:before {
   font-family: "dashicons";
   font-style: normal;
