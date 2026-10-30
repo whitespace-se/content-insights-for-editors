@@ -12,6 +12,7 @@ class App {
     new Admin\Metabox();
     new Admin\Dashboard();
     new Admin\BrokenLinkCron();
+    new Performance\Monitor();
     new Util\BrokenLinks();
     new Util\Matomo();
     new Util\Plugins\CustomerFeedback();

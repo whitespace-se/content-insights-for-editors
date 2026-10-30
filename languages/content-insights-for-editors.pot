@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Content Insights for Editors plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Insights for Editors 2.4.4\n"
+"Project-Id-Version: Content Insights for Editors 2.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-for-editors\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T13:11:39+00:00\n"
+"POT-Creation-Date: 2026-10-30T09:21:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: content-insights-for-editors\n"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: source/php/AcfFields/php/options-page.php:99
 #: source/php/AcfFields/php/options-page.php:115
-#: source/php/Admin/Dashboard.php:139
+#: source/php/Admin/Dashboard.php:144
 msgid "days"
 msgstr ""
 
@@ -110,8 +110,8 @@ msgid "Minimum votes required before feedback is highlighted."
 msgstr ""
 
 #: source/php/AcfFields/php/options-page.php:228
-#: source/php/Admin/Dashboard.php:109
-#: source/php/Admin/Dashboard.php:123
+#: source/php/Admin/Dashboard.php:114
+#: source/php/Admin/Dashboard.php:128
 msgid "votes"
 msgstr ""
 
@@ -152,111 +152,129 @@ msgid "All your pages with broken links"
 msgstr ""
 
 #: source/php/Admin/Dashboard.php:93
+msgid "Pages with high performance risk"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:98
 msgid "External links on your pages requiring review"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:103
+#: source/php/Admin/Dashboard.php:108
 msgid "Top 10 pages with most most positive feedback responses"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:107
-#: source/php/Admin/Dashboard.php:121
+#: source/php/Admin/Dashboard.php:112
+#: source/php/Admin/Dashboard.php:126
 msgid "minimum"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:117
+#: source/php/Admin/Dashboard.php:122
 msgid "Top 10 pages with least positive feedback responses"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:134
+#: source/php/Admin/Dashboard.php:139
 msgid "All your pages not updated in the last"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:192
+#: source/php/Admin/Dashboard.php:199
+msgid "No high-risk pages right now."
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:208
+#: source/php/Admin/Metabox.php:94
+#: source/php/Util/ListTable.php:174
+msgid "High"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:212
+msgid "View all analysed pages"
+msgstr ""
+
+#: source/php/Admin/Dashboard.php:218
 #: source/php/Util/MailFormatter.php:124
 msgid "No external links currently require review."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:201
+#: source/php/Admin/Dashboard.php:227
 msgid "Review external links"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:252
+#: source/php/Admin/Dashboard.php:278
 msgid "No broken links found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:256
+#: source/php/Admin/Dashboard.php:282
 msgid "Nice job, everything seems to be in order."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:263
-#: source/php/Admin/Dashboard.php:361
-#: source/php/Admin/Dashboard.php:419
+#: source/php/Admin/Dashboard.php:289
+#: source/php/Admin/Dashboard.php:387
+#: source/php/Admin/Dashboard.php:445
 msgid "Click here to"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:265
-#: source/php/Admin/Dashboard.php:421
+#: source/php/Admin/Dashboard.php:291
+#: source/php/Admin/Dashboard.php:447
 msgid "view your pages"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:294
-#: source/php/Admin/Dashboard.php:382
-#: source/php/Admin/Dashboard.php:446
+#: source/php/Admin/Dashboard.php:320
+#: source/php/Admin/Dashboard.php:408
+#: source/php/Admin/Dashboard.php:472
 #: source/php/Util/MailFormatter.php:108
 #: source/php/Util/MailFormatter.php:131
 #: source/php/Util/MailFormatter.php:148
 msgid "Page title"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:295
+#: source/php/Admin/Dashboard.php:321
 #: source/php/Util/MailFormatter.php:132
 msgid "Number of visitors"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:296
-#: source/php/Admin/Dashboard.php:383
-#: source/php/Util/ListTable.php:96
+#: source/php/Admin/Dashboard.php:322
+#: source/php/Admin/Dashboard.php:409
+#: source/php/Util/ListTable.php:99
 #: source/php/Util/MailFormatter.php:149
 msgid "Last updated"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:352
-#: source/php/Admin/Dashboard.php:500
+#: source/php/Admin/Dashboard.php:378
+#: source/php/Admin/Dashboard.php:526
 msgid "No pages found"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:357
+#: source/php/Admin/Dashboard.php:383
 #: source/php/Util/MailFormatter.php:138
 msgid "Seems like you are not the author of any pages yet."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:363
+#: source/php/Admin/Dashboard.php:389
 msgid "create a new page"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:404
+#: source/php/Admin/Dashboard.php:430
 msgid "No old pages found"
 msgstr ""
 
 #. translators: %d: number of days in the outdated-content threshold.
-#: source/php/Admin/Dashboard.php:410
+#: source/php/Admin/Dashboard.php:436
 msgid "Great! All of your pages have been updated within the last %d days."
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:447
+#: source/php/Admin/Dashboard.php:473
 msgid "Weekly visitors"
 msgstr ""
 
-#: source/php/Admin/Dashboard.php:505
+#: source/php/Admin/Dashboard.php:531
 msgid "We could not find any pages that has got enough votes"
 msgstr ""
 
 #: source/php/Admin/ExternalLinks.php:18
 #: source/php/Admin/ExternalLinks.php:19
 #: source/php/Admin/ExternalLinks.php:42
-#: source/php/Admin/Metabox.php:51
-#: source/php/Admin/Metabox.php:57
+#: source/php/Admin/Metabox.php:47
+#: source/php/Admin/Metabox.php:53
 msgid "External links"
 msgstr ""
 
@@ -277,7 +295,7 @@ msgid "The external link was marked as checked."
 msgstr ""
 
 #: source/php/Admin/ExternalLinks.php:52
-#: source/php/Util/ListTable.php:63
+#: source/php/Util/ListTable.php:65
 msgid "All"
 msgstr ""
 
@@ -399,57 +417,112 @@ msgstr ""
 msgid "Something went wrong"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:33
-msgid "No data available"
-msgstr ""
-
-#: source/php/Admin/Metabox.php:41
+#: source/php/Admin/Metabox.php:37
 msgid "Broken internal links"
 msgstr ""
 
+#: source/php/Admin/Metabox.php:38
+msgid "No data available"
+msgstr ""
+
 #. translators: %d: number of external links found on the current page.
-#: source/php/Admin/Metabox.php:53
+#: source/php/Admin/Metabox.php:49
 msgid "%d link"
 msgid_plural "%d links"
 msgstr[0] ""
 msgstr[1] ""
 
-#: source/php/Admin/Metabox.php:62
+#: source/php/Admin/Metabox.php:58
 msgid "Visitor statistics"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:63
+#: source/php/Admin/Metabox.php:59
 msgid "Matomo is not connected"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:70
-#: source/php/Admin/Metabox.php:78
+#: source/php/Admin/Metabox.php:63
+#: source/php/Admin/Metabox.php:71
 msgid "Visitors"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:70
-#: source/php/Admin/Metabox.php:74
-#: source/php/Admin/Metabox.php:78
-#: source/php/Admin/Metabox.php:82
-#: source/php/Util/ListTable.php:107
-#: source/php/Util/ListTable.php:113
+#: source/php/Admin/Metabox.php:63
+#: source/php/Admin/Metabox.php:67
+#: source/php/Admin/Metabox.php:71
+#: source/php/Admin/Metabox.php:75
+#: source/php/Util/ListTable.php:110
+#: source/php/Util/ListTable.php:116
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: source/php/Admin/Metabox.php:74
-#: source/php/Admin/Metabox.php:82
+#: source/php/Admin/Metabox.php:67
+#: source/php/Admin/Metabox.php:75
 msgid "Pageviews"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:86
+#: source/php/Admin/Metabox.php:79
 msgid "Statistics from"
 msgstr ""
 
-#: source/php/Admin/Metabox.php:87
-#: source/php/Admin/Metabox.php:110
+#: source/php/Admin/Metabox.php:82
+#: source/php/Admin/Metabox.php:175
 msgid "No data yet"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:92
+#: source/php/Util/ListTable.php:172
+msgid "Low"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:93
+#: source/php/Util/ListTable.php:173
+msgid "Moderate"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:99
+msgid "Page performance risk"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:103
+msgid "Content-based estimate—not a measured load time."
+msgstr ""
+
+#: source/php/Admin/Metabox.php:109
+msgid "Content markup"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:113
+msgid "Page elements"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:117
+msgid "Referenced media"
+msgstr ""
+
+#. translators: 1: number of media files, 2: combined source size.
+#: source/php/Admin/Metabox.php:120
+msgid "%1$d files / %2$s"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:126
+msgid "Large media files"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:130
+msgid "External resources"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:134
+msgid "Embeds"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:138
+msgid "External scripts"
+msgstr ""
+
+#: source/php/Admin/Metabox.php:142
+msgid "External links are excluded because they load only when clicked."
 msgstr ""
 
 #: source/php/Admin/Settings.php:114
@@ -457,40 +530,44 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: source/php/BrokenLinks/Scheduler.php:178
+#: source/php/BrokenLinks/Scheduler.php:179
 msgid "You are not allowed to run this check."
 msgstr ""
 
-#: source/php/Util/ListTable.php:81
+#: source/php/Util/ListTable.php:83
 msgid "Show only pages with broken links"
 msgstr ""
 
-#: source/php/Util/ListTable.php:93
+#: source/php/Util/ListTable.php:95
 msgid "Post"
 msgstr ""
 
-#: source/php/Util/ListTable.php:94
+#: source/php/Util/ListTable.php:96
 msgid "Web address"
 msgstr ""
 
-#: source/php/Util/ListTable.php:95
+#: source/php/Util/ListTable.php:97
 msgid "Number of broken links"
 msgstr ""
 
 #: source/php/Util/ListTable.php:98
+msgid "Performance risk"
+msgstr ""
+
+#: source/php/Util/ListTable.php:101
 msgid "Editor"
 msgstr ""
 
-#: source/php/Util/ListTable.php:99
+#: source/php/Util/ListTable.php:102
 msgid "Author"
 msgstr ""
 
-#: source/php/Util/ListTable.php:105
-#: source/php/Util/ListTable.php:111
+#: source/php/Util/ListTable.php:108
+#: source/php/Util/ListTable.php:114
 msgid "Visitor"
 msgstr ""
 
-#: source/php/Util/ListTable.php:115
+#: source/php/Util/ListTable.php:118
 msgid "Analysis updated"
 msgstr ""
 

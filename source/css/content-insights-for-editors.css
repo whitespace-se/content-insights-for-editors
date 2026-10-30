@@ -31,6 +31,77 @@
   text-align: right;
 }
 
+.cife-performance {
+  border-top: 1px solid #dcdcde;
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.cife-performance__heading {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.cife-performance__heading h3 {
+  margin: 0;
+}
+
+.cife-performance__badge {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 8px;
+}
+
+.cife-performance__badge--low {
+  background: #d7f0dc;
+  color: #135e2d;
+}
+
+.cife-performance__badge--moderate {
+  background: #fcf0c3;
+  color: #6e4d00;
+}
+
+.cife-performance__badge--high {
+  background: #f6d7d7;
+  color: #8a2424;
+}
+
+.cife-performance__risk-cell {
+  text-align: right;
+}
+
+.cife-performance__empty-icon {
+  color: #008a20;
+  vertical-align: middle;
+}
+
+.cife-performance__metrics {
+  margin: 12px 0;
+}
+
+.cife-performance__metrics > div {
+  align-items: baseline;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+.cife-performance__metrics dt {
+  color: #50575e;
+}
+
+.cife-performance__metrics dd {
+  font-weight: 600;
+  margin: 0;
+  text-align: right;
+}
+
 @media screen and (min-width: 783px) {
   .acf-field.cife-settings-field > .acf-label {
     min-height: 72px;

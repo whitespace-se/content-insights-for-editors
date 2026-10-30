@@ -98,6 +98,10 @@ nonce-protected POST and also verifies ownership/capability server-side.
   metabox presentation, load-order-independent filtering of the analyzed post
   type selector, and structured ACF link collection. The obsolete bundled
   custom selector is no longer loaded.
+- Version `2.5.0` adds an explainable content-based performance-risk estimate,
+  coloured risk indicators in the editor and analysed-pages table, and a
+  dashboard overview of high-risk pages. Results are stored per page and
+  refreshed on content saves and normal CIFE scans.
 
 ## Release sequence
 

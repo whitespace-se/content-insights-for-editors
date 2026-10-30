@@ -11,7 +11,10 @@ use PHPUnit\Framework\TestCase;
 class ScannerTest extends TestCase {
   public function testChecksOnlyInternalLinksAndInventoriesExternalLinks() {
     $postId = 42;
-    $GLOBALS['cife_test_posts'][$postId] = (object) array('ID' => $postId);
+    $GLOBALS['cife_test_posts'][$postId] = (object) array(
+      'ID' => $postId,
+      'post_content' => '',
+    );
     $GLOBALS['cife_test_permalinks'][$postId] = 'https://example.test/page';
     $broken = new InMemoryBrokenLinkRepository(array('https://example.test/timeout'));
     $external = new InMemoryExternalLinkRepository();
@@ -26,7 +29,10 @@ class ScannerTest extends TestCase {
 
   public function testResumesBothResultSetsWithoutSavingPartialData() {
     $postId = 43;
-    $GLOBALS['cife_test_posts'][$postId] = (object) array('ID' => $postId);
+    $GLOBALS['cife_test_posts'][$postId] = (object) array(
+      'ID' => $postId,
+      'post_content' => '',
+    );
     $GLOBALS['cife_test_permalinks'][$postId] = 'https://example.test/page';
     $broken = new InMemoryBrokenLinkRepository(array());
     $external = new InMemoryExternalLinkRepository();

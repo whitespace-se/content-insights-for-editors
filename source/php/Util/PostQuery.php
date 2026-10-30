@@ -3,6 +3,7 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
+use CONTENT_INSIGHTS_FOR_EDITORS\Performance\Analyzer as PerformanceAnalyzer;
 
 class PostQuery {
   private static $postTbName = 'post';
@@ -239,6 +240,34 @@ class PostQuery {
       $count
     );
     return $wpdb->get_results($sql);
+  }
+
+  public static function getHighPerformanceRiskPosts($count = 10, $userID = false) {
+    global $wpdb;
+    $postName = self::$postTbName;
+    $postTypes = Settings::getAnalysedPostTypes();
+    $postTypePlaceholders = implode(',', array_fill(0, count($postTypes), '%s'));
+    $arguments = array_merge(
+      array(PerformanceAnalyzer::RISK_META_KEY, 'high'),
+      $postTypes
+    );
+    $sql = "SELECT $postName.ID, $postName.post_title AS title
+      FROM $wpdb->posts $postName";
+    if ($userID !== false) {
+      $sql .= ' INNER JOIN ' . $wpdb->users . ' user ON ' . self::userSelectQuery();
+    }
+    $sql .= " INNER JOIN $wpdb->postmeta performance
+        ON performance.post_id = $postName.ID AND performance.meta_key = %s
+      WHERE performance.meta_value = %s
+        AND $postName.post_status = 'publish'
+        AND $postName.post_type IN ($postTypePlaceholders)";
+    if ($userID !== false) {
+      $sql .= ' AND user.ID = %d';
+      $arguments[] = (int) $userID;
+    }
+    $sql .= " ORDER BY $postName.post_modified DESC LIMIT %d";
+    $arguments[] = max(1, (int) $count);
+    return $wpdb->get_results($wpdb->prepare($sql, $arguments));
   }
 
   public static function getPagesModifiedAfter(

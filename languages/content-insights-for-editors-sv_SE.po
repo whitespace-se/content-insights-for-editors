@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-"
 "for-editors\n"
-"POT-Creation-Date: 2026-10-28T11:17:28+00:00\n"
+"POT-Creation-Date: 2026-10-30T09:17:52+00:00\n"
 "PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -81,7 +81,7 @@ msgstr "Flagga innehåll som inte har uppdaterats inom perioden."
 
 #: source/php/AcfFields/php/options-page.php:99
 #: source/php/AcfFields/php/options-page.php:115
-#: source/php/Admin/Dashboard.php:139
+#: source/php/Admin/Dashboard.php:144
 msgid "days"
 msgstr "dagar"
 
@@ -126,7 +126,7 @@ msgid "Minimum votes required before feedback is highlighted."
 msgstr "Minsta antal röster innan återkopplingen lyfts fram."
 
 #: source/php/AcfFields/php/options-page.php:228
-#: source/php/Admin/Dashboard.php:109 source/php/Admin/Dashboard.php:123
+#: source/php/Admin/Dashboard.php:114 source/php/Admin/Dashboard.php:128
 msgid "votes"
 msgstr "röster"
 
@@ -167,97 +167,114 @@ msgid "All your pages with broken links"
 msgstr "Alla dina sidor med brutna länkar"
 
 #: source/php/Admin/Dashboard.php:93
+msgid "Pages with high performance risk"
+msgstr "Sidor med hög prestandarisk"
+
+#: source/php/Admin/Dashboard.php:98
 msgid "External links on your pages requiring review"
 msgstr "Externa länkar på dina sidor som behöver granskas"
 
-#: source/php/Admin/Dashboard.php:103
+#: source/php/Admin/Dashboard.php:108
 msgid "Top 10 pages with most most positive feedback responses"
 msgstr "Topp 10 sidor med mest positiva feedbacksvar"
 
-#: source/php/Admin/Dashboard.php:107 source/php/Admin/Dashboard.php:121
+#: source/php/Admin/Dashboard.php:112 source/php/Admin/Dashboard.php:126
 msgid "minimum"
 msgstr "minimum"
 
-#: source/php/Admin/Dashboard.php:117
+#: source/php/Admin/Dashboard.php:122
 msgid "Top 10 pages with least positive feedback responses"
 msgstr "Topp 10 sidor med minst positiva feedbacksvar"
 
-#: source/php/Admin/Dashboard.php:134
+#: source/php/Admin/Dashboard.php:139
 msgid "All your pages not updated in the last"
 msgstr "Alla dina sidor som inte uppdaterats under de senaste"
 
-#: source/php/Admin/Dashboard.php:192 source/php/Util/MailFormatter.php:124
+#: source/php/Admin/Dashboard.php:199
+msgid "No high-risk pages right now."
+msgstr "Inga sidor med hög risk just nu."
+
+#: source/php/Admin/Dashboard.php:208 source/php/Admin/Metabox.php:94
+#: source/php/Util/ListTable.php:174
+msgid "High"
+msgstr "Hög"
+
+#: source/php/Admin/Dashboard.php:212
+msgid "View all analysed pages"
+msgstr "Visa alla analyserade sidor"
+
+#: source/php/Admin/Dashboard.php:218 source/php/Util/MailFormatter.php:124
 msgid "No external links currently require review."
 msgstr "Inga externa länkar behöver granskas just nu."
 
-#: source/php/Admin/Dashboard.php:201
+#: source/php/Admin/Dashboard.php:227
 msgid "Review external links"
 msgstr "Granska externa länkar"
 
-#: source/php/Admin/Dashboard.php:252
+#: source/php/Admin/Dashboard.php:278
 msgid "No broken links found"
 msgstr "Inga brutna länkar hittades"
 
-#: source/php/Admin/Dashboard.php:256
+#: source/php/Admin/Dashboard.php:282
 msgid "Nice job, everything seems to be in order."
 msgstr "Bra jobb, allt verkar vara i ordning."
 
-#: source/php/Admin/Dashboard.php:263 source/php/Admin/Dashboard.php:361
-#: source/php/Admin/Dashboard.php:419
+#: source/php/Admin/Dashboard.php:289 source/php/Admin/Dashboard.php:387
+#: source/php/Admin/Dashboard.php:445
 msgid "Click here to"
 msgstr "Klicka här för att"
 
-#: source/php/Admin/Dashboard.php:265 source/php/Admin/Dashboard.php:421
+#: source/php/Admin/Dashboard.php:291 source/php/Admin/Dashboard.php:447
 msgid "view your pages"
 msgstr "visa dina sidor"
 
-#: source/php/Admin/Dashboard.php:294 source/php/Admin/Dashboard.php:382
-#: source/php/Admin/Dashboard.php:446 source/php/Util/MailFormatter.php:108
+#: source/php/Admin/Dashboard.php:320 source/php/Admin/Dashboard.php:408
+#: source/php/Admin/Dashboard.php:472 source/php/Util/MailFormatter.php:108
 #: source/php/Util/MailFormatter.php:131 source/php/Util/MailFormatter.php:148
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: source/php/Admin/Dashboard.php:295 source/php/Util/MailFormatter.php:132
+#: source/php/Admin/Dashboard.php:321 source/php/Util/MailFormatter.php:132
 msgid "Number of visitors"
 msgstr "Antal besökare"
 
-#: source/php/Admin/Dashboard.php:296 source/php/Admin/Dashboard.php:383
-#: source/php/Util/ListTable.php:96 source/php/Util/MailFormatter.php:149
+#: source/php/Admin/Dashboard.php:322 source/php/Admin/Dashboard.php:409
+#: source/php/Util/ListTable.php:99 source/php/Util/MailFormatter.php:149
 msgid "Last updated"
 msgstr "Senast uppdaterat"
 
-#: source/php/Admin/Dashboard.php:352 source/php/Admin/Dashboard.php:500
+#: source/php/Admin/Dashboard.php:378 source/php/Admin/Dashboard.php:526
 msgid "No pages found"
 msgstr "Inga sidor hittades"
 
-#: source/php/Admin/Dashboard.php:357 source/php/Util/MailFormatter.php:138
+#: source/php/Admin/Dashboard.php:383 source/php/Util/MailFormatter.php:138
 msgid "Seems like you are not the author of any pages yet."
 msgstr "Verkar som om du inte är författaren till några sidor ännu."
 
-#: source/php/Admin/Dashboard.php:363
+#: source/php/Admin/Dashboard.php:389
 msgid "create a new page"
 msgstr "skapa en ny sida"
 
-#: source/php/Admin/Dashboard.php:404
+#: source/php/Admin/Dashboard.php:430
 msgid "No old pages found"
 msgstr "Inga föråldrade sidor hittades"
 
 #. translators: %d: number of days in the outdated-content threshold.
-#: source/php/Admin/Dashboard.php:410
+#: source/php/Admin/Dashboard.php:436
 msgid "Great! All of your pages have been updated within the last %d days."
 msgstr "Toppen! Alla dina sidor har uppdaterats inom de senaste %d dagarna."
 
-#: source/php/Admin/Dashboard.php:447
+#: source/php/Admin/Dashboard.php:473
 msgid "Weekly visitors"
 msgstr "Besökare per vecka"
 
-#: source/php/Admin/Dashboard.php:505
+#: source/php/Admin/Dashboard.php:531
 msgid "We could not find any pages that has got enough votes"
 msgstr "Vi kunde inte hitta några sidor som har fått tillräckligt med röster"
 
 #: source/php/Admin/ExternalLinks.php:18 source/php/Admin/ExternalLinks.php:19
-#: source/php/Admin/ExternalLinks.php:42 source/php/Admin/Metabox.php:51
-#: source/php/Admin/Metabox.php:57
+#: source/php/Admin/ExternalLinks.php:42 source/php/Admin/Metabox.php:47
+#: source/php/Admin/Metabox.php:53
 msgid "External links"
 msgstr "Externa länkar"
 
@@ -281,7 +298,7 @@ msgstr ""
 msgid "The external link was marked as checked."
 msgstr "Den externa länken markerades som kontrollerad."
 
-#: source/php/Admin/ExternalLinks.php:52 source/php/Util/ListTable.php:63
+#: source/php/Admin/ExternalLinks.php:52 source/php/Util/ListTable.php:65
 msgid "All"
 msgstr "Alla"
 
@@ -403,90 +420,148 @@ msgstr "fel"
 msgid "Something went wrong"
 msgstr "Något gick fel"
 
-#: source/php/Admin/Metabox.php:33
-msgid "No data available"
-msgstr "Ingen data fanns tillgänglig"
-
-#: source/php/Admin/Metabox.php:41
+#: source/php/Admin/Metabox.php:37
 msgid "Broken internal links"
 msgstr "Brutna interna länkar"
 
+#: source/php/Admin/Metabox.php:38
+msgid "No data available"
+msgstr "Ingen data fanns tillgänglig"
+
 #. translators: %d: number of external links found on the current page.
-#: source/php/Admin/Metabox.php:53
+#: source/php/Admin/Metabox.php:49
 msgid "%d link"
 msgid_plural "%d links"
 msgstr[0] "%d länk"
 msgstr[1] "%d länkar"
 
-#: source/php/Admin/Metabox.php:62
+#: source/php/Admin/Metabox.php:58
 msgid "Visitor statistics"
 msgstr "Besöksstatistik"
 
-#: source/php/Admin/Metabox.php:63
+#: source/php/Admin/Metabox.php:59
 msgid "Matomo is not connected"
 msgstr "Matomo är inte anslutet"
 
-#: source/php/Admin/Metabox.php:70 source/php/Admin/Metabox.php:78
+#: source/php/Admin/Metabox.php:63 source/php/Admin/Metabox.php:71
 msgid "Visitors"
 msgstr "Besökare"
 
-#: source/php/Admin/Metabox.php:70 source/php/Admin/Metabox.php:74
-#: source/php/Admin/Metabox.php:78 source/php/Admin/Metabox.php:82
-#: source/php/Util/ListTable.php:107 source/php/Util/ListTable.php:113
+#: source/php/Admin/Metabox.php:63 source/php/Admin/Metabox.php:67
+#: source/php/Admin/Metabox.php:71 source/php/Admin/Metabox.php:75
+#: source/php/Util/ListTable.php:110 source/php/Util/ListTable.php:116
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
 msgstr[1] "dagar"
 
-#: source/php/Admin/Metabox.php:74 source/php/Admin/Metabox.php:82
+#: source/php/Admin/Metabox.php:67 source/php/Admin/Metabox.php:75
 msgid "Pageviews"
 msgstr "Sidvisningar"
 
-#: source/php/Admin/Metabox.php:86
+#: source/php/Admin/Metabox.php:79
 msgid "Statistics from"
 msgstr "Statistik från"
 
-#: source/php/Admin/Metabox.php:87 source/php/Admin/Metabox.php:110
+#: source/php/Admin/Metabox.php:82 source/php/Admin/Metabox.php:175
 msgid "No data yet"
 msgstr "Ingen data ännu"
+
+#: source/php/Admin/Metabox.php:92 source/php/Util/ListTable.php:172
+msgid "Low"
+msgstr "Låg"
+
+#: source/php/Admin/Metabox.php:93 source/php/Util/ListTable.php:173
+msgid "Moderate"
+msgstr "Måttlig"
+
+#: source/php/Admin/Metabox.php:99
+msgid "Page performance risk"
+msgstr "Prestandarisk för sidan"
+
+#: source/php/Admin/Metabox.php:103
+msgid "Content-based estimate—not a measured load time."
+msgstr "Innehållsbaserad uppskattning – inte en uppmätt laddningstid."
+
+#: source/php/Admin/Metabox.php:109
+msgid "Content markup"
+msgstr "Innehållets HTML"
+
+#: source/php/Admin/Metabox.php:113
+msgid "Page elements"
+msgstr "Sidelement"
+
+#: source/php/Admin/Metabox.php:117
+msgid "Referenced media"
+msgstr "Refererade media"
+
+#. translators: 1: number of media files, 2: combined source size.
+#: source/php/Admin/Metabox.php:120
+msgid "%1$d files / %2$s"
+msgstr "%1$d filer / %2$s"
+
+#: source/php/Admin/Metabox.php:126
+msgid "Large media files"
+msgstr "Stora mediefiler"
+
+#: source/php/Admin/Metabox.php:130
+msgid "External resources"
+msgstr "Externa resurser"
+
+#: source/php/Admin/Metabox.php:134
+msgid "Embeds"
+msgstr "Inbäddningar"
+
+#: source/php/Admin/Metabox.php:138
+msgid "External scripts"
+msgstr "Externa skript"
+
+#: source/php/Admin/Metabox.php:142
+msgid "External links are excluded because they load only when clicked."
+msgstr ""
+"Externa länkar räknas inte eftersom de laddas först när någon klickar på dem."
 
 #: source/php/Admin/Settings.php:114 source/php/Admin/Settings.php:119
 msgid "Settings"
 msgstr "Inställningar"
 
-#: source/php/BrokenLinks/Scheduler.php:178
+#: source/php/BrokenLinks/Scheduler.php:179
 msgid "You are not allowed to run this check."
 msgstr "Du har inte behörighet att köra den här kontrollen."
 
-#: source/php/Util/ListTable.php:81
+#: source/php/Util/ListTable.php:83
 msgid "Show only pages with broken links"
 msgstr "Visa endast sidor med trasiga länkar"
 
-#: source/php/Util/ListTable.php:93
+#: source/php/Util/ListTable.php:95
 msgid "Post"
 msgstr "Inlägg"
 
-#: source/php/Util/ListTable.php:94
+#: source/php/Util/ListTable.php:96
 msgid "Web address"
 msgstr "Webbadress"
 
-#: source/php/Util/ListTable.php:95
+#: source/php/Util/ListTable.php:97
 msgid "Number of broken links"
 msgstr "Antal brutna länkar"
 
 #: source/php/Util/ListTable.php:98
+msgid "Performance risk"
+msgstr "Prestandarisk"
+
+#: source/php/Util/ListTable.php:101
 msgid "Editor"
 msgstr "Redaktör"
 
-#: source/php/Util/ListTable.php:99
+#: source/php/Util/ListTable.php:102
 msgid "Author"
 msgstr "Författare"
 
-#: source/php/Util/ListTable.php:105 source/php/Util/ListTable.php:111
+#: source/php/Util/ListTable.php:108 source/php/Util/ListTable.php:114
 msgid "Visitor"
 msgstr "Besökare"
 
-#: source/php/Util/ListTable.php:115
+#: source/php/Util/ListTable.php:118
 msgid "Analysis updated"
 msgstr "Analys uppdaterad"
 

@@ -3,6 +3,7 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
+use CONTENT_INSIGHTS_FOR_EDITORS\Performance\Analyzer as PerformanceAnalyzer;
 
 class Scheduler {
   const DAILY_HOOK = 'cife_broken_links_daily_scan';
@@ -195,6 +196,7 @@ class Scheduler {
     $repository = new Repository();
     $repository->deleteForPost($postId);
     (new ExternalLinkRepository())->deleteForPost($postId);
+    PerformanceAnalyzer::deleteStored($postId);
   }
 
   public static function nextScheduledTimestamp() {

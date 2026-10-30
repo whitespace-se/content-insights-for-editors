@@ -89,6 +89,11 @@ class Dashboard {
     );
     if (current_user_can('edit_posts')) {
       wp_add_dashboard_widget(
+        'cife_high_performance_risk',
+        __('Pages with high performance risk', 'content-insights-for-editors'),
+        array($this, 'highPerformanceRisk')
+      );
+      wp_add_dashboard_widget(
         'cife_external_links_due_user',
         __('External links on your pages requiring review', 'content-insights-for-editors'),
         array($this, 'userExternalLinksDue')
@@ -184,6 +189,27 @@ class Dashboard {
 
   public function userExternalLinksDue() {
     $this->renderExternalLinksDue(get_current_user_id(), 100);
+  }
+
+  public function highPerformanceRisk() {
+    $userId = current_user_can('manage_options') ? false : get_current_user_id();
+    $pages = PostQuery::getHighPerformanceRiskPosts(10, $userId);
+    if (!$pages) {
+      echo '<p><span class="dashicons dashicons-yes-alt cife-performance__empty-icon"></span> ' .
+        esc_html__('No high-risk pages right now.', 'content-insights-for-editors') . '</p>';
+      return;
+    }
+
+    echo '<table class="cife_table"><tbody>';
+    foreach ($pages as $page) {
+      echo '<tr><td><a href="' . esc_url(get_edit_post_link($page->ID)) . '"><strong>' .
+        esc_html($page->title) . '</strong></a></td><td class="cife-performance__risk-cell">' .
+        '<span class="cife-performance__badge cife-performance__badge--high">' .
+        esc_html__('High', 'content-insights-for-editors') . '</span></td></tr>';
+    }
+    echo '</tbody></table>';
+    echo '<p><a href="' . esc_url(admin_url('admin.php?page=content-insights-for-editors-page')) . '">' .
+      esc_html__('View all analysed pages', 'content-insights-for-editors') . '</a></p>';
   }
 
   public function renderExternalLinksDue($userId, $take) {

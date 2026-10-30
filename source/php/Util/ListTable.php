@@ -2,6 +2,8 @@
 
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 
+use CONTENT_INSIGHTS_FOR_EDITORS\Performance\Analyzer as PerformanceAnalyzer;
+
 class ListTable extends \WP_List_Table {
   public static $useAlternateUserField = false;
 
@@ -93,6 +95,7 @@ class ListTable extends \WP_List_Table {
       'title' => __('Post', 'content-insights-for-editors'),
       'url' => __('Web address', 'content-insights-for-editors'),
       'length' => __('Number of broken links', 'content-insights-for-editors'),
+      'performance_risk' => __('Performance risk', 'content-insights-for-editors'),
       'modified' => __('Last updated', 'content-insights-for-editors'),
       'author' => self::$useAlternateUserField
         ? __('Editor', 'content-insights-for-editors')
@@ -162,6 +165,20 @@ class ListTable extends \WP_List_Table {
           '">' .
           esc_html($item->author) .
           '</a>';
+
+      case 'performance_risk':
+        $metrics = (new PerformanceAnalyzer())->getMetrics($item->ID);
+        $riskLabels = array(
+          'low' => __('Low', 'content-insights-for-editors'),
+          'moderate' => __('Moderate', 'content-insights-for-editors'),
+          'high' => __('High', 'content-insights-for-editors'),
+        );
+        $risk = isset($riskLabels[$metrics['risk']]) ? $metrics['risk'] : 'low';
+        return sprintf(
+          '<span class="cife-performance__badge cife-performance__badge--%1$s">%2$s</span>',
+          esc_attr($risk),
+          esc_html($riskLabels[$risk])
+        );
 
       default:
         return isset($item->$column_name) ? esc_html($item->$column_name) : '';

@@ -2,6 +2,8 @@
 
 namespace CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks;
 
+use CONTENT_INSIGHTS_FOR_EDITORS\Performance\Analyzer as PerformanceAnalyzer;
+
 class Scanner {
   private $repository;
   private $externalRepository;
@@ -80,6 +82,9 @@ class Scanner {
     if ($complete) {
       $saved = $this->repository->replaceForPost($postId, $brokenUrls) &&
         $this->externalRepository->replaceForPost($postId, $externalUrls);
+      if ($saved) {
+        (new PerformanceAnalyzer())->analyzeAndStore($postId);
+      }
     }
 
     return array(

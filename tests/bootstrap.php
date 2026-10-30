@@ -1,6 +1,6 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.4.4-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.5.0-test');
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';
@@ -10,6 +10,8 @@ $GLOBALS['cife_test_permalinks'] = array();
 $GLOBALS['cife_test_fields'] = array();
 $GLOBALS['cife_test_field_objects'] = array();
 $GLOBALS['cife_test_post_meta'] = array();
+$GLOBALS['cife_test_attachment_ids'] = array();
+$GLOBALS['cife_test_post_thumbnails'] = array();
 $GLOBALS['cife_test_post_types'] = array('post', 'page', 'attachment', 'external_page', 'modal-content');
 
 function apply_filters($hook, $value) {
@@ -69,10 +71,40 @@ function get_post_meta($postId, $key = '', $single = false) {
   return $single ? $value : array($value);
 }
 
+function update_post_meta($postId, $key, $value) {
+  $GLOBALS['cife_test_post_meta'][$postId][$key] = $value;
+  return true;
+}
+
+function delete_post_meta($postId, $key) {
+  unset($GLOBALS['cife_test_post_meta'][$postId][$key]);
+  return true;
+}
+
 function wp_get_attachment_url($postId) {
   return isset($GLOBALS['cife_test_permalinks'][$postId])
     ? $GLOBALS['cife_test_permalinks'][$postId]
     : false;
+}
+
+function attachment_url_to_postid($url) {
+  return isset($GLOBALS['cife_test_attachment_ids'][$url])
+    ? $GLOBALS['cife_test_attachment_ids'][$url]
+    : 0;
+}
+
+function get_post_thumbnail_id($postId) {
+  return isset($GLOBALS['cife_test_post_thumbnails'][$postId])
+    ? $GLOBALS['cife_test_post_thumbnails'][$postId]
+    : 0;
+}
+
+function get_attached_file($postId) {
+  return false;
+}
+
+function wp_parse_url($url, $component = -1) {
+  return parse_url($url, $component);
 }
 
 function sanitize_key($key) {
@@ -107,4 +139,5 @@ require_once dirname(__DIR__) . '/source/php/BrokenLinks/ContentProvider.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkExtractor.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkChecker.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/Scanner.php';
+require_once dirname(__DIR__) . '/source/php/Performance/Analyzer.php';
 require_once dirname(__DIR__) . '/source/php/Admin/Settings.php';
