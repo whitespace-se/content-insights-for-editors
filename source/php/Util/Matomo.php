@@ -199,10 +199,16 @@ class Matomo {
     $data = array();
     while ($pager) {
       $response = $this->request($filter);
-      if (empty($response)) {
+      // Stop on empty, failed or error responses ({"result":"error",...})
+      if (
+        !is_array($response) ||
+        empty($response) ||
+        isset($response['result'])
+      ) {
         $pager = false;
+      } else {
+        $data = array_merge($data, $response);
       }
-      $data = is_array($response) ? array_merge($data, $response) : $data;
       $filter['filter_offset'] = $this->parameters['filter_limit'] * $i++;
     }
     return $data;
@@ -220,6 +226,8 @@ class Matomo {
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
     $result = curl_exec($ch);
 
     return json_decode($result, true);
