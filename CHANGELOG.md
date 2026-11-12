@@ -1,3 +1,10 @@
+### [2.1.1](https://github.com/whitespace-se/content-insights-for-editors/compare/2.1.0...2.1.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* Matomo sync looped endlessly on API error responses ([994b454](https://github.com/whitespace-se/content-insights-for-editors/commit/994b4543ae2cc7a1c29137ce46cab60b51b4de01))
+
 ## [2.1.0](https://github.com/whitespace-se/content-insights-for-editors/compare/2.0.1...2.1.0) (2023-03-10)
 
 ### [2.0.1](https://github.com/whitespace-se/content-insights-for-editors/compare/2.0.0...2.0.1) (2021-09-21)
