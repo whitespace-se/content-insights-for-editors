@@ -110,6 +110,9 @@ nonce-protected POST and also verifies ownership/capability server-side.
   external hosts. The checker is disabled by default, rate-limited, restricted
   to inventoried HTTPS URLs, and keeps automatic results separate from manual
   editorial reviews.
+- Version `2.6.1` hides the redundant manual-review action when a successful
+  automatic result is the current review, while retaining it whenever an
+  editor can still resolve or repeat a manual review.
 
 ## Release sequence
 

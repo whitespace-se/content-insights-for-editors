@@ -1,6 +1,6 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.6.0-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.6.1-test');
 define('MINUTE_IN_SECONDS', 60);
 
 $GLOBALS['cife_test_filters'] = array();
@@ -183,5 +183,6 @@ require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkChecker.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/ExternalLinkCheckConfig.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/ExternalLinkChecker.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/Scanner.php';
+require_once dirname(__DIR__) . '/source/php/Admin/ExternalLinks.php';
 require_once dirname(__DIR__) . '/source/php/Performance/Analyzer.php';
 require_once dirname(__DIR__) . '/source/php/Admin/Settings.php';

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-"
 "for-editors\n"
-"POT-Creation-Date: 2026-11-19T14:34:53+00:00\n"
+"POT-Creation-Date: 2026-11-19T16:09:19+00:00\n"
 "PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -358,59 +358,59 @@ msgstr "Åtgärd"
 msgid "No external links found."
 msgstr "Inga externa länkar hittades."
 
-#: source/php/Admin/ExternalLinks.php:92
+#: source/php/Admin/ExternalLinks.php:93
 msgid "Mark as checked"
 msgstr "Markera som kontrollerad"
 
-#: source/php/Admin/ExternalLinks.php:109
+#: source/php/Admin/ExternalLinks.php:128
 msgid "Manual review only"
 msgstr "Endast manuell granskning"
 
-#: source/php/Admin/ExternalLinks.php:112
+#: source/php/Admin/ExternalLinks.php:131
 msgid "Awaiting automatic check"
 msgstr "Väntar på automatisk kontroll"
 
-#: source/php/Admin/ExternalLinks.php:115
+#: source/php/Admin/ExternalLinks.php:134
 msgid "OK"
 msgstr "OK"
 
-#: source/php/Admin/ExternalLinks.php:116
+#: source/php/Admin/ExternalLinks.php:135
 msgid "Broken"
 msgstr "Trasig"
 
-#: source/php/Admin/ExternalLinks.php:117
+#: source/php/Admin/ExternalLinks.php:136
 msgid "Manual review required"
 msgstr "Manuell granskning krävs"
 
-#: source/php/Admin/ExternalLinks.php:136
+#: source/php/Admin/ExternalLinks.php:155
 msgid "Redirected outside the approved hosts"
 msgstr "Omdirigerad utanför godkända värdar"
 
-#: source/php/Admin/ExternalLinks.php:137
+#: source/php/Admin/ExternalLinks.php:156
 msgid "Invalid redirect"
 msgstr "Ogiltig omdirigering"
 
-#: source/php/Admin/ExternalLinks.php:138
+#: source/php/Admin/ExternalLinks.php:157
 msgid "Too many redirects"
 msgstr "För många omdirigeringar"
 
-#: source/php/Admin/ExternalLinks.php:139
+#: source/php/Admin/ExternalLinks.php:158
 msgid "Inconclusive HTTP response"
 msgstr "Oklart HTTP-svar"
 
-#: source/php/Admin/ExternalLinks.php:140
+#: source/php/Admin/ExternalLinks.php:159
 msgid "Destination is not approved"
 msgstr "Destinationen är inte godkänd"
 
-#: source/php/Admin/ExternalLinks.php:144
+#: source/php/Admin/ExternalLinks.php:163
 msgid "Network request failed"
 msgstr "Nätverksanropet misslyckades"
 
-#: source/php/Admin/ExternalLinks.php:150
+#: source/php/Admin/ExternalLinks.php:169
 msgid "You are not allowed to review this link."
 msgstr "Du har inte behörighet att granska den här länken."
 
-#: source/php/Admin/ExternalLinks.php:155
+#: source/php/Admin/ExternalLinks.php:174
 msgid "The external-link review could not be saved."
 msgstr "Granskningen av den externa länken kunde inte sparas."
 

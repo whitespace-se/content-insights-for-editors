@@ -84,13 +84,18 @@ class ExternalLinks {
       echo '<td>' . ($item->checked_at ? esc_html(mysql2date('Y-m-d', $item->checked_at, false)) : '&mdash;') . '</td>';
       echo '<td>' . $this->automaticStatusMarkup($item, $automaticConfig) . '</td>';
       echo '<td>' . esc_html($item->review_due) . '</td><td>';
-      echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
-      echo '<input type="hidden" name="action" value="cife_mark_external_link_checked">';
-      echo '<input type="hidden" name="link_id" value="' . absint($item->id) . '">';
-      echo '<input type="hidden" name="return_url" value="' . esc_attr($dueOnly ? $dueUrl : $allUrl) . '">';
-      wp_nonce_field('cife_mark_external_link_' . $item->id);
-      submit_button(__('Mark as checked', 'content-insights-for-editors'), 'secondary small', 'submit', false);
-      echo '</form></td></tr>';
+      if ($this->shouldShowManualReviewAction($item, $automaticConfig)) {
+        echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
+        echo '<input type="hidden" name="action" value="cife_mark_external_link_checked">';
+        echo '<input type="hidden" name="link_id" value="' . absint($item->id) . '">';
+        echo '<input type="hidden" name="return_url" value="' . esc_attr($dueOnly ? $dueUrl : $allUrl) . '">';
+        wp_nonce_field('cife_mark_external_link_' . $item->id);
+        submit_button(__('Mark as checked', 'content-insights-for-editors'), 'secondary small', 'submit', false);
+        echo '</form>';
+      } else {
+        echo '&mdash;';
+      }
+      echo '</td></tr>';
     }
     echo '</tbody></table>';
     if ($total > $perPage) {
@@ -102,6 +107,20 @@ class ExternalLinks {
       echo '</div></div>';
     }
     echo '</div>';
+  }
+
+  protected function shouldShowManualReviewAction($item, ExternalLinkCheckConfig $config) {
+    if (!$config->isApprovedUrl($item->url)) {
+      return true;
+    }
+    if (
+      empty($item->automatic_checked_at) ||
+      $item->automatic_status !== 'ok'
+    ) {
+      return true;
+    }
+    return !empty($item->checked_at) &&
+      $item->checked_at >= $item->automatic_checked_at;
   }
 
   private function automaticStatusMarkup($item, ExternalLinkCheckConfig $config) {
