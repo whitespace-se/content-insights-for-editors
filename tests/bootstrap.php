@@ -1,6 +1,7 @@
 <?php
 
-define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.5.0-test');
+define('CONTENT_INSIGHTS_FOR_EDITORS_VERSION', '2.6.0-test');
+define('MINUTE_IN_SECONDS', 60);
 
 $GLOBALS['cife_test_filters'] = array();
 $GLOBALS['cife_test_site_url'] = 'https://example.test';
@@ -107,6 +108,47 @@ function wp_parse_url($url, $component = -1) {
   return parse_url($url, $component);
 }
 
+function sanitize_text_field($value) {
+  return trim(strip_tags((string) $value));
+}
+
+function is_wp_error($value) {
+  return $value instanceof WP_Error;
+}
+
+function wp_remote_retrieve_response_code($response) {
+  return isset($response['response']['code']) ? $response['response']['code'] : 0;
+}
+
+function wp_remote_retrieve_header($response, $header) {
+  $header = strtolower($header);
+  return isset($response['headers'][$header]) ? $response['headers'][$header] : '';
+}
+
+class WP_Error {
+  private $message;
+  public function __construct($code = '', $message = '') { $this->message = $message; }
+  public function get_error_message() { return $this->message; }
+}
+
+class WP_Http {
+  public static function make_absolute_url($location, $baseUrl) {
+    if (parse_url($location, PHP_URL_SCHEME)) {
+      return $location;
+    }
+    $parts = parse_url($baseUrl);
+    $origin = $parts['scheme'] . '://' . $parts['host'];
+    if (strpos($location, '//') === 0) {
+      return $parts['scheme'] . ':' . $location;
+    }
+    if (strpos($location, '/') === 0) {
+      return $origin . $location;
+    }
+    $path = isset($parts['path']) ? $parts['path'] : '/';
+    return $origin . rtrim(dirname($path), '/') . '/' . $location;
+  }
+}
+
 function sanitize_key($key) {
   return preg_replace('/[^a-z0-9_\-]/', '', strtolower((string) $key));
 }
@@ -138,6 +180,8 @@ require_once dirname(__DIR__) . '/source/php/BrokenLinks/InternalTargetRepositor
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/ContentProvider.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkExtractor.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/LinkChecker.php';
+require_once dirname(__DIR__) . '/source/php/BrokenLinks/ExternalLinkCheckConfig.php';
+require_once dirname(__DIR__) . '/source/php/BrokenLinks/ExternalLinkChecker.php';
 require_once dirname(__DIR__) . '/source/php/BrokenLinks/Scanner.php';
 require_once dirname(__DIR__) . '/source/php/Performance/Analyzer.php';
 require_once dirname(__DIR__) . '/source/php/Admin/Settings.php';

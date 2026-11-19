@@ -7,8 +7,9 @@ No SKR or Höör dependency lock is changed in this repository.
 ## Runtime boundary
 
 CIFE no longer depends on `helsingborg-stad/broken-link-detector`. Its scheduled
-scanner extracts HTTP(S) links from configured content and Modularity fragments,
-but it never makes HTTP requests for link validation.
+scanner extracts HTTP(S) links from configured content and Modularity fragments.
+It makes no external HTTP requests by default; an installation may explicitly
+allow exact hosts whose technical owners have approved automatic validation.
 
 - Same-site links are resolved from WordPress data.
 - Published posts and pages are reachable; known non-published content is broken.
@@ -18,8 +19,9 @@ but it never makes HTTP requests for link validation.
 - Unknown internal custom routes are indeterminate and are not reported as
   broken. Integrations can resolve them through
   `cife_broken_links_internal_url_status`.
-- External links are inventoried for manual review and are never requested by
-  CIFE.
+- External links are inventoried for manual review. Only exact HTTPS hosts in
+  deployment-controlled configuration may be checked automatically; CIFE does
+  not crawl or discover URLs on those hosts.
 - Editorial ACF URL, Link, File and WYSIWYG fields are included recursively,
   covering links rendered from repeaters and other structured fields without
   scanning unrelated post metadata.
@@ -61,7 +63,9 @@ The migration is additive:
 
 ```text
 {$wpdb->prefix}cife_external_links
-  id, url, url_hash, first_seen, last_seen, checked_at, checked_by
+  id, url, url_hash, host, first_seen, last_seen, checked_at, checked_by,
+  automatic_checked_at, automatic_status, automatic_http_code,
+  automatic_message, automatic_final_url
 
 {$wpdb->prefix}cife_external_link_occurrences
   id, link_id, post_id, first_seen, last_seen
@@ -102,6 +106,10 @@ nonce-protected POST and also verifies ownership/capability server-side.
   coloured risk indicators in the editor and analysed-pages table, and a
   dashboard overview of high-risk pages. Results are stored per page and
   refreshed on content saves and normal CIFE scans.
+- Version `2.6.0` adds opt-in automatic validation for exact, pre-approved
+  external hosts. The checker is disabled by default, rate-limited, restricted
+  to inventoried HTTPS URLs, and keeps automatic results separate from manual
+  editorial reviews.
 
 ## Release sequence
 

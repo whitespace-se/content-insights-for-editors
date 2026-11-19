@@ -3,6 +3,7 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Admin;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ExternalLinkRepository;
+use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ExternalLinkCheckConfig;
 
 class ExternalLinks {
   const PAGE_SLUG = 'content-insights-for-editors-external-links';
@@ -28,6 +29,7 @@ class ExternalLinks {
       wp_die(esc_html__('You are not allowed to view external links.', 'content-insights-for-editors'));
     }
     $repository = new ExternalLinkRepository();
+    $automaticConfig = new ExternalLinkCheckConfig();
     $userId = current_user_can('manage_options') ? false : get_current_user_id();
     $dueOnly = !empty($_GET['review_due']) && sanitize_key(wp_unslash($_GET['review_due'])) === '1';
     $postId = isset($_GET['post_id']) ? absint(wp_unslash($_GET['post_id'])) : false;
@@ -40,7 +42,11 @@ class ExternalLinks {
     $total = $repository->countLinks($userId, $dueOnly, $postId);
 
     echo '<div class="wrap"><h1>' . esc_html__('External links', 'content-insights-for-editors') . '</h1>';
-    echo '<p>' . esc_html__('CIFE never requests external URLs. Open a link yourself, verify it, then record the review date here.', 'content-insights-for-editors') . '</p>';
+    if ($automaticConfig->isEnabled()) {
+      echo '<p>' . esc_html__('CIFE automatically checks only the pre-approved hosts shown in settings. All other external links remain manual reviews.', 'content-insights-for-editors') . '</p>';
+    } else {
+      echo '<p>' . esc_html__('CIFE never requests external URLs on this installation. Open a link yourself, verify it, then record the review date here.', 'content-insights-for-editors') . '</p>';
+    }
     if (!empty($_GET['cife_link_checked'])) {
       echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('The external link was marked as checked.', 'content-insights-for-editors') . '</p></div>';
     }
@@ -57,6 +63,7 @@ class ExternalLinks {
       __('Appears on', 'content-insights-for-editors'),
       __('First seen', 'content-insights-for-editors'),
       __('Checked on', 'content-insights-for-editors'),
+      __('Automatic check', 'content-insights-for-editors'),
       __('Next review', 'content-insights-for-editors'),
       __('Action', 'content-insights-for-editors'),
     ) as $heading) {
@@ -64,7 +71,7 @@ class ExternalLinks {
     }
     echo '</tr></thead><tbody>';
     if (!$items) {
-      echo '<tr><td colspan="6">' . esc_html__('No external links found.', 'content-insights-for-editors') . '</td></tr>';
+      echo '<tr><td colspan="7">' . esc_html__('No external links found.', 'content-insights-for-editors') . '</td></tr>';
     }
     foreach ($items as $item) {
       echo '<tr><td><a target="_blank" rel="noopener noreferrer" href="' . esc_url($item->url) . '">' . esc_html($item->url) . '</a></td><td>';
@@ -75,6 +82,7 @@ class ExternalLinks {
       echo implode('<br>', $pageLinks);
       echo '</td><td>' . esc_html(mysql2date('Y-m-d', $item->first_seen, false)) . '</td>';
       echo '<td>' . ($item->checked_at ? esc_html(mysql2date('Y-m-d', $item->checked_at, false)) : '&mdash;') . '</td>';
+      echo '<td>' . $this->automaticStatusMarkup($item, $automaticConfig) . '</td>';
       echo '<td>' . esc_html($item->review_due) . '</td><td>';
       echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
       echo '<input type="hidden" name="action" value="cife_mark_external_link_checked">';
@@ -94,6 +102,46 @@ class ExternalLinks {
       echo '</div></div>';
     }
     echo '</div>';
+  }
+
+  private function automaticStatusMarkup($item, ExternalLinkCheckConfig $config) {
+    if (!$config->isApprovedUrl($item->url)) {
+      return esc_html__('Manual review only', 'content-insights-for-editors');
+    }
+    if (empty($item->automatic_checked_at) || empty($item->automatic_status)) {
+      return esc_html__('Awaiting automatic check', 'content-insights-for-editors');
+    }
+    $labels = array(
+      'ok' => __('OK', 'content-insights-for-editors'),
+      'broken' => __('Broken', 'content-insights-for-editors'),
+      'inconclusive' => __('Manual review required', 'content-insights-for-editors'),
+    );
+    $status = isset($labels[$item->automatic_status])
+      ? $item->automatic_status
+      : 'inconclusive';
+    $details = array(mysql2date('Y-m-d', $item->automatic_checked_at, false));
+    if (!empty($item->automatic_http_code)) {
+      $details[] = 'HTTP ' . absint($item->automatic_http_code);
+    }
+    if ($status === 'inconclusive') {
+      $details[] = $this->automaticMessageLabel($item->automatic_message);
+    }
+    return '<span class="cife-link-status cife-link-status--' . esc_attr($status) . '">' .
+      esc_html($labels[$status]) . '</span><br><small>' .
+      esc_html(implode(' · ', $details)) . '</small>';
+  }
+
+  private function automaticMessageLabel($message) {
+    $labels = array(
+      'redirect_not_approved' => __('Redirected outside the approved hosts', 'content-insights-for-editors'),
+      'invalid_redirect' => __('Invalid redirect', 'content-insights-for-editors'),
+      'too_many_redirects' => __('Too many redirects', 'content-insights-for-editors'),
+      'http_error' => __('Inconclusive HTTP response', 'content-insights-for-editors'),
+      'not_approved' => __('Destination is not approved', 'content-insights-for-editors'),
+    );
+    return isset($labels[$message])
+      ? $labels[$message]
+      : __('Network request failed', 'content-insights-for-editors');
   }
 
   public function markChecked() {

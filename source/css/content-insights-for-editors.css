@@ -80,6 +80,47 @@
   vertical-align: middle;
 }
 
+.cife-link-status {
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 8px;
+}
+
+.cife-link-status--ok {
+  background: #d7f0dc;
+  color: #135e2d;
+}
+
+.cife-link-status--broken {
+  background: #f6d7d7;
+  color: #8a2424;
+}
+
+.cife-link-status--inconclusive {
+  background: #fcf0c3;
+  color: #6e4d00;
+}
+
+.cife-readonly-config dl {
+  display: grid;
+  gap: 6px 16px;
+  grid-template-columns: minmax(140px, max-content) 1fr;
+  margin: 12px 0;
+}
+
+.cife-readonly-config dt {
+  color: #50575e;
+}
+
+.cife-readonly-config dd {
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .cife-performance__metrics {
   margin: 12px 0;
 }
@@ -116,6 +157,14 @@
 
   .acf-field.cife-settings-field > .acf-label {
     min-height: 0;
+  }
+
+  .cife-readonly-config dl {
+    grid-template-columns: 1fr;
+  }
+
+  .cife-readonly-config dd + dt {
+    margin-top: 8px;
   }
 }
 

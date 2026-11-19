@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Content Insights for Editors plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Insights for Editors 2.5.0\n"
+"Project-Id-Version: Content Insights for Editors 2.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-for-editors\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-30T09:21:38+00:00\n"
+"POT-Creation-Date: 2026-11-19T15:24:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: content-insights-for-editors\n"
@@ -78,38 +78,46 @@ msgid "Remind content owners to review external links after this period."
 msgstr ""
 
 #: source/php/AcfFields/php/options-page.php:121
-msgid "Matomo API URL"
+msgid "Automatic external-link checks"
 msgstr ""
 
 #: source/php/AcfFields/php/options-page.php:124
+msgid "Approved destinations are configured per installation and cannot be edited from WordPress."
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:134
+msgid "Matomo API URL"
+msgstr ""
+
+#: source/php/AcfFields/php/options-page.php:137
 msgid "Example: https://analytics.example.com/"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:143
+#: source/php/AcfFields/php/options-page.php:156
 msgid "Matomo API key"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:146
+#: source/php/AcfFields/php/options-page.php:159
 msgid "Use the token_auth value from your Matomo profile."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:165
+#: source/php/AcfFields/php/options-page.php:178
 msgid "Matomo site id"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:168
+#: source/php/AcfFields/php/options-page.php:181
 msgid "The numeric site ID in Matomo."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:208
+#: source/php/AcfFields/php/options-page.php:221
 msgid "Customer feedback minimum responses"
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:214
+#: source/php/AcfFields/php/options-page.php:227
 msgid "Minimum votes required before feedback is highlighted."
 msgstr ""
 
-#: source/php/AcfFields/php/options-page.php:228
+#: source/php/AcfFields/php/options-page.php:241
 #: source/php/Admin/Dashboard.php:114
 #: source/php/Admin/Dashboard.php:128
 msgid "votes"
@@ -270,77 +278,129 @@ msgstr ""
 msgid "We could not find any pages that has got enough votes"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:18
 #: source/php/Admin/ExternalLinks.php:19
-#: source/php/Admin/ExternalLinks.php:42
+#: source/php/Admin/ExternalLinks.php:20
+#: source/php/Admin/ExternalLinks.php:44
 #: source/php/Admin/Metabox.php:47
 #: source/php/Admin/Metabox.php:53
 msgid "External links"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:28
+#: source/php/Admin/ExternalLinks.php:29
 msgid "You are not allowed to view external links."
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:35
+#: source/php/Admin/ExternalLinks.php:37
 msgid "You are not allowed to view external links for this page."
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:43
-msgid "CIFE never requests external URLs. Open a link yourself, verify it, then record the review date here."
+#: source/php/Admin/ExternalLinks.php:46
+msgid "CIFE automatically checks only the pre-approved hosts shown in settings. All other external links remain manual reviews."
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:45
+#: source/php/Admin/ExternalLinks.php:48
+msgid "CIFE never requests external URLs on this installation. Open a link yourself, verify it, then record the review date here."
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:51
 msgid "The external link was marked as checked."
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:52
+#: source/php/Admin/ExternalLinks.php:58
 #: source/php/Util/ListTable.php:65
 msgid "All"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:53
+#: source/php/Admin/ExternalLinks.php:59
 #: source/php/Util/MailFormatter.php:121
 msgid "Review due"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:56
+#: source/php/Admin/ExternalLinks.php:62
 msgid "External link"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:57
+#: source/php/Admin/ExternalLinks.php:63
 msgid "Appears on"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:58
+#: source/php/Admin/ExternalLinks.php:64
 msgid "First seen"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:59
+#: source/php/Admin/ExternalLinks.php:65
 msgid "Checked on"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:60
-msgid "Next review"
-msgstr ""
-
-#: source/php/Admin/ExternalLinks.php:61
-msgid "Action"
+#: source/php/Admin/ExternalLinks.php:66
+msgid "Automatic check"
 msgstr ""
 
 #: source/php/Admin/ExternalLinks.php:67
+msgid "Next review"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:68
+msgid "Action"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:74
 msgid "No external links found."
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:84
+#: source/php/Admin/ExternalLinks.php:92
 msgid "Mark as checked"
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:102
+#: source/php/Admin/ExternalLinks.php:109
+msgid "Manual review only"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:112
+msgid "Awaiting automatic check"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:115
+msgid "OK"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:116
+msgid "Broken"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:117
+msgid "Manual review required"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:136
+msgid "Redirected outside the approved hosts"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:137
+msgid "Invalid redirect"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:138
+msgid "Too many redirects"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:139
+msgid "Inconclusive HTTP response"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:140
+msgid "Destination is not approved"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:144
+msgid "Network request failed"
+msgstr ""
+
+#: source/php/Admin/ExternalLinks.php:150
 msgid "You are not allowed to review this link."
 msgstr ""
 
-#: source/php/Admin/ExternalLinks.php:107
+#: source/php/Admin/ExternalLinks.php:155
 msgid "The external-link review could not be saved."
 msgstr ""
 
@@ -525,8 +585,54 @@ msgstr ""
 msgid "External links are excluded because they load only when clicked."
 msgstr ""
 
-#: source/php/Admin/Settings.php:114
-#: source/php/Admin/Settings.php:119
+#: source/php/Admin/Settings.php:124
+msgid "Disabled"
+msgstr ""
+
+#: source/php/Admin/Settings.php:125
+msgid "No hosts have been approved for automatic external-link checks on this installation."
+msgstr ""
+
+#: source/php/Admin/Settings.php:133
+msgid "Enabled"
+msgstr ""
+
+#: source/php/Admin/Settings.php:135
+msgid "Approved hosts"
+msgstr ""
+
+#: source/php/Admin/Settings.php:137
+msgid "User agent"
+msgstr ""
+
+#: source/php/Admin/Settings.php:139
+msgid "Check interval"
+msgstr ""
+
+#. translators: %d: number of days between automatic checks.
+#: source/php/Admin/Settings.php:142
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: source/php/Admin/Settings.php:145
+msgid "Maximum request rate"
+msgstr ""
+
+#. translators: %d: maximum number of requests per minute.
+#: source/php/Admin/Settings.php:148
+msgid "%d request per minute"
+msgid_plural "%d requests per minute"
+msgstr[0] ""
+msgstr[1] ""
+
+#: source/php/Admin/Settings.php:150
+msgid "This deployment-controlled configuration is read-only here. CIFE never crawls approved sites; it checks only exact links already found in analysed content."
+msgstr ""
+
+#: source/php/Admin/Settings.php:161
+#: source/php/Admin/Settings.php:166
 msgid "Settings"
 msgstr ""
 

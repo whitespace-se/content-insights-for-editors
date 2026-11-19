@@ -27,10 +27,11 @@ class ExternalLinkRepository {
 
     foreach ($urls as $url) {
       $hash = hash('sha256', $url);
+      $host = strtolower(rtrim((string) wp_parse_url($url, PHP_URL_HOST), '.'));
       $sql = $wpdb->prepare(
-        "INSERT INTO $links (url,url_hash,first_seen,last_seen) VALUES (%s,%s,%s,%s)
-         ON DUPLICATE KEY UPDATE url=VALUES(url),last_seen=VALUES(last_seen)",
-        $url, $hash, $now, $now
+        "INSERT INTO $links (url,url_hash,host,first_seen,last_seen) VALUES (%s,%s,%s,%s,%s)
+         ON DUPLICATE KEY UPDATE url=VALUES(url),host=VALUES(host),last_seen=VALUES(last_seen)",
+        $url, $hash, $host, $now, $now
       );
       if ($wpdb->query($sql) === false) {
         $wpdb->query('ROLLBACK');
@@ -103,6 +104,58 @@ class ExternalLinkRepository {
     ) !== false;
   }
 
+  public function saveAutomaticResult($linkId, array $result) {
+    global $wpdb;
+    $allowedStatuses = array(
+      ExternalLinkChecker::OK,
+      ExternalLinkChecker::BROKEN,
+      ExternalLinkChecker::INCONCLUSIVE,
+    );
+    $status = isset($result['status']) && in_array($result['status'], $allowedStatuses, true)
+      ? $result['status']
+      : ExternalLinkChecker::INCONCLUSIVE;
+    return $wpdb->update(
+      self::linksTableName(),
+      array(
+        'automatic_checked_at' => current_time('mysql'),
+        'automatic_status' => $status,
+        'automatic_http_code' => isset($result['http_code']) && is_numeric($result['http_code'])
+          ? (int) $result['http_code']
+          : null,
+        'automatic_message' => isset($result['message'])
+          ? substr(sanitize_text_field($result['message']), 0, 255)
+          : '',
+        'automatic_final_url' => isset($result['final_url'])
+          ? substr(esc_url_raw($result['final_url']), 0, 2048)
+          : '',
+      ),
+      array('id' => (int) $linkId),
+      array('%s', '%s', '%d', '%s', '%s'),
+      array('%d')
+    ) !== false;
+  }
+
+  public function getNextAutomaticCheck(array $hosts, $intervalDays) {
+    global $wpdb;
+    $hosts = array_values(array_unique(array_filter(array_map('strval', $hosts))));
+    if (!$hosts) {
+      return null;
+    }
+    $placeholders = implode(',', array_fill(0, count($hosts), '%s'));
+    $cutoff = (new \DateTimeImmutable('now', wp_timezone()))
+      ->modify('-' . max(1, (int) $intervalDays) . ' days')
+      ->format('Y-m-d H:i:s');
+    $sql = "SELECT DISTINCT link.* FROM " . self::linksTableName() . " link
+      INNER JOIN " . self::occurrencesTableName() . " occurrence ON occurrence.link_id=link.id
+      INNER JOIN {$wpdb->posts} post ON post.ID=occurrence.post_id
+      WHERE post.post_status='publish'
+        AND link.host IN ($placeholders)
+        AND (link.automatic_checked_at IS NULL OR link.automatic_checked_at<%s)
+      ORDER BY COALESCE(link.automatic_checked_at,'1000-01-01 00:00:00') ASC,link.id ASC
+      LIMIT 1";
+    return $wpdb->get_row($wpdb->prepare($sql, array_merge($hosts, array($cutoff))));
+  }
+
   public function userCanReview($linkId, $userId) {
     global $wpdb;
     if (user_can($userId, 'manage_options')) {
@@ -134,20 +187,24 @@ class ExternalLinkRepository {
       $arguments[] = (int) $userId;
     }
     if ($dueOnly) {
-      $sql .= ' AND COALESCE(link.checked_at,link.first_seen)<%s';
+      $sql .= ' AND ' . $this->dueExpression('link') . '<%s';
       $arguments[] = $this->cutoff();
     }
     if ($postId !== false) {
       $sql .= ' AND occurrence.post_id=%d';
       $arguments[] = (int) $postId;
     }
-    $sql .= ' ORDER BY COALESCE(link.checked_at,link.first_seen) ASC,link.id ASC LIMIT %d OFFSET %d';
+    $sql .= ' ORDER BY ' . $this->dueExpression('link') . ' ASC,link.id ASC LIMIT %d OFFSET %d';
     $arguments[] = max(1, (int) $limit);
     $arguments[] = max(0, (int) $offset);
     $items = $wpdb->get_results($wpdb->prepare($sql, $arguments));
     foreach ($items as $item) {
       $item->pages = $this->getOccurrences($item->id, $userId);
-      $item->review_due = mysql2date('Y-m-d', $this->addDays($item->checked_at ?: $item->first_seen), false);
+      $reference = $this->reviewReference($item);
+      $item->review_due = mysql2date('Y-m-d', $this->addDays($reference), false);
+      if ($this->hasUnresolvedAutomaticResult($item)) {
+        $item->review_due = mysql2date('Y-m-d', current_time('mysql'), false);
+      }
     }
     return $items;
   }
@@ -165,7 +222,7 @@ class ExternalLinkRepository {
       $arguments[] = (int) $userId;
     }
     if ($dueOnly) {
-      $sql .= ' AND COALESCE(link.checked_at,link.first_seen)<%s';
+      $sql .= ' AND ' . $this->dueExpression('link') . '<%s';
       $arguments[] = $this->cutoff();
     }
     if ($postId !== false) {
@@ -226,6 +283,42 @@ class ExternalLinkRepository {
   private function addDays($date) {
     return (new \DateTimeImmutable($date, wp_timezone()))
       ->modify('+' . Settings::validateAndGetExternalLinkReviewDays() . ' days')->format('Y-m-d H:i:s');
+  }
+
+  private function dueExpression($alias) {
+    return "CASE
+      WHEN $alias.automatic_status IN ('broken','inconclusive')
+        AND ($alias.checked_at IS NULL OR $alias.checked_at<$alias.automatic_checked_at)
+        THEN '1000-01-01 00:00:00'
+      WHEN $alias.automatic_status='ok'
+        AND $alias.automatic_checked_at IS NOT NULL
+        AND ($alias.checked_at IS NULL OR $alias.checked_at<$alias.automatic_checked_at)
+        THEN $alias.automatic_checked_at
+      ELSE COALESCE($alias.checked_at,$alias.first_seen)
+    END";
+  }
+
+  private function reviewReference($item) {
+    if (
+      isset($item->automatic_status, $item->automatic_checked_at) &&
+      $item->automatic_status === ExternalLinkChecker::OK &&
+      $item->automatic_checked_at &&
+      (!$item->checked_at || $item->checked_at < $item->automatic_checked_at)
+    ) {
+      return $item->automatic_checked_at;
+    }
+    return $item->checked_at ?: $item->first_seen;
+  }
+
+  private function hasUnresolvedAutomaticResult($item) {
+    return isset($item->automatic_status, $item->automatic_checked_at) &&
+      in_array(
+        $item->automatic_status,
+        array(ExternalLinkChecker::BROKEN, ExternalLinkChecker::INCONCLUSIVE),
+        true
+      ) &&
+      $item->automatic_checked_at &&
+      (!$item->checked_at || $item->checked_at < $item->automatic_checked_at);
   }
 
   private function deleteOrphans() {

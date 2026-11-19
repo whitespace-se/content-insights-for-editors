@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-"
 "for-editors\n"
-"POT-Creation-Date: 2026-10-30T09:17:52+00:00\n"
+"POT-Creation-Date: 2026-11-19T14:34:53+00:00\n"
 "PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -94,38 +94,50 @@ msgid "Remind content owners to review external links after this period."
 msgstr "Påminn innehållsansvariga att granska externa länkar efter perioden."
 
 #: source/php/AcfFields/php/options-page.php:121
+msgid "Automatic external-link checks"
+msgstr "Automatiska kontroller av externa länkar"
+
+#: source/php/AcfFields/php/options-page.php:124
+msgid ""
+"Approved destinations are configured per installation and cannot be edited "
+"from WordPress."
+msgstr ""
+"Godkända destinationer konfigureras per installation och kan inte redigeras "
+"i WordPress."
+
+#: source/php/AcfFields/php/options-page.php:134
 msgid "Matomo API URL"
 msgstr "URL till Matomos API"
 
-#: source/php/AcfFields/php/options-page.php:124
+#: source/php/AcfFields/php/options-page.php:137
 msgid "Example: https://analytics.example.com/"
 msgstr "Exempel: https://analys.exempel.se/"
 
-#: source/php/AcfFields/php/options-page.php:143
+#: source/php/AcfFields/php/options-page.php:156
 msgid "Matomo API key"
 msgstr "Matomo API-nyckel"
 
-#: source/php/AcfFields/php/options-page.php:146
+#: source/php/AcfFields/php/options-page.php:159
 msgid "Use the token_auth value from your Matomo profile."
 msgstr "Använd värdet token_auth från din Matomo-profil."
 
-#: source/php/AcfFields/php/options-page.php:165
+#: source/php/AcfFields/php/options-page.php:178
 msgid "Matomo site id"
 msgstr "Matomo-webbplats-ID"
 
-#: source/php/AcfFields/php/options-page.php:168
+#: source/php/AcfFields/php/options-page.php:181
 msgid "The numeric site ID in Matomo."
 msgstr "Webbplatsens numeriska ID i Matomo."
 
-#: source/php/AcfFields/php/options-page.php:208
+#: source/php/AcfFields/php/options-page.php:221
 msgid "Customer feedback minimum responses"
 msgstr "Customer feedback minst antal svar"
 
-#: source/php/AcfFields/php/options-page.php:214
+#: source/php/AcfFields/php/options-page.php:227
 msgid "Minimum votes required before feedback is highlighted."
 msgstr "Minsta antal röster innan återkopplingen lyfts fram."
 
-#: source/php/AcfFields/php/options-page.php:228
+#: source/php/AcfFields/php/options-page.php:241
 #: source/php/Admin/Dashboard.php:114 source/php/Admin/Dashboard.php:128
 msgid "votes"
 msgstr "röster"
@@ -272,77 +284,133 @@ msgstr "Besökare per vecka"
 msgid "We could not find any pages that has got enough votes"
 msgstr "Vi kunde inte hitta några sidor som har fått tillräckligt med röster"
 
-#: source/php/Admin/ExternalLinks.php:18 source/php/Admin/ExternalLinks.php:19
-#: source/php/Admin/ExternalLinks.php:42 source/php/Admin/Metabox.php:47
+#: source/php/Admin/ExternalLinks.php:19 source/php/Admin/ExternalLinks.php:20
+#: source/php/Admin/ExternalLinks.php:44 source/php/Admin/Metabox.php:47
 #: source/php/Admin/Metabox.php:53
 msgid "External links"
 msgstr "Externa länkar"
 
-#: source/php/Admin/ExternalLinks.php:28
+#: source/php/Admin/ExternalLinks.php:29
 msgid "You are not allowed to view external links."
 msgstr "Du har inte behörighet att visa externa länkar."
 
-#: source/php/Admin/ExternalLinks.php:35
+#: source/php/Admin/ExternalLinks.php:37
 msgid "You are not allowed to view external links for this page."
 msgstr "Du har inte behörighet att visa externa länkar för den här sidan."
 
-#: source/php/Admin/ExternalLinks.php:43
+#: source/php/Admin/ExternalLinks.php:46
 msgid ""
-"CIFE never requests external URLs. Open a link yourself, verify it, then "
-"record the review date here."
+"CIFE automatically checks only the pre-approved hosts shown in settings. All "
+"other external links remain manual reviews."
 msgstr ""
-"CIFE anropar aldrig externa webbadresser. Öppna länken själv, kontrollera "
-"den och registrera sedan granskningsdatumet här."
+"CIFE kontrollerar automatiskt endast de förhandsgodkända värdar som visas i "
+"inställningarna. Alla övriga externa länkar granskas manuellt."
 
-#: source/php/Admin/ExternalLinks.php:45
+#: source/php/Admin/ExternalLinks.php:48
+msgid ""
+"CIFE never requests external URLs on this installation. Open a link "
+"yourself, verify it, then record the review date here."
+msgstr ""
+"CIFE anropar inga externa webbadresser i den här installationen. Öppna "
+"länken själv, kontrollera den och registrera sedan granskningsdatumet här."
+
+#: source/php/Admin/ExternalLinks.php:51
 msgid "The external link was marked as checked."
 msgstr "Den externa länken markerades som kontrollerad."
 
-#: source/php/Admin/ExternalLinks.php:52 source/php/Util/ListTable.php:65
+#: source/php/Admin/ExternalLinks.php:58 source/php/Util/ListTable.php:65
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Admin/ExternalLinks.php:53 source/php/Util/MailFormatter.php:121
+#: source/php/Admin/ExternalLinks.php:59 source/php/Util/MailFormatter.php:121
 msgid "Review due"
 msgstr "Granskning senast"
 
-#: source/php/Admin/ExternalLinks.php:56
+#: source/php/Admin/ExternalLinks.php:62
 msgid "External link"
 msgstr "Extern länk"
 
-#: source/php/Admin/ExternalLinks.php:57
+#: source/php/Admin/ExternalLinks.php:63
 msgid "Appears on"
 msgstr "Finns på"
 
-#: source/php/Admin/ExternalLinks.php:58
+#: source/php/Admin/ExternalLinks.php:64
 msgid "First seen"
 msgstr "Först upptäckt"
 
-#: source/php/Admin/ExternalLinks.php:59
+#: source/php/Admin/ExternalLinks.php:65
 msgid "Checked on"
 msgstr "Kontrollerad"
 
-#: source/php/Admin/ExternalLinks.php:60
+#: source/php/Admin/ExternalLinks.php:66
+msgid "Automatic check"
+msgstr "Automatisk kontroll"
+
+#: source/php/Admin/ExternalLinks.php:67
 msgid "Next review"
 msgstr "Nästa granskning"
 
-#: source/php/Admin/ExternalLinks.php:61
+#: source/php/Admin/ExternalLinks.php:68
 msgid "Action"
 msgstr "Åtgärd"
 
-#: source/php/Admin/ExternalLinks.php:67
+#: source/php/Admin/ExternalLinks.php:74
 msgid "No external links found."
 msgstr "Inga externa länkar hittades."
 
-#: source/php/Admin/ExternalLinks.php:84
+#: source/php/Admin/ExternalLinks.php:92
 msgid "Mark as checked"
 msgstr "Markera som kontrollerad"
 
-#: source/php/Admin/ExternalLinks.php:102
+#: source/php/Admin/ExternalLinks.php:109
+msgid "Manual review only"
+msgstr "Endast manuell granskning"
+
+#: source/php/Admin/ExternalLinks.php:112
+msgid "Awaiting automatic check"
+msgstr "Väntar på automatisk kontroll"
+
+#: source/php/Admin/ExternalLinks.php:115
+msgid "OK"
+msgstr "OK"
+
+#: source/php/Admin/ExternalLinks.php:116
+msgid "Broken"
+msgstr "Trasig"
+
+#: source/php/Admin/ExternalLinks.php:117
+msgid "Manual review required"
+msgstr "Manuell granskning krävs"
+
+#: source/php/Admin/ExternalLinks.php:136
+msgid "Redirected outside the approved hosts"
+msgstr "Omdirigerad utanför godkända värdar"
+
+#: source/php/Admin/ExternalLinks.php:137
+msgid "Invalid redirect"
+msgstr "Ogiltig omdirigering"
+
+#: source/php/Admin/ExternalLinks.php:138
+msgid "Too many redirects"
+msgstr "För många omdirigeringar"
+
+#: source/php/Admin/ExternalLinks.php:139
+msgid "Inconclusive HTTP response"
+msgstr "Oklart HTTP-svar"
+
+#: source/php/Admin/ExternalLinks.php:140
+msgid "Destination is not approved"
+msgstr "Destinationen är inte godkänd"
+
+#: source/php/Admin/ExternalLinks.php:144
+msgid "Network request failed"
+msgstr "Nätverksanropet misslyckades"
+
+#: source/php/Admin/ExternalLinks.php:150
 msgid "You are not allowed to review this link."
 msgstr "Du har inte behörighet att granska den här länken."
 
-#: source/php/Admin/ExternalLinks.php:107
+#: source/php/Admin/ExternalLinks.php:155
 msgid "The external-link review could not be saved."
 msgstr "Granskningen av den externa länken kunde inte sparas."
 
@@ -521,7 +589,63 @@ msgid "External links are excluded because they load only when clicked."
 msgstr ""
 "Externa länkar räknas inte eftersom de laddas först när någon klickar på dem."
 
-#: source/php/Admin/Settings.php:114 source/php/Admin/Settings.php:119
+#: source/php/Admin/Settings.php:124
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+#: source/php/Admin/Settings.php:125
+msgid ""
+"No hosts have been approved for automatic external-link checks on this "
+"installation."
+msgstr ""
+"Inga värdar har godkänts för automatiska kontroller av externa länkar i den "
+"här installationen."
+
+#: source/php/Admin/Settings.php:133
+msgid "Enabled"
+msgstr "Aktiverad"
+
+#: source/php/Admin/Settings.php:135
+msgid "Approved hosts"
+msgstr "Godkända värdar"
+
+#: source/php/Admin/Settings.php:137
+msgid "User agent"
+msgstr "User agent"
+
+#: source/php/Admin/Settings.php:139
+msgid "Check interval"
+msgstr "Kontrollintervall"
+
+#. translators: %d: number of days between automatic checks.
+#: source/php/Admin/Settings.php:142
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d dag"
+msgstr[1] "%d dagar"
+
+#: source/php/Admin/Settings.php:145
+msgid "Maximum request rate"
+msgstr "Högsta anropsfrekvens"
+
+#. translators: %d: maximum number of requests per minute.
+#: source/php/Admin/Settings.php:148
+msgid "%d request per minute"
+msgid_plural "%d requests per minute"
+msgstr[0] "%d anrop per minut"
+msgstr[1] "%d anrop per minut"
+
+#: source/php/Admin/Settings.php:150
+msgid ""
+"This deployment-controlled configuration is read-only here. CIFE never "
+"crawls approved sites; it checks only exact links already found in analysed "
+"content."
+msgstr ""
+"Den här distributionsstyrda konfigurationen är skrivskyddad här. CIFE "
+"genomsöker aldrig godkända webbplatser, utan kontrollerar endast exakta "
+"länkar som redan hittats i analyserat innehåll."
+
+#: source/php/Admin/Settings.php:161 source/php/Admin/Settings.php:166
 msgid "Settings"
 msgstr "Inställningar"
 

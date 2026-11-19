@@ -3,7 +3,7 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks;
 
 class Installer {
-  const DB_VERSION = '3.0.0';
+  const DB_VERSION = '4.0.0';
   const DB_VERSION_OPTION = 'cife_broken_links_db_version';
 
   public static function install() {
@@ -31,12 +31,19 @@ class Installer {
       id bigint(20) NOT NULL AUTO_INCREMENT,
       url varchar(2048) DEFAULT '' NOT NULL,
       url_hash char(64) DEFAULT '' NOT NULL,
+      host varchar(255) DEFAULT '' NOT NULL,
       first_seen datetime NOT NULL,
       last_seen datetime NOT NULL,
       checked_at datetime DEFAULT NULL,
       checked_by bigint(20) DEFAULT NULL,
+      automatic_checked_at datetime DEFAULT NULL,
+      automatic_status varchar(20) DEFAULT NULL,
+      automatic_http_code smallint DEFAULT NULL,
+      automatic_message varchar(255) DEFAULT '' NOT NULL,
+      automatic_final_url varchar(2048) DEFAULT '' NOT NULL,
       PRIMARY KEY  (id),
       UNIQUE KEY url_hash (url_hash),
+      KEY host (host),
       KEY checked_at (checked_at)
     ) $charsetCollation;");
     dbDelta("CREATE TABLE $occurrencesTable (
@@ -60,7 +67,31 @@ class Installer {
       KEY post_id (post_id)
     ) $charsetCollation;");
 
+    self::backfillExternalLinkHosts($externalLinksTable);
+
     update_option(self::DB_VERSION_OPTION, self::DB_VERSION, false);
+  }
+
+  private static function backfillExternalLinkHosts($tableName) {
+    global $wpdb;
+    $lastId = 0;
+    do {
+      $rows = $wpdb->get_results($wpdb->prepare(
+        "SELECT id,url FROM $tableName WHERE host='' AND id>%d ORDER BY id ASC LIMIT 500",
+        $lastId
+      ));
+      foreach ($rows as $row) {
+        $lastId = (int) $row->id;
+        $host = strtolower(rtrim((string) wp_parse_url($row->url, PHP_URL_HOST), '.'));
+        $wpdb->update(
+          $tableName,
+          array('host' => $host),
+          array('id' => (int) $row->id),
+          array('%s'),
+          array('%d')
+        );
+      }
+    } while (count($rows) === 500);
   }
 
   public static function maybeInstall() {

@@ -104,6 +104,10 @@ class LegacyMigrationTest extends WP_UnitTestCase {
 
     global $wpdb;
     $this->assertSame(1, (int) $wpdb->get_var('SELECT COUNT(*) FROM ' . ExternalLinkRepository::linksTableName()));
+    $this->assertSame(
+      'external.example',
+      $wpdb->get_var('SELECT host FROM ' . ExternalLinkRepository::linksTableName())
+    );
     $this->assertSame(2, (int) $wpdb->get_var('SELECT COUNT(*) FROM ' . ExternalLinkRepository::occurrencesTableName()));
     $this->assertSame(1, $repository->countForPost($firstPage));
     $this->assertSame(1, $repository->countForPost($secondPage));
@@ -111,6 +115,37 @@ class LegacyMigrationTest extends WP_UnitTestCase {
     $this->assertTrue($repository->replaceForPost($firstPage, array()));
     $this->assertSame(0, $repository->countForPost($firstPage));
     $this->assertSame(1, $repository->countForPost($secondPage));
+  }
+
+  public function testAutomaticExternalLinkResultIsStoredSeparatelyFromManualReview() {
+    Installer::install();
+    $repository = new ExternalLinkRepository();
+    $page = self::factory()->post->create(array(
+      'post_type' => 'page',
+      'post_status' => 'publish',
+    ));
+    $repository->replaceForPost($page, array('https://www.adda.se/resource'));
+
+    global $wpdb;
+    $link = $repository->getNextAutomaticCheck(array('www.adda.se'), 30);
+    $this->assertNotNull($link);
+    $this->assertTrue($repository->saveAutomaticResult($link->id, array(
+      'status' => 'ok',
+      'http_code' => 200,
+      'message' => 'reachable',
+      'final_url' => 'https://www.adda.se/resource',
+    )));
+
+    $stored = $wpdb->get_row(
+      'SELECT checked_at,automatic_checked_at,automatic_status,automatic_http_code,automatic_final_url
+       FROM ' . ExternalLinkRepository::linksTableName() . ' WHERE id=' . (int) $link->id
+    );
+    $this->assertNull($stored->checked_at);
+    $this->assertNotEmpty($stored->automatic_checked_at);
+    $this->assertSame('ok', $stored->automatic_status);
+    $this->assertSame(200, (int) $stored->automatic_http_code);
+    $this->assertSame('https://www.adda.se/resource', $stored->automatic_final_url);
+    $this->assertNull($repository->getNextAutomaticCheck(array('www.adda.se'), 30));
   }
 
   public function testExternalLinkReviewDateIsUpdatedWithoutChangingOccurrences() {
