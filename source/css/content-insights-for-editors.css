@@ -16,6 +16,158 @@
   background-color: #f5f5f5;
 }
 
+.cife-metabox-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.cife-metabox-table td {
+  padding: 4px 0;
+  vertical-align: top;
+}
+
+.cife-metabox-table td:last-child {
+  padding-left: 12px;
+  text-align: right;
+}
+
+.cife-performance {
+  border-top: 1px solid #dcdcde;
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.cife-performance__heading {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.cife-performance__heading h3 {
+  margin: 0;
+}
+
+.cife-performance__badge {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 8px;
+}
+
+.cife-performance__badge--low {
+  background: #d7f0dc;
+  color: #135e2d;
+}
+
+.cife-performance__badge--moderate {
+  background: #fcf0c3;
+  color: #6e4d00;
+}
+
+.cife-performance__badge--high {
+  background: #f6d7d7;
+  color: #8a2424;
+}
+
+.cife-performance__risk-cell {
+  text-align: right;
+}
+
+.cife-performance__empty-icon {
+  color: #008a20;
+  vertical-align: middle;
+}
+
+.cife-link-status {
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 8px;
+}
+
+.cife-link-status--ok {
+  background: #d7f0dc;
+  color: #135e2d;
+}
+
+.cife-link-status--broken {
+  background: #f6d7d7;
+  color: #8a2424;
+}
+
+.cife-link-status--inconclusive {
+  background: #fcf0c3;
+  color: #6e4d00;
+}
+
+.cife-readonly-config dl {
+  display: grid;
+  gap: 6px 16px;
+  grid-template-columns: minmax(140px, max-content) 1fr;
+  margin: 12px 0;
+}
+
+.cife-readonly-config dt {
+  color: #50575e;
+}
+
+.cife-readonly-config dd {
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.cife-performance__metrics {
+  margin: 12px 0;
+}
+
+.cife-performance__metrics > div {
+  align-items: baseline;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+.cife-performance__metrics dt {
+  color: #50575e;
+}
+
+.cife-performance__metrics dd {
+  font-weight: 600;
+  margin: 0;
+  text-align: right;
+}
+
+@media screen and (min-width: 783px) {
+  .acf-field.cife-settings-field > .acf-label {
+    min-height: 72px;
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .acf-fields > .acf-field.cife-settings-field {
+    clear: both;
+    width: 100% !important;
+  }
+
+  .acf-field.cife-settings-field > .acf-label {
+    min-height: 0;
+  }
+
+  .cife-readonly-config dl {
+    grid-template-columns: 1fr;
+  }
+
+  .cife-readonly-config dd + dt {
+    margin-top: 8px;
+  }
+}
+
 .cife-icon:before {
   font-family: "dashicons";
   font-style: normal;

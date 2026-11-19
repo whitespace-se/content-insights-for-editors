@@ -2,24 +2,23 @@
 	global jQuery, WS_ANALYSIS
 */
 jQuery(document).ready(function($) {
-  jQuery("#author_id").change(function(e) {
-    window.location.href =
-      window.location.href + "&author_id=" + jQuery(this).val();
+  $("#author_id").change(function(e) {
+    window.location.href = window.location.href + "&author_id=" + $(this).val();
   });
 
-  jQuery("[name=show_only_broken_links]").change(function(e) {
-    let showBrokenLinks =
-      jQuery(this).attr("name") + "=" + jQuery(this).is(":checked");
+  $("[name=show_only_broken_links]").change(function(e) {
+    let showBrokenLinks = $(this).attr("name") + "=" + $(this).is(":checked");
     window.location.href = window.location.href + "&" + showBrokenLinks;
   });
 });
 
 jQuery(document).ready(function($) {
-  jQuery("#trigger_update_analytics").click(function(e) {
-    var $this = jQuery(this);
+  $("#trigger_update_analytics").click(function(e) {
+    var $this = $(this);
     $this.attr("disabled", true);
     var data = {
       action: "trigger_update_analytics",
+      nonce: WS_ANALYSIS.nonce,
     };
 
     jQuery.post(WS_ANALYSIS.ajaxurl, data, function(response) {

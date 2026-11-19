@@ -8,9 +8,11 @@ class App {
   public function __construct() {
     new Admin\Main();
     new Admin\Settings();
+    new Admin\ExternalLinks();
     new Admin\Metabox();
     new Admin\Dashboard();
     new Admin\BrokenLinkCron();
+    new Performance\Monitor();
     new Util\BrokenLinks();
     new Util\Matomo();
     new Util\Plugins\CustomerFeedback();
@@ -21,7 +23,9 @@ class App {
   public function enqueueStyles() {
     wp_enqueue_style(
       'cife_css',
-      plugins_url('../css/content-insights-for-editors.css', __FILE__)
+      plugins_url('../css/content-insights-for-editors.css', __FILE__),
+      array(),
+      CONTENT_INSIGHTS_FOR_EDITORS_VERSION
     );
   }
 }

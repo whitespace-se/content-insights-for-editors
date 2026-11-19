@@ -1,3 +1,16 @@
+## 2.6.1 (2026-11-19)
+
+### Features
+
+* Replace the external broken-link runtime dependency with CIFE-owned checking.
+* Inventory external links and optionally validate exact, deployment-approved hosts.
+* Add structured ACF link collection and page performance-risk insights.
+
+### Bug Fixes
+
+* Hide redundant manual review actions after a current successful automatic check.
+* Improve responsive settings and filter unsupported analyzed content types.
+
 ## [2.1.0](https://github.com/whitespace-se/content-insights-for-editors/compare/2.0.1...2.1.0) (2023-03-10)
 
 ### [2.0.1](https://github.com/whitespace-se/content-insights-for-editors/compare/2.0.0...2.0.1) (2021-09-21)
@@ -33,4 +46,3 @@
 ## [1.1.0](https://github.com/whitespace-se/content-insights-for-editors/compare/1.0.0...1.1.0) (2019-09-02)
 
 ## 1.0.0 (2019-08-26)
-

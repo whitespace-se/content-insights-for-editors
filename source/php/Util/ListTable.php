@@ -2,6 +2,8 @@
 
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 
+use CONTENT_INSIGHTS_FOR_EDITORS\Performance\Analyzer as PerformanceAnalyzer;
+
 class ListTable extends \WP_List_Table {
   public static $useAlternateUserField = false;
 
@@ -19,24 +21,27 @@ class ListTable extends \WP_List_Table {
     $hidden = $this->get_hidden_columns();
     $sortable = $this->get_sortable_columns();
 
-    $userID = isset($_GET['author_id'])
-      ? $_GET['author_id']
+    $userID = current_user_can('manage_options') && isset($_GET['author_id'])
+      ? absint(wp_unslash($_GET['author_id']))
       : get_current_user_id();
     $showOnlyBrokenLinks =
       !empty($_GET['show_only_broken_links']) &&
-      $_GET['show_only_broken_links'] == 'true';
-
-    $data = PostQuery::getListPosts($userID, $showOnlyBrokenLinks);
+      sanitize_key(wp_unslash($_GET['show_only_broken_links'])) === 'true';
 
     $perPage = 30;
     $currentPage = $this->get_pagenum();
-    $totalItems = count($data);
+    $data = PostQuery::getListPosts(
+      $userID,
+      $showOnlyBrokenLinks,
+      false,
+      $perPage,
+      ($currentPage - 1) * $perPage
+    );
+    $totalItems = PostQuery::getLastFoundRows();
     $this->set_pagination_args(array(
       'total_items' => $totalItems,
       'per_page' => $perPage,
     ));
-    $data = array_slice($data, ($currentPage - 1) * $perPage, $perPage);
-
     $this->_column_headers = array($columns, $hidden, $sortable);
     $this->items = $data;
   }
@@ -45,17 +50,18 @@ class ListTable extends \WP_List_Table {
     if ($which == 'top') {
 
       $selected_user = isset($_GET['author_id'])
-        ? $_GET['author_id']
+        ? absint(wp_unslash($_GET['author_id']))
         : get_current_user_id();
       $show_only_broken_links = '';
       if (
         !empty($_GET['show_only_broken_links']) &&
-        $_GET['show_only_broken_links'] == 'true'
+        sanitize_key(wp_unslash($_GET['show_only_broken_links'])) === 'true'
       ) {
         $show_only_broken_links = 'checked';
       }
 
-      $args = array(
+      if (current_user_can('manage_options')) {
+        $args = array(
         'show_option_all' => __('All', 'content-insights-for-editors'),
         'role__in' => ['administrator', 'editor', 'author'],
         'orderby' => 'display_name',
@@ -67,19 +73,18 @@ class ListTable extends \WP_List_Table {
         'include_selected' => true,
         'name' => 'author_id',
         'blog_id' => $GLOBALS['blog_id'],
-      );
+        );
+      }
       ?>
             <div class="alignleft actions">
-				<?php wp_dropdown_users($args); ?>
-				<?php if (class_exists('\BrokenLinkDetector\App')): ?>
+                <?php if (current_user_can('manage_options')) { wp_dropdown_users($args); } ?>
                 <label style="vertical-align: -webkit-baseline-middle;">
-                    <input type="checkbox" name="show_only_broken_links" value="true" <?php echo $show_only_broken_links; ?> />
+                    <input type="checkbox" name="show_only_broken_links" value="true" <?php echo esc_attr($show_only_broken_links); ?> />
                     <?php _e(
                       'Show only pages with broken links',
                       'content-insights-for-editors'
                     ); ?>
 				</label>
-				<?php endif; ?>
             </div>
             <?php
     }
@@ -90,6 +95,7 @@ class ListTable extends \WP_List_Table {
       'title' => __('Post', 'content-insights-for-editors'),
       'url' => __('Web address', 'content-insights-for-editors'),
       'length' => __('Number of broken links', 'content-insights-for-editors'),
+      'performance_risk' => __('Performance risk', 'content-insights-for-editors'),
       'modified' => __('Last updated', 'content-insights-for-editors'),
       'author' => self::$useAlternateUserField
         ? __('Editor', 'content-insights-for-editors')
@@ -142,26 +148,40 @@ class ListTable extends \WP_List_Table {
     switch ($column_name) {
       case 'title':
         return '<a href="' .
-          get_edit_post_link($item->ID) .
+          esc_url(get_edit_post_link($item->ID)) .
           '"><strong>' .
-          $item->title .
+          esc_html($item->title) .
           '</strong></a>';
 
       case 'url':
         return '<a target="_blank" href="' .
-          get_permalink($item->ID) .
+          esc_url(get_permalink($item->ID)) .
           '">' .
-          get_permalink($item->ID) .
+          esc_html(get_permalink($item->ID)) .
           '</a>';
       case 'author':
         return '<a href="mailto:' .
-          $item->author_email .
+          esc_attr($item->author_email) .
           '">' .
-          $item->author .
+          esc_html($item->author) .
           '</a>';
 
+      case 'performance_risk':
+        $metrics = (new PerformanceAnalyzer())->getMetrics($item->ID);
+        $riskLabels = array(
+          'low' => __('Low', 'content-insights-for-editors'),
+          'moderate' => __('Moderate', 'content-insights-for-editors'),
+          'high' => __('High', 'content-insights-for-editors'),
+        );
+        $risk = isset($riskLabels[$metrics['risk']]) ? $metrics['risk'] : 'low';
+        return sprintf(
+          '<span class="cife-performance__badge cife-performance__badge--%1$s">%2$s</span>',
+          esc_attr($risk),
+          esc_html($riskLabels[$risk])
+        );
+
       default:
-        return $item->$column_name;
+        return isset($item->$column_name) ? esc_html($item->$column_name) : '';
     }
   }
 }

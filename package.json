@@ -1,8 +1,8 @@
 {
   "name": "content-insights-for-editors",
-  "author": "Whitespace AB <code@whitespace.se>",
-  "license": "AGPL",
-  "version": "2.2.0",
+  "author": "Whitespace Dev <code@whitespace.se>",
+  "license": "AGPL-3.0-or-later",
+  "version": "2.6.1",
   "private": true,
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,json,md,scss,css,yml,html,php}\""

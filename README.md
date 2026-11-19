@@ -1,40 +1,55 @@
 # Content Insights for Editors
 
-> An easy way for content editors to keep track of their work and get notified
-> when it is not working properly
+> An easy way for content editors to keep track of their work and get notified when it is not working properly
 
-Content Insights for Editors is a WordPress plugin
+Content Insights for Editors is a WordPress plugin 
 
 ## Table of Contents
 
-- [Usage](#usage)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Develop](#develop)
-  - [Local prerequisites](#local-prerequisites)
-  - [Local installation](#local-installation)
-- [Contributing](#contributing)
-- [Versioning](#versioning)
-- [Authors](#authors)
-- [License](#license)
+* [Usage](#usage)
+    * [Prerequisites](#prerequisites)
+    * [Installation](#installation)
+* [Develop](#develop)
+    * [Local prerequisites](#local-prerequisites)
+    * [Local installation](#local-installation)
+* [Contributing](#contributing)
+* [Versioning](#versioning)
+* [Authors](#authors)
+* [License](#license)
 
 ## Usage
 
 ### Prerequisites
 
-- [WordPress](https://wordpress.com/)
-- [ACF](https://www.advancedcustomfields.com/)
-- [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-- [matomo](https://matomo.org/)
+* PHP 8.1 or later
+* [WordPress](https://wordpress.org/)
+* [ACF](https://www.advancedcustomfields.com/)
+* [Matomo](https://matomo.org/) for visitor statistics
 
-Content Insights for Editors uses matomo for visitor statistics and
-[helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-for analysing content.
+Content Insights for Editors includes its own scheduled broken-link checker. It
+stores internal broken-link results in the existing
+`{$wpdb->prefix}broken_links_detector` table so upgrades from the former external
+detector retain their data.
+
+Automatic validation is limited to URLs on the current WordPress site and makes
+no HTTP requests. Known WordPress content and uploads are resolved from local
+data; unknown custom routes remain indeterminate rather than being fetched or
+incorrectly reported as broken.
+
+External URLs are collected without being requested. Editors can review links
+from their own pages on the **External links** screen, while administrators see
+the sitewide inventory. A manual review can be marked with a checked date. The
+configurable review interval defaults to 30 days and feeds the dashboard and the
+existing manual and scheduled email summaries.
+
+Links are collected from normal post content, Modularity content and editorial
+ACF URL, Link, File and WYSIWYG fields, including fields nested in repeaters,
+groups and flexible content. Other ACF field types and arbitrary post metadata
+are not scanned.
 
 ### Installing
 
-The package can be downloaded manually and unzipped in the /wp-content/plugins/
-directory or by using composer.
+The package can be downloaded manually and unzipped in the /wp-content/plugins/ directory or by using composer. 
 
 Install by running the following command:
 
@@ -44,16 +59,23 @@ composer require municipio/content-insights-for-editors
 
 Example of how composer works [here](https://wpackagist.org/)
 
-When resources have been installed. The plugin can be activated by looking for a
-"Content Insights for Editors" entry in the plugins page and clicking on
-"Activate".
+When resources have been installed. The plugin can be activated by looking for a "Content Insights for Editors" entry in the plugins page and clicking on "Activate".
 
 ### Hooks
 
 Here are the hooks for customizing the plugin
 
-### Set the mail logo url
+### Excluding an ACF field from link collection
 
+```php
+cife_broken_links_scan_acf_field
+```
+
+Return `false` for an editorial ACF field that should not contribute links to
+CIFE. The filter receives the current decision, the ACF field definition and
+the post ID.
+
+### Set the mail logo url
 ```php
 cife_notification_mail_logo_url
 ```
@@ -61,14 +83,13 @@ cife_notification_mail_logo_url
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_logo_url', function ($currentLogo) {
-  $logo = get_field('logotype', 'option');
-  return wp_get_attachment_url($logo['id']);
+add_filter('cife_notification_mail_logo_url', function($currentLogo) {
+    $logo =  get_field('logotype', 'option');
+    return  wp_get_attachment_url($logo['id']);
 });
 ```
 
 ### Adding a section to mail notification
-
 ```php
 cife_notification_mail_list_sections
 ```
@@ -76,7 +97,7 @@ cife_notification_mail_list_sections
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_list_sections', function($sections){
+add_filter('cife_notification_mail_list_sections', function($sections){
     array_push($sections, [
         'section_header' => '', // string, Title rendered above section
         'list' => [
@@ -87,7 +108,7 @@ add_action('cife_notification_mail_list_sections', function($sections){
             ],
             ...
         ],
-        'list_header' => ['title' => '', 'value' => ''], // array, Explaining list.title and list.value
+        'list_header' => ['title' => '', 'value' => ''], // array, Explaining list.title and list.value 
         'no_items_text' => '', // string, Replace list if empty
     ]);
     return $sections;
@@ -95,7 +116,6 @@ add_action('cife_notification_mail_list_sections', function($sections){
 ```
 
 ### Modify which section template to use during render
-
 ```php
 cife_notification_mail_render_section
 ```
@@ -103,19 +123,12 @@ cife_notification_mail_render_section
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_list_sections', function (
-  $template,
-  $sectionVars
-) {
-  if (
-    $_sectionVars['id'] === 'most-viewed' &&
-    class_exists('\CustomerFeedback\App')
-  ) {
-    return CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH .
-      '/partials/section-3-cols-customer-feedback.template.php';
-  }
-  return $template; // Absolute php file path
-});
+add_filter('cife_notification_mail_render_section', function($template, $sectionVars){
+    if ($sectionVars['id'] === 'most-viewed' && class_exists('\CustomerFeedback\App')) {
+        return CONTENT_INSIGHTS_FOR_EDITORS_MAIL_TEMPLATE_PATH . '/partials/section-3-cols-customer-feedback.template.php';
+    }
+    return $template; // Absolute php file path
+}, 10, 2);
 ```
 
 ### Customizing content of mail notification
@@ -125,7 +138,6 @@ cife_notification_mail_vars
 ```
 
 **Exposed variables**
-
 ```php
 'logo'  // string, Logourl showed in top of email
 'intro_header' // string, Title showen in top of email
@@ -137,39 +149,31 @@ cife_notification_mail_vars
 **Example usage**
 
 ```php
-add_action('cife_notification_mail_vars', function ($html_vars) {
-  $html_vars['logo'] = "...";
-  return $html_vars;
+add_filter('cife_notification_mail_vars', function($html_vars){
+    $html_vars['logo'] = "..."; 
+    return $html_vars;
 });
 ```
 
 ## Develop
 
-These instructions will get you a copy of the project up and running on your
-local machine for development and testing purposes. See [Usage](#usage) for
-notes on how to use the plugin in production.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Usage](#usage) for notes on how to use the plugin in production.
 
 ### Local prerequisites
 
-- [WordPress](https://wordpress.com/)
-- [ACF](https://www.advancedcustomfields.com/)
-- [helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-- [matomo](https://matomo.org/)
-
-Content Insights for Editors uses matomo for visitor statistics and
-[helsingborg-stad/broken-link-detector](https://github.com/helsingborg-stad/broken-link-detector)
-for analysing content.
+* [WordPress](https://wordpress.com/)
+* [ACF](https://www.advancedcustomfields.com/)
+* [Matomo](https://matomo.org/) when developing visitor-statistics features
 
 ### Local installation
 
-The plugin can be installed with composer or by cloning this repo from github
-into the /wp-content/plugins/ directory of your WordPress installation.
+The plugin can be installed with composer or by cloning this repo from github into the /wp-content/plugins/ directory of your WordPress installation.
 
 **With composer**
 
 Add this to your composer.json
 
-```
+````
 "repositories": [
     {
         "type": "path",
@@ -182,31 +186,25 @@ Add this to your composer.json
     ...
     "content-insights-for-editors": "dev-master"
 },
-```
-
-And this to install helsingborg-stad/broken-link-detector
-
-```
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:helsingborg-stad/broken-link-detector.git",
-        "no-api": true
-    },
-    ...
-]
-
-"require": {
-    ...
-    "helsingborg-stad/broken-link-detector": "^1.3",
-},
-```
+````
 
 Then run
 
-```
+````
 composer install
-```
+````
+
+Run unit tests with:
+
+````
+composer test
+````
+
+The WordPress integration tests additionally require `WP_TESTS_DIR`:
+
+````
+WP_TESTS_DIR=/path/to/wordpress-tests-lib composer test:integration
+````
 
 Example of how composer works [here](https://wpackagist.org/)
 
@@ -220,17 +218,13 @@ Example of how composer works [here](https://wpackagist.org/)
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available,
-see the
-[tags on this repository](https://github.com/whitespace-se/content-insights-for-editors/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/whitespace-se/content-insights-for-editors/tags). 
 
 ## Authors
 
-See the list of
-[contributors](https://github.com/whitespace-se/content-insights-for-editors/graphs/contributors)
-who participated in this project.
+See the list of [contributors](https://github.com/whitespace-se/content-insights-for-editors/graphs/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the
-[LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU Affero General Public License v3 or
+later - see the [LICENSE](LICENSE) file for details.

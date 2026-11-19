@@ -3,9 +3,11 @@
 namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
+use CONTENT_INSIGHTS_FOR_EDITORS\Performance\Analyzer as PerformanceAnalyzer;
 
 class PostQuery {
   private static $postTbName = 'post';
+  private static $lastFoundRows = 0;
 
   private static function getValueType($value) {
     if (is_float($value)) {
@@ -19,29 +21,30 @@ class PostQuery {
     return '%s';
   }
 
-  private static function userSelectQuery() {
+  public static function userSelectQuery() {
     //FIX: When using municipio you may want to filter by "Redaktör" instead of "Author"
     $postName = self::$postTbName;
     if (Settings::getUseAlternateUserField()) {
       global $wpdb;
-      return "(SELECT meta_value FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = user.ID OR ((SELECT count(1) FROM $wpdb->postmeta WHERE post_id = $postName.ID AND meta_key LIKE 'page_meta_maineditor') = 0 AND post.post_author = user.ID)";
+      return "(
+        $postName.post_type = 'page'
+        AND CAST(COALESCE(NULLIF((
+          SELECT meta_value FROM $wpdb->postmeta
+          WHERE post_id = $postName.ID AND meta_key = 'page_meta_maineditor'
+          LIMIT 1
+        ), ''), $postName.post_author) AS UNSIGNED) = user.ID
+      ) OR ($postName.post_author = user.ID AND $postName.post_type != 'page')";
     }
 
     return "$postName.post_author = user.ID";
-  }
-
-  public static function getBrokenLinks($postId = false) {
-    global $wpdb;
-    $brokenLinksTable = BrokenLinks::$dbTable;
-    $sql = "SELECT url FROM $brokenLinksTable WHERE post_id=" . (int) $postId;
-    return $wpdb->get_results($sql);
   }
 
   public static function getListPosts(
     $userID,
     $showOnlyBrokenLinks = false,
     $postId = false,
-    $limit = false
+    $limit = false,
+    $offset = 0
   ) {
     global $wpdb;
     $brokenLinksTable = BrokenLinks::$dbTable;
@@ -51,8 +54,8 @@ class PostQuery {
     $userSelectQuery = self::userSelectQuery();
 
     $sql = "SELECT $postName.ID AS ID,
-                        $postName.post_title AS title,
-                        $postName.post_name AS url,
+                        $postName.post_title AS title, 
+                        $postName.post_name AS url, 
                         COUNT(links.id) AS length,
                         $postName.post_modified AS modified,
                         user.display_name AS author,
@@ -116,18 +119,42 @@ class PostQuery {
     if ($showOnlyBrokenLinks) {
       $sql .= ' HAVING length > 0';
     }
+    $countSql = "SELECT COUNT(*) FROM ($sql) cife_results";
 
-    $orderby = !empty($_GET['orderby']) ? esc_sql($_GET['orderby']) : 'length';
-    $order = !empty($_GET['order']) ? esc_sql($_GET['order']) : 'DESC';
+    $sortableColumns = array(
+      'length' => 'length',
+      'modified' => "$postName.post_modified",
+      'week_visitors' => 'analytics.week_visitors',
+      'month_visitors' => 'analytics.month_visitors',
+    );
+    $requestedOrderBy = isset($_GET['orderby'])
+      ? sanitize_key(wp_unslash($_GET['orderby']))
+      : 'length';
+    $orderby = isset($sortableColumns[$requestedOrderBy])
+      ? $sortableColumns[$requestedOrderBy]
+      : 'length';
+    $requestedOrder = isset($_GET['order'])
+      ? strtoupper(sanitize_key(wp_unslash($_GET['order'])))
+      : 'DESC';
+    $order = in_array($requestedOrder, array('ASC', 'DESC'), true)
+      ? $requestedOrder
+      : 'DESC';
 
     $sql .= " ORDER BY $orderby $order";
     if (is_numeric($limit) && $limit > 0) {
-      $sql .= " LIMIT $limit";
+      $sql .= $wpdb->prepare(' LIMIT %d OFFSET %d', (int) $limit, max(0, (int) $offset));
     }
 
     $result = $wpdb->get_results($sql);
+    self::$lastFoundRows = is_numeric($limit) && (int) $limit > 0
+      ? (int) $wpdb->get_var($countSql)
+      : count($result);
 
     return $result;
+  }
+
+  public static function getLastFoundRows() {
+    return self::$lastFoundRows;
   }
 
   public static function getMostVisitedPosts(
@@ -139,32 +166,23 @@ class PostQuery {
     global $wpdb;
     $postName = self::$postTbName;
     $analyticsTable = Matomo::getDbTable();
-    $timespanRow = esc_sql(sprintf('%s_visitors', $timespan));
+    $postTypes = Settings::getAnalysedPostTypes();
+    $postTypePlaceholders = implode(',', array_fill(0, count($postTypes), '%s'));
+    $timespanRow = $timespan === 'month' ? 'month_visitors' : 'week_visitors';
     $sql = "SELECT $postName.ID AS ID,
                         $postName.post_title AS title,
-                        COALESCE(analytics.$timespanRow, 0) AS visitors
+                        COALESCE(analytics.$timespanRow, 0) AS visitors 
 				FROM $wpdb->posts $postName";
-    if ($userID !== false && Settings::getUseAlternateUserField()) {
-      $sql .= " LEFT JOIN $wpdb->postmeta postmeta ON $postName.ID = postmeta.post_id";
+    if ($userID !== false) {
+      $sql .= ' INNER JOIN ' . $wpdb->users . ' user ON ' . self::userSelectQuery();
     }
     $sql .= " LEFT JOIN $analyticsTable analytics ON $postName.ID = analytics.post_id";
-    if (Settings::getIncludePrivatePages()) {
-      $sql .= " WHERE ($postName.post_status = 'publish' OR $postName.post_status = 'private') AND $postName.post_type != 'revision'";
-    } else {
-      $sql .= " WHERE $postName.post_status = 'publish' AND $postName.post_type != 'revision'";
-    }
-
-    // Don’t include Modularity modules
-    $sql .= " AND $postName.post_type NOT LIKE 'mod-%'";
-
+    $sql .= $wpdb->prepare(
+      " WHERE $postName.post_status = 'publish' AND $postName.post_type IN ($postTypePlaceholders)",
+      $postTypes
+    );
     if ($userID !== false) {
-      if (Settings::getUseAlternateUserField()) {
-        $stmt =
-          " AND postmeta.meta_key = 'page_meta_maineditor' AND postmeta.meta_value = %d";
-      } else {
-        $stmt = " AND $postName.post_author = %d";
-      }
-      $sql .= $wpdb->prepare($stmt, $userID);
+      $sql .= $wpdb->prepare(' AND user.ID = %d', $userID);
     }
 
     $order = $desc ? 'DESC' : 'ASC';
@@ -195,6 +213,8 @@ class PostQuery {
     global $wpdb;
     $postName = self::$postTbName;
     $brokenLinksTable = BrokenLinks::$dbTable;
+    $postTypes = Settings::getAnalysedPostTypes();
+    $postTypePlaceholders = implode(',', array_fill(0, count($postTypes), '%s'));
 
     $userSelectQuery = self::userSelectQuery();
 
@@ -203,10 +223,14 @@ class PostQuery {
                         user.display_name AS author,
                         COUNT(links.id) AS broken_links
 				FROM $wpdb->posts $postName";
-    $sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery
+    $sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery 
 				INNER JOIN $brokenLinksTable links ON $postName.ID = links.post_id";
+    $sql .= $wpdb->prepare(
+      " WHERE $postName.post_status = 'publish' AND $postName.post_type IN ($postTypePlaceholders)",
+      $postTypes
+    );
     if ($userID !== false) {
-      $sql .= $wpdb->prepare(' WHERE user.ID = %d', $userID);
+      $sql .= $wpdb->prepare(' AND user.ID = %d', $userID);
     }
     $sql .= $wpdb->prepare(
       " GROUP BY post.ID
@@ -218,51 +242,67 @@ class PostQuery {
     return $wpdb->get_results($sql);
   }
 
+  public static function getHighPerformanceRiskPosts($count = 10, $userID = false) {
+    global $wpdb;
+    $postName = self::$postTbName;
+    $postTypes = Settings::getAnalysedPostTypes();
+    $postTypePlaceholders = implode(',', array_fill(0, count($postTypes), '%s'));
+    $arguments = array_merge(
+      array(PerformanceAnalyzer::RISK_META_KEY, 'high'),
+      $postTypes
+    );
+    $sql = "SELECT $postName.ID, $postName.post_title AS title
+      FROM $wpdb->posts $postName";
+    if ($userID !== false) {
+      $sql .= ' INNER JOIN ' . $wpdb->users . ' user ON ' . self::userSelectQuery();
+    }
+    $sql .= " INNER JOIN $wpdb->postmeta performance
+        ON performance.post_id = $postName.ID AND performance.meta_key = %s
+      WHERE performance.meta_value = %s
+        AND $postName.post_status = 'publish'
+        AND $postName.post_type IN ($postTypePlaceholders)";
+    if ($userID !== false) {
+      $sql .= ' AND user.ID = %d';
+      $arguments[] = (int) $userID;
+    }
+    $sql .= " ORDER BY $postName.post_modified DESC LIMIT %d";
+    $arguments[] = max(1, (int) $count);
+    return $wpdb->get_results($wpdb->prepare($sql, $arguments));
+  }
+
   public static function getPagesModifiedAfter(
     $time,
     $take = -1,
     $userID = false
   ) {
-    $args = array(
-      'post_type' => 'page',
-      'posts_per_page' => $take,
-      'post_status' => 'publish',
-      'date_query' => array(
-        'before' => $time,
-        'column' => 'post_modified',
-      ),
-      'order' => 'ASC',
-      'orderby' => 'post_modified',
-    );
-    if (Settings::getIncludePrivatePages()) {
-      $args['post_status'] = array('publish', 'private');
+    global $wpdb;
+    $postName = self::$postTbName;
+    $postTypes = Settings::getAnalysedPostTypes();
+    $postTypePlaceholders = implode(',', array_fill(0, count($postTypes), '%s'));
+    $cutoff = (new \DateTimeImmutable('now', wp_timezone()))
+      ->modify($time)
+      ->format('Y-m-d H:i:s');
+    $arguments = array_merge($postTypes, array($cutoff));
+    $sql = "SELECT $postName.ID, $postName.post_title AS title,
+        DATE($postName.post_modified) AS lastModified
+      FROM $wpdb->posts $postName";
+    if ($userID !== false) {
+      $sql .= ' INNER JOIN ' . $wpdb->users . ' user ON ' . self::userSelectQuery();
     }
-    if ($userID) {
-      if (Settings::getUseAlternateUserField()) {
-        $args['meta_query'] = $args['meta_query'] ?: array();
-        $args['meta_query'][] = array(
-          'key' => 'page_meta_maineditor',
-          'value' => $userID,
-          'compare' => '=',
-        );
-      } else {
-        $args['author'] = $userID;
-      }
+    $sql .= " WHERE $postName.post_status = 'publish'
+      AND $postName.post_type IN ($postTypePlaceholders)
+      AND $postName.post_modified < %s";
+    if ($userID !== false) {
+      $sql .= ' AND user.ID = %d';
+      $arguments[] = (int) $userID;
     }
-    $query = new \WP_Query($args);
-    $pages = array();
-    if ($query->have_posts()) {
-      while ($query->have_posts()):
-        $query->the_post();
-        $page = new \stdClass();
-        $page->ID = get_the_ID();
-        $page->title = get_the_title();
-        $page->lastModified = get_the_modified_date('Y-m-d');
-        $pages[] = $page;
-      endwhile;
+    $sql .= " ORDER BY $postName.post_modified ASC";
+    if (is_numeric($take) && (int) $take > 0) {
+      $sql .= ' LIMIT %d';
+      $arguments[] = (int) $take;
     }
-    wp_reset_postdata();
-    return $pages;
+
+    return $wpdb->get_results($wpdb->prepare($sql, $arguments));
   }
 
   public static function getPostWithCustomerFeedbackResponses(
@@ -277,22 +317,29 @@ class PostQuery {
     $postName = self::$postTbName;
     $analyticsTable = Matomo::getDbTable();
     $feedback = 'feedback';
+    $postTypes = Settings::getAnalysedPostTypes();
+    $postTypePlaceholders = implode(',', array_fill(0, count($postTypes), '%s'));
 
     $userSelectQuery = self::userSelectQuery();
 
     $sql = "SELECT $postName.ID AS ID,
-				$postName.post_title AS title,
+				$postName.post_title AS title, 
 				COUNT(*) as count,
                 COALESCE(analytics.week_visitors, 0) AS visitors
                 FROM $wpdb->postmeta postmeta
-				INNER JOIN $wpdb->posts $feedback ON postmeta.post_id = $feedback.ID
-				INNER JOIN $analyticsTable analytics ON postmeta.meta_value = analytics.post_id
+				INNER JOIN $wpdb->posts $feedback ON postmeta.post_id = $feedback.ID 
+				INNER JOIN $analyticsTable analytics ON postmeta.meta_value = analytics.post_id 
 				INNER JOIN $wpdb->posts $postName ON postmeta.meta_value = $postName.ID";
     if ($userID !== false) {
       $sql .= " INNER JOIN $wpdb->users user ON $userSelectQuery";
     }
-    $sql .= " WHERE postmeta.meta_key = 'customer_feedback_page_reference'
-		AND $feedback.post_date_gmt > $postName.post_modified_gmt ";
+    $sql .= $wpdb->prepare(
+      " WHERE postmeta.meta_key = 'customer_feedback_page_reference'
+        AND $feedback.post_date_gmt > $postName.post_modified_gmt
+        AND $postName.post_status = 'publish'
+        AND $postName.post_type IN ($postTypePlaceholders) ",
+      $postTypes
+    );
     if ($userID !== false) {
       $sql .= $wpdb->prepare(' AND user.ID = %d', $userID);
     }

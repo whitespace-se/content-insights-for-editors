@@ -1,7 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Content Insights for Editors\n"
-"POT-Creation-Date: 2019-10-03 11:40+0200\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/content-insights-"
+"for-editors\n"
+"POT-Creation-Date: 2026-11-19T16:09:19+00:00\n"
 "PO-Revision-Date: 2019-10-03 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,105 +17,132 @@ msgstr ""
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: content-insights-for-editors.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: plugins\n"
 
+#. Plugin Name of the plugin
+#: content-insights-for-editors.php source/php/Admin/Main.php:29
+#: source/php/Admin/Main.php:30
+msgid "Content Insights for Editors"
+msgstr "Content Insights for Editors"
+
+# msgid "Content Insights for Editors"
+# msgstr "Content Insights for Editors"
+#. Description of the plugin
+#: content-insights-for-editors.php
+msgid "Analyse content for your website"
+msgstr "Analysera webbplatsens innehåll"
+
+#. Author of the plugin
+#: content-insights-for-editors.php
+msgid "Whitespace"
+msgstr "Whitespace"
+
 #: source/php/AcfFields/php/options-page.php:9
-msgid "Analyzed posttypes"
+msgid "Analyzed post types"
 msgstr "Analyserade posttyper"
 
-#: source/php/AcfFields/php/options-page.php:30
-msgid "Include private pages"
-msgstr "Inkludera privata sidor"
+#: source/php/AcfFields/php/options-page.php:12
+msgid ""
+"Choose standalone content types. Modules and modal content are included with "
+"their parent page."
+msgstr ""
+"Välj fristående innehållstyper. Moduler och modalt innehåll ingår i den "
+"överordnade sidan."
 
-#: source/php/AcfFields/php/options-page.php:36
-msgid "By default data for private pages is excluded, this option allows it to be displayed."
-msgstr "Som standard är data för privata sidor exkluderade, det här alternativet visar det."
-
-#: source/php/AcfFields/php/options-page.php:29
+#: source/php/AcfFields/php/options-page.php:32
 msgid "Use alternative user field"
 msgstr "Använd alternativt användarfält"
 
-#: source/php/AcfFields/php/options-page.php:33
-msgid ""
-"Uses the Editor field (page_meta_maineditor) for user filtering, instead of "
-"Author used by default."
+#: source/php/AcfFields/php/options-page.php:38
+msgid "Use Municipio’s main editor for pages instead of the WordPress author."
 msgstr ""
-"Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
-"istället för Författare som används som standard."
+"Använd Municipios huvudredaktör för sidor i stället för WordPress-"
+"författaren."
 
-#: source/php/AcfFields/php/options-page.php:49
-msgid "Enable automatic mailing for broken links"
-msgstr "Aktivera automatiska utskick för brutna länkar"
+#: source/php/AcfFields/php/options-page.php:57
+msgid "Enable automatic summary emails"
+msgstr "Aktivera automatiska sammanfattningsmejl"
 
-#: source/php/AcfFields/php/options-page.php:53
-msgid ""
-"Sends email to all authors, editors and administrators every two weeks with "
-"a report on their broken links."
-msgstr ""
-"Skickar mail till alla författare, redaktörer samt administratörer varannan "
-"vecka med en rapport om deras brutna länkar."
+#: source/php/AcfFields/php/options-page.php:63
+msgid "Email content owners a CIFE summary every two weeks."
+msgstr "Mejla innehållsansvariga en CIFE-sammanfattning varannan vecka."
 
-#: source/php/AcfFields/php/options-page.php:69
-msgid "Obsolete pages"
-msgstr "Föråldrade sidor"
+#: source/php/AcfFields/php/options-page.php:82
+msgid "Outdated content"
+msgstr "Inaktuellt innehåll"
 
-#: source/php/AcfFields/php/options-page.php:73
-msgid ""
-"Set the threshold for how many days a page that has not been updated should "
-"be before the plugin flags the page as outdated."
-msgstr ""
-"Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats skall "
-"vara innan pluginet flaggar sidan som föråldrad."
+#: source/php/AcfFields/php/options-page.php:85
+msgid "Flag content not updated within this period."
+msgstr "Flagga innehåll som inte har uppdaterats inom perioden."
 
-#: source/php/AcfFields/php/options-page.php:84
-#: source/php/Admin/Dashboard.php:130
+#: source/php/AcfFields/php/options-page.php:99
+#: source/php/AcfFields/php/options-page.php:115
+#: source/php/Admin/Dashboard.php:144
 msgid "days"
 msgstr "dagar"
 
-#: source/php/AcfFields/php/options-page.php:110
-msgid "ex. https://analys.yourdomain.se/"
-msgstr "ex. https://analys.dindoman.se/"
+#: source/php/AcfFields/php/options-page.php:105
+msgid "External link review"
+msgstr "Granskning av externa länkar"
 
-#: source/php/AcfFields/php/options-page.php:126
-msgid "Matomo Api key"
+#: source/php/AcfFields/php/options-page.php:108
+msgid "Remind content owners to review external links after this period."
+msgstr "Påminn innehållsansvariga att granska externa länkar efter perioden."
+
+#: source/php/AcfFields/php/options-page.php:121
+msgid "Automatic external-link checks"
+msgstr "Automatiska kontroller av externa länkar"
+
+#: source/php/AcfFields/php/options-page.php:124
+msgid ""
+"Approved destinations are configured per installation and cannot be edited "
+"from WordPress."
+msgstr ""
+"Godkända destinationer konfigureras per installation och kan inte redigeras "
+"i WordPress."
+
+#: source/php/AcfFields/php/options-page.php:134
+msgid "Matomo API URL"
+msgstr "URL till Matomos API"
+
+#: source/php/AcfFields/php/options-page.php:137
+msgid "Example: https://analytics.example.com/"
+msgstr "Exempel: https://analys.exempel.se/"
+
+#: source/php/AcfFields/php/options-page.php:156
+msgid "Matomo API key"
 msgstr "Matomo API-nyckel"
 
-#: source/php/AcfFields/php/options-page.php:130
-msgid ""
-"Visit admin for your Matomo installation. Under Platform -> API there is & "
-"token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
-"xxxxxxxxxxxxxxx"
-msgstr ""
-"Besök admin för din Matomoinstallation. Under Plattform -> API finns "
-"&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
+#: source/php/AcfFields/php/options-page.php:159
+msgid "Use the token_auth value from your Matomo profile."
+msgstr "Använd värdet token_auth från din Matomo-profil."
 
-#: source/php/AcfFields/php/options-page.php:146
+#: source/php/AcfFields/php/options-page.php:178
 msgid "Matomo site id"
-msgstr ""
+msgstr "Matomo-webbplats-ID"
 
-#: source/php/AcfFields/php/options-page.php:209
+#: source/php/AcfFields/php/options-page.php:181
+msgid "The numeric site ID in Matomo."
+msgstr "Webbplatsens numeriska ID i Matomo."
+
+#: source/php/AcfFields/php/options-page.php:221
 msgid "Customer feedback minimum responses"
 msgstr "Customer feedback minst antal svar"
 
-#: source/php/AcfFields/php/options-page.php:213
-msgid ""
-"Set the threshold for how votes (yes/no) the page must have since last "
-"update."
-msgstr ""
-"Ange tröskelvärdet för hur röster (Ja/Nej) sidan måste ha sedan senaste "
-"uppdateringen."
+#: source/php/AcfFields/php/options-page.php:227
+msgid "Minimum votes required before feedback is highlighted."
+msgstr "Minsta antal röster innan återkopplingen lyfts fram."
 
-#: source/php/AcfFields/php/options-page.php:224
-#: source/php/Admin/Dashboard.php:100 source/php/Admin/Dashboard.php:114
+#: source/php/AcfFields/php/options-page.php:241
+#: source/php/Admin/Dashboard.php:114 source/php/Admin/Dashboard.php:128
 msgid "votes"
 msgstr "röster"
 
-#: source/php/Admin/BrokenLinkCron.php:58
+#: source/php/Admin/BrokenLinkCron.php:121
 msgid "Every Second Week"
 msgstr "Varannan vecka"
 
@@ -125,117 +154,271 @@ msgstr "Topp 10 mest besökta sidorna senaste veckan (alla redaktörer)"
 msgid "Top 10 most visitied pages last month (sitewide)"
 msgstr "Topp 10 mest besökta sidorna senaste månaden (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:40
+#: source/php/Admin/Dashboard.php:39
 msgid "Top 10 pages with most number of broken links (sitewide)"
 msgstr "Topp 10 sidor med flest trasiga länkar (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:52
+#: source/php/Admin/Dashboard.php:47
+msgid "External links requiring review (sitewide)"
+msgstr "Externa länkar som behöver granskas (hela webbplatsen)"
+
+#: source/php/Admin/Dashboard.php:55
 msgid "Top 10 pages not updated in a while (sitewide)"
 msgstr "Topp 10 sidor som ej uppdaterats på ett tag (alla redaktörer)"
 
-#: source/php/Admin/Dashboard.php:65
+#: source/php/Admin/Dashboard.php:68
 msgid "Your top 10 pages most visited last month"
 msgstr "Dina topp 10 mest besökta sidor senaste månaden"
 
-#: source/php/Admin/Dashboard.php:74
+#: source/php/Admin/Dashboard.php:77
 msgid "Your 10 least visited pages last month"
 msgstr "Dina topp 10 minst besökta sidor senaste månaden"
 
-#: source/php/Admin/Dashboard.php:84
+#: source/php/Admin/Dashboard.php:87
 msgid "All your pages with broken links"
 msgstr "Alla dina sidor med brutna länkar"
 
-#: source/php/Admin/Dashboard.php:95
+#: source/php/Admin/Dashboard.php:93
+msgid "Pages with high performance risk"
+msgstr "Sidor med hög prestandarisk"
+
+#: source/php/Admin/Dashboard.php:98
+msgid "External links on your pages requiring review"
+msgstr "Externa länkar på dina sidor som behöver granskas"
+
+#: source/php/Admin/Dashboard.php:108
 msgid "Top 10 pages with most most positive feedback responses"
 msgstr "Topp 10 sidor med mest positiva feedbacksvar"
 
-#: source/php/Admin/Dashboard.php:98 source/php/Admin/Dashboard.php:112
+#: source/php/Admin/Dashboard.php:112 source/php/Admin/Dashboard.php:126
 msgid "minimum"
 msgstr "minimum"
 
-#: source/php/Admin/Dashboard.php:109
+#: source/php/Admin/Dashboard.php:122
 msgid "Top 10 pages with least positive feedback responses"
 msgstr "Topp 10 sidor med minst positiva feedbacksvar"
 
-#: source/php/Admin/Dashboard.php:126
+#: source/php/Admin/Dashboard.php:139
 msgid "All your pages not updated in the last"
 msgstr "Alla dina sidor som inte uppdaterats under de senaste"
 
-#: source/php/Admin/Dashboard.php:220
+#: source/php/Admin/Dashboard.php:199
+msgid "No high-risk pages right now."
+msgstr "Inga sidor med hög risk just nu."
+
+#: source/php/Admin/Dashboard.php:208 source/php/Admin/Metabox.php:94
+#: source/php/Util/ListTable.php:174
+msgid "High"
+msgstr "Hög"
+
+#: source/php/Admin/Dashboard.php:212
+msgid "View all analysed pages"
+msgstr "Visa alla analyserade sidor"
+
+#: source/php/Admin/Dashboard.php:218 source/php/Util/MailFormatter.php:124
+msgid "No external links currently require review."
+msgstr "Inga externa länkar behöver granskas just nu."
+
+#: source/php/Admin/Dashboard.php:227
+msgid "Review external links"
+msgstr "Granska externa länkar"
+
+#: source/php/Admin/Dashboard.php:278
 msgid "No broken links found"
 msgstr "Inga brutna länkar hittades"
 
-#: source/php/Admin/Dashboard.php:225
+#: source/php/Admin/Dashboard.php:282
 msgid "Nice job, everything seems to be in order."
 msgstr "Bra jobb, allt verkar vara i ordning."
 
-#: source/php/Admin/Dashboard.php:231 source/php/Admin/Dashboard.php:319
-#: source/php/Admin/Dashboard.php:376
+#: source/php/Admin/Dashboard.php:289 source/php/Admin/Dashboard.php:387
+#: source/php/Admin/Dashboard.php:445
 msgid "Click here to"
 msgstr "Klicka här för att"
 
-#: source/php/Admin/Dashboard.php:233 source/php/Admin/Dashboard.php:378
+#: source/php/Admin/Dashboard.php:291 source/php/Admin/Dashboard.php:447
 msgid "view your pages"
 msgstr "visa dina sidor"
 
-#: source/php/Admin/Dashboard.php:262 source/php/Admin/Dashboard.php:340
-#: source/php/Admin/Dashboard.php:395 source/php/Util/MailFormatter.php:87
-#: source/php/Util/MailFormatter.php:104 source/php/Util/MailFormatter.php:121
+#: source/php/Admin/Dashboard.php:320 source/php/Admin/Dashboard.php:408
+#: source/php/Admin/Dashboard.php:472 source/php/Util/MailFormatter.php:108
+#: source/php/Util/MailFormatter.php:131 source/php/Util/MailFormatter.php:148
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: source/php/Admin/Dashboard.php:263 source/php/Util/MailFormatter.php:105
+#: source/php/Admin/Dashboard.php:321 source/php/Util/MailFormatter.php:132
 msgid "Number of visitors"
 msgstr "Antal besökare"
 
-#: source/php/Admin/Dashboard.php:264 source/php/Admin/Dashboard.php:341
-#: source/php/Util/ListTable.php:93 source/php/Util/MailFormatter.php:122
+#: source/php/Admin/Dashboard.php:322 source/php/Admin/Dashboard.php:409
+#: source/php/Util/ListTable.php:99 source/php/Util/MailFormatter.php:149
 msgid "Last updated"
 msgstr "Senast uppdaterat"
 
-#: source/php/Admin/Dashboard.php:310 source/php/Admin/Dashboard.php:439
+#: source/php/Admin/Dashboard.php:378 source/php/Admin/Dashboard.php:526
 msgid "No pages found"
 msgstr "Inga sidor hittades"
 
-#: source/php/Admin/Dashboard.php:316 source/php/Util/MailFormatter.php:112
+#: source/php/Admin/Dashboard.php:383 source/php/Util/MailFormatter.php:138
 msgid "Seems like you are not the author of any pages yet."
 msgstr "Verkar som om du inte är författaren till några sidor ännu."
 
-#: source/php/Admin/Dashboard.php:321
+#: source/php/Admin/Dashboard.php:389
 msgid "create a new page"
 msgstr "skapa en ny sida"
 
-#: source/php/Admin/Dashboard.php:362
+#: source/php/Admin/Dashboard.php:430
 msgid "No old pages found"
 msgstr "Inga föråldrade sidor hittades"
 
-#: source/php/Admin/Dashboard.php:368
-#, php-format
+#. translators: %d: number of days in the outdated-content threshold.
+#: source/php/Admin/Dashboard.php:436
 msgid "Great! All of your pages have been updated within the last %d days."
 msgstr "Toppen! Alla dina sidor har uppdaterats inom de senaste %d dagarna."
 
-#: source/php/Admin/Dashboard.php:396
-#, fuzzy
-#| msgid "Visitors"
+#: source/php/Admin/Dashboard.php:473
 msgid "Weekly visitors"
-msgstr "Besökare"
+msgstr "Besökare per vecka"
 
-#: source/php/Admin/Dashboard.php:445
+#: source/php/Admin/Dashboard.php:531
 msgid "We could not find any pages that has got enough votes"
 msgstr "Vi kunde inte hitta några sidor som har fått tillräckligt med röster"
 
-#. Plugin Name of the plugin/theme
-#: source/php/Admin/Main.php:29 source/php/Admin/Main.php:30
-#, fuzzy
-#| msgid "Content Insights for Editors"
-msgid "Content Insights for Editors"
-msgstr "Content Insights for Editors"
+#: source/php/Admin/ExternalLinks.php:19 source/php/Admin/ExternalLinks.php:20
+#: source/php/Admin/ExternalLinks.php:44 source/php/Admin/Metabox.php:47
+#: source/php/Admin/Metabox.php:53
+msgid "External links"
+msgstr "Externa länkar"
+
+#: source/php/Admin/ExternalLinks.php:29
+msgid "You are not allowed to view external links."
+msgstr "Du har inte behörighet att visa externa länkar."
+
+#: source/php/Admin/ExternalLinks.php:37
+msgid "You are not allowed to view external links for this page."
+msgstr "Du har inte behörighet att visa externa länkar för den här sidan."
+
+#: source/php/Admin/ExternalLinks.php:46
+msgid ""
+"CIFE automatically checks only the pre-approved hosts shown in settings. All "
+"other external links remain manual reviews."
+msgstr ""
+"CIFE kontrollerar automatiskt endast de förhandsgodkända värdar som visas i "
+"inställningarna. Alla övriga externa länkar granskas manuellt."
+
+#: source/php/Admin/ExternalLinks.php:48
+msgid ""
+"CIFE never requests external URLs on this installation. Open a link "
+"yourself, verify it, then record the review date here."
+msgstr ""
+"CIFE anropar inga externa webbadresser i den här installationen. Öppna "
+"länken själv, kontrollera den och registrera sedan granskningsdatumet här."
+
+#: source/php/Admin/ExternalLinks.php:51
+msgid "The external link was marked as checked."
+msgstr "Den externa länken markerades som kontrollerad."
+
+#: source/php/Admin/ExternalLinks.php:58 source/php/Util/ListTable.php:65
+msgid "All"
+msgstr "Alla"
+
+#: source/php/Admin/ExternalLinks.php:59 source/php/Util/MailFormatter.php:121
+msgid "Review due"
+msgstr "Granskning senast"
+
+#: source/php/Admin/ExternalLinks.php:62
+msgid "External link"
+msgstr "Extern länk"
+
+#: source/php/Admin/ExternalLinks.php:63
+msgid "Appears on"
+msgstr "Finns på"
+
+#: source/php/Admin/ExternalLinks.php:64
+msgid "First seen"
+msgstr "Först upptäckt"
+
+#: source/php/Admin/ExternalLinks.php:65
+msgid "Checked on"
+msgstr "Kontrollerad"
+
+#: source/php/Admin/ExternalLinks.php:66
+msgid "Automatic check"
+msgstr "Automatisk kontroll"
+
+#: source/php/Admin/ExternalLinks.php:67
+msgid "Next review"
+msgstr "Nästa granskning"
+
+#: source/php/Admin/ExternalLinks.php:68
+msgid "Action"
+msgstr "Åtgärd"
+
+#: source/php/Admin/ExternalLinks.php:74
+msgid "No external links found."
+msgstr "Inga externa länkar hittades."
+
+#: source/php/Admin/ExternalLinks.php:93
+msgid "Mark as checked"
+msgstr "Markera som kontrollerad"
+
+#: source/php/Admin/ExternalLinks.php:128
+msgid "Manual review only"
+msgstr "Endast manuell granskning"
+
+#: source/php/Admin/ExternalLinks.php:131
+msgid "Awaiting automatic check"
+msgstr "Väntar på automatisk kontroll"
+
+#: source/php/Admin/ExternalLinks.php:134
+msgid "OK"
+msgstr "OK"
+
+#: source/php/Admin/ExternalLinks.php:135
+msgid "Broken"
+msgstr "Trasig"
+
+#: source/php/Admin/ExternalLinks.php:136
+msgid "Manual review required"
+msgstr "Manuell granskning krävs"
+
+#: source/php/Admin/ExternalLinks.php:155
+msgid "Redirected outside the approved hosts"
+msgstr "Omdirigerad utanför godkända värdar"
+
+#: source/php/Admin/ExternalLinks.php:156
+msgid "Invalid redirect"
+msgstr "Ogiltig omdirigering"
+
+#: source/php/Admin/ExternalLinks.php:157
+msgid "Too many redirects"
+msgstr "För många omdirigeringar"
+
+#: source/php/Admin/ExternalLinks.php:158
+msgid "Inconclusive HTTP response"
+msgstr "Oklart HTTP-svar"
+
+#: source/php/Admin/ExternalLinks.php:159
+msgid "Destination is not approved"
+msgstr "Destinationen är inte godkänd"
+
+#: source/php/Admin/ExternalLinks.php:163
+msgid "Network request failed"
+msgstr "Nätverksanropet misslyckades"
+
+#: source/php/Admin/ExternalLinks.php:169
+msgid "You are not allowed to review this link."
+msgstr "Du har inte behörighet att granska den här länken."
+
+#: source/php/Admin/ExternalLinks.php:174
+msgid "The external-link review could not be saved."
+msgstr "Granskningen av den externa länken kunde inte sparas."
 
 #: source/php/Admin/Main.php:37 source/php/Admin/Main.php:38
 msgid "Notifications"
 msgstr "Notiser"
 
-#: source/php/Admin/Main.php:59
+#: source/php/Admin/Main.php:58
 msgid "Send a notice about their broken links to selected users"
 msgstr "Skicka ett meddelande om deras brutna länkar till valda användare"
 
@@ -243,80 +426,104 @@ msgstr "Skicka ett meddelande om deras brutna länkar till valda användare"
 msgid "Send email to selected users"
 msgstr "Skicka e-post till valda användare"
 
-#: source/php/Admin/Main.php:109
+#: source/php/Admin/Main.php:95
+msgid "You are not allowed to send these notifications."
+msgstr "Du har inte behörighet att skicka dessa notiser."
+
+#: source/php/Admin/Main.php:118
 msgid "Sent"
 msgstr "Skickat"
 
-#: source/php/Admin/Main.php:111
+#: source/php/Admin/Main.php:120
 msgid "of"
 msgstr "av"
 
-#: source/php/Admin/Main.php:113
+#: source/php/Admin/Main.php:122
 msgid "emails"
 msgstr "meddelanden"
 
-#: source/php/Admin/Main.php:119
+#: source/php/Admin/Main.php:127
 msgid "No mail was sent, please select at least one user"
 msgstr "Ingen e-post skickades, välj minst en användare"
 
-#: source/php/Admin/Main.php:148
-msgid "Broken links plugin not found"
-msgstr "Tillägget Broken links hittades ej"
-
-#: source/php/Admin/Main.php:149
+#: source/php/Admin/Main.php:146
 msgid ""
-"This plugin depends on broken links in order to display a list of broken "
-"links. To enable this view please install and activate broken links."
+"The broken-link check has been scheduled and will continue in the background."
 msgstr ""
-"Detta tillägget kräver att tillägget Broken links är aktiverat för att kunna "
-"presentera en lista över brutna länkar. För att aktivera denna vy, vänligen "
-"installera och aktivera tillägget Broken links."
+"Kontrollen av brutna länkar har schemalagts och fortsätter i bakgrunden."
 
-#: source/php/Admin/Main.php:164
+#: source/php/Admin/Main.php:167
 msgid "Next scheduled check for broken links"
 msgstr "Nästa schemalagda kontroll av brutna länkar"
 
-#: source/php/Admin/Main.php:175
+#: source/php/Admin/Main.php:179
 msgid "Analysed pages"
 msgstr "Analyserade sidor"
 
-#: source/php/Admin/Main.php:189
+#: source/php/Admin/Main.php:188
+msgid "Run broken-link check now"
+msgstr "Kör kontroll av brutna länkar nu"
+
+#: source/php/Admin/Main.php:204
 msgid "Fetch visitorstaticstics for all pages"
 msgstr "Hämta besökarstatistik för alla sidor"
 
-#: source/php/Admin/Main.php:227
+#: source/php/Admin/Main.php:216
+msgid "You are not allowed to update analytics."
+msgstr "Du har inte behörighet att uppdatera analysdata."
+
+#: source/php/Admin/Main.php:232
+msgid "The visitor statistics could not be updated."
+msgstr "Besöksstatistiken kunde inte uppdateras."
+
+#: source/php/Admin/Main.php:255
 msgid "Update of visitor statistics complete"
 msgstr "Uppdatering av besökarstatistik genomförd"
 
-#: source/php/Admin/Main.php:230
+#: source/php/Admin/Main.php:259
 msgid "error"
 msgstr "fel"
 
-#: source/php/Admin/Main.php:232
+#: source/php/Admin/Main.php:260
 msgid "Something went wrong"
 msgstr "Något gick fel"
 
-#: source/php/Admin/Metabox.php:31
+#: source/php/Admin/Metabox.php:37
+msgid "Broken internal links"
+msgstr "Brutna interna länkar"
+
+#: source/php/Admin/Metabox.php:38
 msgid "No data available"
 msgstr "Ingen data fanns tillgänglig"
 
-#: source/php/Admin/Metabox.php:39 source/php/Util/MailFormatter.php:90
-msgid "Broken links"
-msgstr "Brutna länkar"
+#. translators: %d: number of external links found on the current page.
+#: source/php/Admin/Metabox.php:49
+msgid "%d link"
+msgid_plural "%d links"
+msgstr[0] "%d länk"
+msgstr[1] "%d länkar"
 
-#: source/php/Admin/Metabox.php:45 source/php/Admin/Metabox.php:63
+#: source/php/Admin/Metabox.php:58
+msgid "Visitor statistics"
+msgstr "Besöksstatistik"
+
+#: source/php/Admin/Metabox.php:59
+msgid "Matomo is not connected"
+msgstr "Matomo är inte anslutet"
+
+#: source/php/Admin/Metabox.php:63 source/php/Admin/Metabox.php:71
 msgid "Visitors"
 msgstr "Besökare"
 
-#: source/php/Admin/Metabox.php:47 source/php/Admin/Metabox.php:56
-#: source/php/Admin/Metabox.php:65 source/php/Admin/Metabox.php:74
-#: source/php/Util/ListTable.php:103 source/php/Util/ListTable.php:109
+#: source/php/Admin/Metabox.php:63 source/php/Admin/Metabox.php:67
+#: source/php/Admin/Metabox.php:71 source/php/Admin/Metabox.php:75
+#: source/php/Util/ListTable.php:110 source/php/Util/ListTable.php:116
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
 msgstr[1] "dagar"
 
-#: source/php/Admin/Metabox.php:54 source/php/Admin/Metabox.php:72
+#: source/php/Admin/Metabox.php:67 source/php/Admin/Metabox.php:75
 msgid "Pageviews"
 msgstr "Sidvisningar"
 
@@ -324,137 +531,299 @@ msgstr "Sidvisningar"
 msgid "Statistics from"
 msgstr "Statistik från"
 
-#: source/php/Admin/Settings.php:69 source/php/Admin/Settings.php:74
+#: source/php/Admin/Metabox.php:82 source/php/Admin/Metabox.php:175
+msgid "No data yet"
+msgstr "Ingen data ännu"
+
+#: source/php/Admin/Metabox.php:92 source/php/Util/ListTable.php:172
+msgid "Low"
+msgstr "Låg"
+
+#: source/php/Admin/Metabox.php:93 source/php/Util/ListTable.php:173
+msgid "Moderate"
+msgstr "Måttlig"
+
+#: source/php/Admin/Metabox.php:99
+msgid "Page performance risk"
+msgstr "Prestandarisk för sidan"
+
+#: source/php/Admin/Metabox.php:103
+msgid "Content-based estimate—not a measured load time."
+msgstr "Innehållsbaserad uppskattning – inte en uppmätt laddningstid."
+
+#: source/php/Admin/Metabox.php:109
+msgid "Content markup"
+msgstr "Innehållets HTML"
+
+#: source/php/Admin/Metabox.php:113
+msgid "Page elements"
+msgstr "Sidelement"
+
+#: source/php/Admin/Metabox.php:117
+msgid "Referenced media"
+msgstr "Refererade media"
+
+#. translators: 1: number of media files, 2: combined source size.
+#: source/php/Admin/Metabox.php:120
+msgid "%1$d files / %2$s"
+msgstr "%1$d filer / %2$s"
+
+#: source/php/Admin/Metabox.php:126
+msgid "Large media files"
+msgstr "Stora mediefiler"
+
+#: source/php/Admin/Metabox.php:130
+msgid "External resources"
+msgstr "Externa resurser"
+
+#: source/php/Admin/Metabox.php:134
+msgid "Embeds"
+msgstr "Inbäddningar"
+
+#: source/php/Admin/Metabox.php:138
+msgid "External scripts"
+msgstr "Externa skript"
+
+#: source/php/Admin/Metabox.php:142
+msgid "External links are excluded because they load only when clicked."
+msgstr ""
+"Externa länkar räknas inte eftersom de laddas först när någon klickar på dem."
+
+#: source/php/Admin/Settings.php:124
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+#: source/php/Admin/Settings.php:125
+msgid ""
+"No hosts have been approved for automatic external-link checks on this "
+"installation."
+msgstr ""
+"Inga värdar har godkänts för automatiska kontroller av externa länkar i den "
+"här installationen."
+
+#: source/php/Admin/Settings.php:133
+msgid "Enabled"
+msgstr "Aktiverad"
+
+#: source/php/Admin/Settings.php:135
+msgid "Approved hosts"
+msgstr "Godkända värdar"
+
+#: source/php/Admin/Settings.php:137
+msgid "User agent"
+msgstr "User agent"
+
+#: source/php/Admin/Settings.php:139
+msgid "Check interval"
+msgstr "Kontrollintervall"
+
+#. translators: %d: number of days between automatic checks.
+#: source/php/Admin/Settings.php:142
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d dag"
+msgstr[1] "%d dagar"
+
+#: source/php/Admin/Settings.php:145
+msgid "Maximum request rate"
+msgstr "Högsta anropsfrekvens"
+
+#. translators: %d: maximum number of requests per minute.
+#: source/php/Admin/Settings.php:148
+msgid "%d request per minute"
+msgid_plural "%d requests per minute"
+msgstr[0] "%d anrop per minut"
+msgstr[1] "%d anrop per minut"
+
+#: source/php/Admin/Settings.php:150
+msgid ""
+"This deployment-controlled configuration is read-only here. CIFE never "
+"crawls approved sites; it checks only exact links already found in analysed "
+"content."
+msgstr ""
+"Den här distributionsstyrda konfigurationen är skrivskyddad här. CIFE "
+"genomsöker aldrig godkända webbplatser, utan kontrollerar endast exakta "
+"länkar som redan hittats i analyserat innehåll."
+
+#: source/php/Admin/Settings.php:161 source/php/Admin/Settings.php:166
 msgid "Settings"
 msgstr "Inställningar"
 
-#: source/php/Util/BrokenLinks.php:40
-msgid ""
-"Broken links plugin is missing. For best experience using this plugin we "
-"recommend you activate Broken links"
-msgstr ""
-"Tillägget Broken links saknas. Detta tillägg är starkt beroende av Broken "
-"links, för bästa upplevelse rekommenderas att tillägget installeras och "
-"aktiveras"
+#: source/php/BrokenLinks/Scheduler.php:179
+msgid "You are not allowed to run this check."
+msgstr "Du har inte behörighet att köra den här kontrollen."
 
-#: source/php/Util/BrokenLinks.php:41
-msgid "Broken links repository"
-msgstr "Källkod för Broken links"
-
-#: source/php/Util/ListTable.php:59
-msgid "All"
-msgstr "Alla"
-
-#: source/php/Util/ListTable.php:78
+#: source/php/Util/ListTable.php:83
 msgid "Show only pages with broken links"
 msgstr "Visa endast sidor med trasiga länkar"
 
-#: source/php/Util/ListTable.php:90
+#: source/php/Util/ListTable.php:95
 msgid "Post"
 msgstr "Inlägg"
 
-#: source/php/Util/ListTable.php:91
+#: source/php/Util/ListTable.php:96
 msgid "Web address"
 msgstr "Webbadress"
 
-#: source/php/Util/ListTable.php:92
+#: source/php/Util/ListTable.php:97
 msgid "Number of broken links"
 msgstr "Antal brutna länkar"
 
-#: source/php/Util/ListTable.php:95
+#: source/php/Util/ListTable.php:98
+msgid "Performance risk"
+msgstr "Prestandarisk"
+
+#: source/php/Util/ListTable.php:101
 msgid "Editor"
 msgstr "Redaktör"
 
-#: source/php/Util/ListTable.php:96
+#: source/php/Util/ListTable.php:102
 msgid "Author"
 msgstr "Författare"
 
-#: source/php/Util/ListTable.php:101 source/php/Util/ListTable.php:107
+#: source/php/Util/ListTable.php:108 source/php/Util/ListTable.php:114
 msgid "Visitor"
 msgstr "Besökare"
 
-#: source/php/Util/ListTable.php:111
+#: source/php/Util/ListTable.php:118
 msgid "Analysis updated"
 msgstr "Analys uppdaterad"
 
-#: source/php/Util/MailFormatter.php:70
+#: source/php/Util/MailFormatter.php:92
 msgid "Hi"
 msgstr "Hej"
 
-#: source/php/Util/MailFormatter.php:74
+#: source/php/Util/MailFormatter.php:95
 msgid ""
-"This is a short summary of all pages you are the author to that contains "
-"broken links, pages that has not been updated in a while and your most "
-"visited pages this week."
+"This summary covers internal broken links, external links requiring manual "
+"review, pages not updated in a while, and your most visited pages this week."
 msgstr ""
-"Detta är en kort sammanfattning av alla sidor som du är författare till och "
-"innehåller brutna länkar, sidor som inte har uppdaterats på ett tag samt "
-"dina mest besökta sidor denna vecka."
+"Den här sammanfattningen tar upp brutna interna länkar, externa länkar som "
+"behöver granskas manuellt, sidor som inte har uppdaterats på ett tag och "
+"dina mest besökta sidor den här veckan."
 
-#: source/php/Util/MailFormatter.php:94
+#: source/php/Util/MailFormatter.php:110
+msgid "Broken links"
+msgstr "Brutna länkar"
+
+#: source/php/Util/MailFormatter.php:111
 msgid "Good news! No broken links found this time, keep up the good work."
 msgstr "Goda nyheter! Inga brutna länkar hittade den här gången, fortsätt så."
 
-#: source/php/Util/MailFormatter.php:108
+#: source/php/Util/MailFormatter.php:120
+msgid "External link and page"
+msgstr "Extern länk och sida"
+
+#: source/php/Util/MailFormatter.php:123
+msgid "External links requiring manual review"
+msgstr "Externa länkar som behöver granskas manuellt"
+
+#: source/php/Util/MailFormatter.php:134
 msgid "Your top 10 pages most visited last week"
 msgstr "Dina topp 10 mest besökta sidor senaste veckan"
 
-#: source/php/Util/MailFormatter.php:125
+#: source/php/Util/MailFormatter.php:151
 msgid "Pages not updated in a while"
 msgstr "Sidor som ej uppdaterats på ett tag"
 
-#: source/php/Util/MailFormatter.php:129
+#: source/php/Util/MailFormatter.php:155
 msgid "Excellent all your pages have been updated recently!"
 msgstr "Utmärkt alla dina sidor har nyligen uppdaterats!"
 
-#: source/php/Util/MailFormatter.php:141
+#: source/php/Util/MailFormatter.php:168
 msgid "Customer feedback"
 msgstr "Feedback besökare"
 
-#: source/php/Util/MailFormatter.php:150
+#: source/php/Util/MailFormatter.php:179
 msgid "Summary of your pages content"
 msgstr "Sammanfattning av dina sidors innehåll"
 
-#: source/php/Util/Matomo.php:61
+#: source/php/Util/Matomo.php:62
 msgid "Matomo is not configured"
 msgstr "Matomo har inte konfigurerats"
 
-#: source/php/Util/Matomo.php:62
+#: source/php/Util/Matomo.php:65
 msgid "Configure settings for Matomo"
 msgstr "Konfigurera inställningar för Matomo"
 
-# msgid "Content Insights for Editors"
-# msgstr "Content Insights for Editors"
-#. Description of the plugin/theme
-msgid "Analyse content for your website"
-msgstr "Analysera webbplatsens innehåll"
+#: source/php/Util/Matomo.php:181
+msgid "The configured Matomo API URL is invalid."
+msgstr "Den konfigurerade URL:en till Matomos API är ogiltig."
 
-#. Author of the plugin/theme
-msgid "Johan Veeborn, Anders Rehn, Whitespace"
-msgstr ""
+#. translators: %d: HTTP response status code returned by Matomo.
+#: source/php/Util/Matomo.php:206
+msgid "Matomo returned HTTP status %d."
+msgstr "Matomo returnerade HTTP-status %d."
 
-#~ msgid "Visa endast sidor med trasiga länkar"
-#~ msgstr "Visa endast sidor med brutna länkar"
+#: source/php/Util/Matomo.php:215
+msgid "Matomo returned an invalid response."
+msgstr "Matomo returnerade ett ogiltigt svar."
 
-#~ msgid "View all pages you are the author of"
-#~ msgstr "Visa alla sidor du är författare till"
-
-#, fuzzy
-#~ msgid "Whitespace"
-#~ msgstr "Whitespace"
+#: source/php/Util/Matomo.php:222
+msgid "Matomo returned an error."
+msgstr "Matomo returnerade ett fel."
 
 #~ msgid ""
-#~ "Below you will find a list of all pages you are the author of which "
-#~ "contains broken links"
+#~ "Uses the Editor field (page_meta_maineditor) for user filtering, instead "
+#~ "of Author used by default."
 #~ msgstr ""
-#~ "Nedan hittar du en lista över alla sidor du är författare till som "
-#~ "innehåller trasiga länkar"
+#~ "Använder fältet Redaktör (page_meta_maineditor) för användarfiltrering, "
+#~ "istället för Författare som används som standard."
 
-#~ msgid "View all your pages"
-#~ msgstr "Visa alla dina sidor"
+#~ msgid ""
+#~ "Sends authors, editors and administrators a summary every two weeks "
+#~ "covering internal broken links, external links due for review, outdated "
+#~ "content and available visitor statistics."
+#~ msgstr ""
+#~ "Skickar varannan vecka en sammanfattning till författare, redaktörer och "
+#~ "administratörer med brutna interna länkar, externa länkar som behöver "
+#~ "granskas, inaktuellt innehåll och tillgänglig besöksstatistik."
 
-#~ msgid "Vistors"
-#~ msgstr "Besökare"
+#~ msgid "Obsolete pages"
+#~ msgstr "Föråldrade sidor"
 
-#~ msgid "Nästa schemalagda kontroll av brutna länkar"
-#~ msgstr "Nästa schemalagda kontroll av brutna länkar"
+#~ msgid ""
+#~ "Set the threshold for how many days a page that has not been updated "
+#~ "should be before the plugin flags the page as outdated."
+#~ msgstr ""
+#~ "Ställ in tröskelvärdet för hur många dagar en sida som ej uppdaterats "
+#~ "skall vara innan pluginet flaggar sidan som föråldrad."
+
+#~ msgid "ex. https://analys.yourdomain.se/"
+#~ msgstr "ex. https://analys.dindoman.se/"
+
+#~ msgid ""
+#~ "Visit admin for your Matomo installation. Under Platform -> API there is "
+#~ "& token_auth = xxxxxxxxxxxxxxx. Paste the value corresponding to "
+#~ "xxxxxxxxxxxxxxx"
+#~ msgstr ""
+#~ "Besök admin för din Matomoinstallation. Under Plattform -> API finns "
+#~ "&token_auth=xxxxxxxxxxxxxxx. Klistra in värdet motsvarande xxxxxxxxxxxxxxx"
+
+#~ msgid ""
+#~ "Set the threshold for how votes (yes/no) the page must have since last "
+#~ "update."
+#~ msgstr ""
+#~ "Ange tröskelvärdet för hur röster (Ja/Nej) sidan måste ha sedan senaste "
+#~ "uppdateringen."
+
+#~ msgid ""
+#~ "Sends email to all authors, editors and administrators every two weeks "
+#~ "with a report on their broken links."
+#~ msgstr ""
+#~ "Skickar mail till alla författare, redaktörer samt administratörer "
+#~ "varannan vecka med en rapport om deras brutna länkar."
+
+#~ msgid ""
+#~ "The check could not start while the legacy Broken Link Detector plugin is "
+#~ "active."
+#~ msgstr ""
+#~ "Kontrollen kunde inte starta medan det äldre tillägget Broken Link "
+#~ "Detector är aktivt."
+
+#~ msgid ""
+#~ "The legacy Broken Link Detector plugin is active. CIFE will keep using "
+#~ "its schedule until the legacy plugin is removed."
+#~ msgstr ""
+#~ "Det äldre tillägget Broken Link Detector är aktivt. CIFE fortsätter att "
+#~ "använda dess schema tills det äldre tillägget har tagits bort."

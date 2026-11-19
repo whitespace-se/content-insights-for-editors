@@ -5,6 +5,7 @@ namespace CONTENT_INSIGHTS_FOR_EDITORS\Util;
 use CONTENT_INSIGHTS_FOR_EDITORS\Admin\Settings;
 
 class Matomo {
+  const CRON_HOOK = 'content-insights-for-editors-matomo';
   private static $dbTable = 'content_insights_for_editors';
   private static $wpdb = null;
 
@@ -22,10 +23,6 @@ class Matomo {
 
     self::checkInstall();
 
-    add_action('init', [$this, 'init']);
-  }
-
-  public function init() {
     $this->matomoUrl = Settings::getMatomoApiUrl();
 
     $this->parameters['module'] = 'API';
@@ -39,10 +36,10 @@ class Matomo {
       add_action('admin_notices', array($this, 'adminNoticeWarnMatomo'));
     }
 
-    add_action('wp', array($this, 'schedule'));
-    add_action('content-insights-for-editors-matomo', array(
+    add_action('init', array($this, 'schedule'));
+    add_action(self::CRON_HOOK, array(
       $this,
-      'updatePagesWeekAndMonth',
+      'runScheduledUpdate',
     ));
   }
 
@@ -61,44 +58,60 @@ class Matomo {
 
   public function adminNoticeWarnMatomo() {
     ?>
-    <div class="notice notice-warning">
-      <p><?php _e(
-        'Matomo is not configured',
-        'content-insights-for-editors'
-      ); ?></p>
-      <a href="<?php echo admin_url(
-        'admin.php?page=content-insights-for-editors-page-settings'
-      ); ?>"><?php _e(
+		<div class="notice notice-warning">
+			<p><?php _e('Matomo is not configured', 'content-insights-for-editors'); ?></p>
+			<a href="<?php echo esc_url(admin_url(
+     'admin.php?page=content-insights-for-editors-page-settings'
+   )); ?>"><?php _e(
   'Configure settings for Matomo',
   'content-insights-for-editors'
 ); ?></a>
-    </div>
-    <?php
+		</div>
+		<?php
   }
 
   public function schedule() {
-    if (wp_next_scheduled('content-insights-for-editors-matomo')) {
+    if (!self::$matomoIsActive) {
+      wp_clear_scheduled_hook(self::CRON_HOOK);
       return;
     }
 
-    wp_schedule_event(time(), 'daily', 'content-insights-for-editors-matomo');
+    if (!wp_next_scheduled(self::CRON_HOOK)) {
+      wp_schedule_event(time() + MINUTE_IN_SECONDS, 'daily', self::CRON_HOOK);
+    }
+  }
+
+  public static function deactivate() {
+    wp_clear_scheduled_hook(self::CRON_HOOK);
   }
 
   public static function getDbTable() {
     return self::$wpdb->prefix . self::$dbTable;
   }
 
-  private function truncateTable() {
-    $tableName = self::getDbTable();
-    self::$wpdb->query("TRUNCATE TABLE $tableName");
-  }
-
   public function updatePagesWeekAndMonth() {
-    $this->truncateTable();
     $pages = $this->getPagesWeekAndMonth();
 
     foreach ($pages as $page) {
+      $post = !empty($page->post_id) ? get_post($page->post_id) : null;
+      if (
+        !$post ||
+        $post->post_status !== 'publish' ||
+        !in_array($post->post_type, Settings::getAnalysedPostTypes(), true)
+      ) {
+        continue;
+      }
       $this->upsert($page);
+    }
+  }
+
+  public function runScheduledUpdate() {
+    try {
+      $this->updatePagesWeekAndMonth();
+      return true;
+    } catch (\Throwable $error) {
+      do_action('cife_matomo_update_error', $error);
+      return false;
     }
   }
 
@@ -107,134 +120,110 @@ class Matomo {
     $this->parameters['period'] = 'range';
     $this->parameters['expanded'] = 0;
     $this->parameters['flat'] = 1;
-    $this->parameters['filter_limit'] = 1000;
+    $this->parameters['filter_limit'] = 2000;
 
     $this->parameters['date'] = $this->getDateRangeStr(7);
 
-    $week_result = $this->requestPager();
+    $week_result = $this->request();
 
     $this->parameters['date'] = $this->getDateRangeStr(30);
 
-    $month_result = $this->requestPager();
+    $month_result = $this->request();
 
     $result = array();
     $this->aggregateWeekAndMonth($result, $week_result, 'week');
     $this->aggregateWeekAndMonth($result, $month_result, 'month');
 
-    $return_data = array();
-    foreach ($result as $url_path => $result_data) {
-      $post_id =
-        $url_path == '/'
-          ? get_option('page_on_front')
-          : url_to_postid($url_path);
-
-      $result_data->post_id = $post_id;
-
-      // Only urls with post ids
-      if ($post_id !== 0) {
-        if (empty($return_data[$post_id])) {
-          $return_data[$post_id] = $result_data;
-
-          if (empty($return_data[$post_id]->week_visitors)) {
-            $return_data[$post_id]->week_visitors = 0;
-          }
-          if (empty($return_data[$post_id]->week_pageviews)) {
-            $return_data[$post_id]->week_pageviews = 0;
-          }
-        } else {
-          $return_data[$post_id]->week_visitors += $result_data->week_visitors;
-          $return_data[$post_id]->week_pageviews +=
-            $result_data->week_pageviews;
-          $return_data[$post_id]->month_visitors +=
-            $result_data->month_visitors;
-          $return_data[$post_id]->month_pageviews +=
-            $result_data->month_pageviews;
-        }
-      }
-    }
-
-    usort($return_data, function ($b, $a) {
-      $retval = $a->week_pageviews <=> $b->week_pageviews;
-      if ($retval == 0) {
-        $retval = $a->month_pageviews <=> $b->month_pageviews;
-        if ($retval == 0) {
-          $retval = $a->month_visitors <=> $b->month_visitors;
-        }
-      }
-      return $retval;
-    });
-
-    return $return_data;
+    return $result;
   }
 
   private function aggregateWeekAndMonth(&$result, $values, $prefix) {
-    if(!empty($values)) {
-      foreach ($values as $value) {
-        if (array_key_exists($value['label'], $result)) {
-          $result[$value['label']] = (object) array_merge(
-            (array) $result[$value['label']],
-            [
-              $prefix . '_visitors' => $value['nb_visits'],
-              $prefix . '_pageviews' => $value['nb_hits'],
-            ]
-          );
-          continue;
-        }
-
-        $result[$value['label']] = (object) [
-          'url_path' => $value['label'],
-          $prefix . '_visitors' => $value['nb_visits'],
-          $prefix . '_pageviews' => $value['nb_hits'],
-        ];
+    if (!is_array($values)) {
+      return;
+    }
+    foreach ($values as $value) {
+      if (array_key_exists($value['label'], $result)) {
+        $result[$value['label']] = (object) array_merge(
+          (array) $result[$value['label']],
+          [
+            $prefix . '_visitors' => $value['nb_visits'],
+            $prefix . '_pageviews' => $value['nb_hits'],
+          ]
+        );
+        continue;
       }
+
+      $post_id =
+        $value['label'] == '/'
+          ? get_option('page_on_front')
+          : url_to_postid($value['label']);
+
+      $result[$value['label']] = (object) [
+        'post_id' => $post_id,
+        'url_path' => $value['label'],
+        $prefix . '_visitors' => $value['nb_visits'],
+        $prefix . '_pageviews' => $value['nb_hits'],
+      ];
     }
   }
 
   private function getDateRangeStr($days) {
-    return date('Y-m-d', strtotime("-$days days")) . ',' . date('Y-m-d');
+    $timezone = wp_timezone();
+    $end = new \DateTimeImmutable('now', $timezone);
+    $start = $end->modify(sprintf('-%d days', absint($days)));
+    return $start->format('Y-m-d') . ',' . $end->format('Y-m-d');
   }
 
-  private function requestPager() {
-    $filter = array();
-    $filter['filter_offset'] = 0;
-
-    $pager = true;
-    $i = 1;
-    $data = array();
-    while ($pager) {
-      $response = $this->request($filter);
-      // Stop on empty, failed or error responses ({"result":"error",...})
-      if (
-        !is_array($response) ||
-        empty($response) ||
-        isset($response['result'])
-      ) {
-        $pager = false;
-      } else {
-        $data = array_merge($data, $response);
-      }
-      $filter['filter_offset'] = $this->parameters['filter_limit'] * $i++;
+  private function request() {
+    $url = esc_url_raw($this->matomoUrl);
+    if (!$url || !in_array(wp_parse_url($url, PHP_URL_SCHEME), array('http', 'https'), true)) {
+      throw new \RuntimeException(
+        __('The configured Matomo API URL is invalid.', 'content-insights-for-editors')
+      );
     }
-    return $data;
-  }
 
-  private function request($filter) {
-    $query = array_merge($this->parameters, $filter);
+    $args = apply_filters(
+      'cife_matomo_http_args',
+      array(
+        'timeout' => 20,
+        'redirection' => 3,
+        'sslverify' => true,
+        'body' => $this->parameters,
+        'user-agent' => 'Content Insights for Editors/' . CONTENT_INSIGHTS_FOR_EDITORS_VERSION,
+      ),
+      $url
+    );
+    $response = wp_safe_remote_post($url, $args);
+    if (is_wp_error($response)) {
+      throw new \RuntimeException($response->get_error_message());
+    }
 
-    $queryString = urldecode(http_build_query($query));
+    $status = (int) wp_remote_retrieve_response_code($response);
+    if ($status < 200 || $status >= 300) {
+      throw new \RuntimeException(
+        sprintf(
+          /* translators: %d: HTTP response status code returned by Matomo. */
+          __('Matomo returned HTTP status %d.', 'content-insights-for-editors'),
+          $status
+        )
+      );
+    }
 
-    $url = $this->matomoUrl . '?' . $queryString;
+    $result = json_decode(wp_remote_retrieve_body($response), true);
+    if (!is_array($result) || json_last_error() !== JSON_ERROR_NONE) {
+      throw new \RuntimeException(
+        __('Matomo returned an invalid response.', 'content-insights-for-editors')
+      );
+    }
+    if (isset($result['result']) && $result['result'] === 'error') {
+      throw new \RuntimeException(
+        isset($result['message'])
+          ? sanitize_text_field($result['message'])
+          : __('Matomo returned an error.', 'content-insights-for-editors')
+      );
+    }
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-    $result = curl_exec($ch);
-
-    return json_decode($result, true);
+    return $result;
   }
 
   private function upsert($item) {
@@ -262,7 +251,7 @@ class Matomo {
       $item->week_pageviews ?? 0,
       $item->month_visitors ?? 0,
       $item->month_pageviews ?? 0,
-      date('Y-m-d H:i:s')
+      current_time('mysql')
     );
 
     self::$wpdb->query($sql);

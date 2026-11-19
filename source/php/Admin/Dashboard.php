@@ -4,6 +4,7 @@ namespace CONTENT_INSIGHTS_FOR_EDITORS\Admin;
 
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\PostQuery;
 use CONTENT_INSIGHTS_FOR_EDITORS\Util\Matomo;
+use CONTENT_INSIGHTS_FOR_EDITORS\BrokenLinks\ExternalLinkRepository;
 
 class Dashboard {
   function __construct() {
@@ -14,7 +15,7 @@ class Dashboard {
     global $wp_meta_boxes;
     $last_updated_threshold = Settings::validateAndGetLastUpdatedThreshold();
     $minimum_feedback_responses_threshold = Settings::validateAndGetMinFeedbackResponsesThreshold();
-    if (current_user_can('administrator')):
+    if (current_user_can('manage_options')):
       if (Matomo::$matomoIsActive):
         wp_add_dashboard_widget(
           'cife_visitors_week_admin',
@@ -33,16 +34,19 @@ class Dashboard {
           array($this, 'adminTopTenLastMonth')
         );
       endif;
-      if (class_exists('\BrokenLinkDetector\App')):
-        wp_add_dashboard_widget(
-          'cife_broken_links_admin',
-          __(
-            'Top 10 pages with most number of broken links (sitewide)',
-            'content-insights-for-editors'
-          ),
-          array($this, 'adminTopTenBrokenLinks')
-        );
-      endif;
+      wp_add_dashboard_widget(
+        'cife_broken_links_admin',
+        __(
+          'Top 10 pages with most number of broken links (sitewide)',
+          'content-insights-for-editors'
+        ),
+        array($this, 'adminTopTenBrokenLinks')
+      );
+      wp_add_dashboard_widget(
+        'cife_external_links_due_admin',
+        __('External links requiring review (sitewide)', 'content-insights-for-editors'),
+        array($this, 'adminExternalLinksDue')
+      );
       if ($last_updated_threshold) {
         wp_add_dashboard_widget(
           'cife_rarely_updated_admin',
@@ -78,13 +82,23 @@ class Dashboard {
       );
     endif;
 
-    if (class_exists('\BrokenLinkDetector\App')):
+    wp_add_dashboard_widget(
+      'cife_broken_links_user',
+      __('All your pages with broken links', 'content-insights-for-editors'),
+      array($this, 'userBrokenLinks')
+    );
+    if (current_user_can('edit_posts')) {
       wp_add_dashboard_widget(
-        'cife_broken_links_user',
-        __('All your pages with broken links', 'content-insights-for-editors'),
-        array($this, 'userBrokenLinks')
+        'cife_high_performance_risk',
+        __('Pages with high performance risk', 'content-insights-for-editors'),
+        array($this, 'highPerformanceRisk')
       );
-    endif;
+      wp_add_dashboard_widget(
+        'cife_external_links_due_user',
+        __('External links on your pages requiring review', 'content-insights-for-editors'),
+        array($this, 'userExternalLinksDue')
+      );
+    }
 
     if (class_exists('\CustomerFeedback\App')):
       wp_add_dashboard_widget(
@@ -169,6 +183,50 @@ class Dashboard {
     $this->renderBrokenLinks(1000, get_current_user_id());
   }
 
+  public function adminExternalLinksDue() {
+    $this->renderExternalLinksDue(false, 10);
+  }
+
+  public function userExternalLinksDue() {
+    $this->renderExternalLinksDue(get_current_user_id(), 100);
+  }
+
+  public function highPerformanceRisk() {
+    $userId = current_user_can('manage_options') ? false : get_current_user_id();
+    $pages = PostQuery::getHighPerformanceRiskPosts(10, $userId);
+    if (!$pages) {
+      echo '<p><span class="dashicons dashicons-yes-alt cife-performance__empty-icon"></span> ' .
+        esc_html__('No high-risk pages right now.', 'content-insights-for-editors') . '</p>';
+      return;
+    }
+
+    echo '<table class="cife_table"><tbody>';
+    foreach ($pages as $page) {
+      echo '<tr><td><a href="' . esc_url(get_edit_post_link($page->ID)) . '"><strong>' .
+        esc_html($page->title) . '</strong></a></td><td class="cife-performance__risk-cell">' .
+        '<span class="cife-performance__badge cife-performance__badge--high">' .
+        esc_html__('High', 'content-insights-for-editors') . '</span></td></tr>';
+    }
+    echo '</tbody></table>';
+    echo '<p><a href="' . esc_url(admin_url('admin.php?page=content-insights-for-editors-page')) . '">' .
+      esc_html__('View all analysed pages', 'content-insights-for-editors') . '</a></p>';
+  }
+
+  public function renderExternalLinksDue($userId, $take) {
+    $items = (new ExternalLinkRepository())->getDueOccurrencesForUser($userId, $take);
+    if (!$items) {
+      echo '<p>' . esc_html__('No external links currently require review.', 'content-insights-for-editors') . '</p>';
+      return;
+    }
+    echo '<table class="cife_table"><tbody>';
+    foreach ($items as $item) {
+      echo '<tr><td><a target="_blank" rel="noopener noreferrer" href="' . esc_url($item->url) . '">' . esc_html($item->url) . '</a><br>';
+      echo '<a href="' . esc_url(get_edit_post_link($item->post_id)) . '">' . esc_html($item->post_title) . '</a></td>';
+      echo '<td>' . esc_html($item->review_due) . '</td></tr>';
+    }
+    echo '</tbody></table><p><a href="' . esc_url(admin_url('admin.php?page=' . ExternalLinks::PAGE_SLUG . '&review_due=1')) . '">' . esc_html__('Review external links', 'content-insights-for-editors') . '</a></p>';
+  }
+
   public function userRarelyUpdated() {
     $this->renderRarelyUpdated(-1, get_current_user_id());
   }
@@ -200,16 +258,16 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($value->ID) .
+          esc_url(get_edit_post_link($value->ID)) .
           '"><strong>' .
-          $value->title .
+          esc_html($value->title) .
           '</strong></a>
                     </td>
                     <td>' .
-          $value->author .
+          esc_html($value->author) .
           '</td>
                     <td>' .
-          $value->broken_links .
+          absint($value->broken_links) .
           '</td>
                 </tr>';
       }
@@ -229,7 +287,7 @@ class Dashboard {
       echo sprintf(
         '<p>%s <a href="%s">%s</a></p>',
         __('Click here to', 'content-insights-for-editors'),
-        admin_url('admin.php?page=content-insights-for-editors-page'),
+        esc_url(admin_url('admin.php?page=content-insights-for-editors-page')),
         __('view your pages', 'content-insights-for-editors')
       );
     endif;
@@ -268,24 +326,24 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($value->ID) .
+          esc_url(get_edit_post_link($value->ID)) .
           '"><strong>' .
-          $value->title .
+          esc_html($value->title) .
           '</strong></a>';
         if (isset($value->feedback)):
           echo '<div class="cife-customer-feedback-wrapper">
 					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
-            round($value->feedback['yes']) .
+            esc_html(round($value->feedback['yes'])) .
             '<i class="cife-icon cife-icon--thumb-up"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
-            round($value->feedback['no']) .
+            esc_html(round($value->feedback['no'])) .
             '<i class="cife-icon cife-icon--thumb-down"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--comments">' .
-            $value->feedback['comments'] .
+            absint($value->feedback['comments']) .
             '<i class="cife-icon cife-icon--comments"></i>';
           if ($value->feedback['comments'] > 0):
             echo '<a href="' .
-              admin_url(
+              esc_url(admin_url(
                 add_query_arg(
                   array(
                     'post_id' => $value->ID,
@@ -298,7 +356,7 @@ class Dashboard {
                   ),
                   'edit.php?post_type=customer-feedback'
                 )
-              ) .
+              )) .
               '" target="_blank">Visa kommentarer</a>';
           endif;
           echo '</span>
@@ -306,10 +364,10 @@ class Dashboard {
         endif;
         echo '</td>
                     <td>' .
-          $value->visitors .
+          absint($value->visitors) .
           '</td>
 					<td>' .
-          get_the_modified_date('Y-m-d', $value->ID) .
+          esc_html(get_the_modified_date('Y-m-d', $value->ID)) .
           '</td>
                 </tr>';
       }
@@ -327,7 +385,7 @@ class Dashboard {
             'content-insights-for-editors'
           ),
           __('Click here to', 'content-insights-for-editors'),
-          admin_url('post-new.php?post_type=page'),
+          esc_url(admin_url('post-new.php?post_type=page')),
           __('create a new page', 'content-insights-for-editors')
         );
       }
@@ -355,13 +413,13 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($page->ID) .
+          esc_url(get_edit_post_link($page->ID)) .
           '"><strong>' .
-          $page->title .
+          esc_html($page->title) .
           '</strong></a>
 					</td>
 					<td style="width: 30%; text-align: right;">' .
-          $page->lastModified .
+          esc_html($page->lastModified) .
           '</td>
                 </tr>';
       }
@@ -374,6 +432,7 @@ class Dashboard {
       if ($userID) {
         echo '<p>' .
           sprintf(
+            /* translators: %d: number of days in the outdated-content threshold. */
             __(
               'Great! All of your pages have been updated within the last %d days.',
               'content-insights-for-editors'
@@ -384,7 +443,7 @@ class Dashboard {
         echo sprintf(
           '<p>%s <a href="%s">%s</a></p>',
           __('Click here to', 'content-insights-for-editors'),
-          admin_url('admin.php?page=content-insights-for-editors-page'),
+          esc_url(admin_url('admin.php?page=content-insights-for-editors-page')),
           __('view your pages', 'content-insights-for-editors')
         );
       }
@@ -418,24 +477,24 @@ class Dashboard {
         echo '<tr>
                     <td>
                         <a href="' .
-          get_edit_post_link($value->ID) .
+          esc_url(get_edit_post_link($value->ID)) .
           '"><strong>' .
-          $value->title .
+          esc_html($value->title) .
           '</strong></a>';
         if (isset($value->feedback)):
           echo '<div class="cife-customer-feedback-wrapper">
 					<span class="cife-customer-feedback cife-customer-feedback--positive">' .
-            round($value->feedback['yes']) .
+            esc_html(round($value->feedback['yes'])) .
             '<i class="cife-icon cife-icon--thumb-up"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--negative">' .
-            round($value->feedback['no']) .
+            esc_html(round($value->feedback['no'])) .
             '<i class="cife-icon cife-icon--thumb-down"></i></span>
 					<span class="cife-customer-feedback cife-customer-feedback--comments">' .
-            $value->feedback['comments'] .
+            absint($value->feedback['comments']) .
             '<i class="cife-icon cife-icon--comments"></i>';
           if ($value->feedback['comments'] > 0):
             echo '<a href="' .
-              admin_url(
+              esc_url(admin_url(
                 add_query_arg(
                   array(
                     'post_id' => $value->ID,
@@ -448,7 +507,7 @@ class Dashboard {
                   ),
                   'edit.php?post_type=customer-feedback'
                 )
-              ) .
+              )) .
               '" target="_blank">Visa kommentarer</a>';
           endif;
           echo '</span>
@@ -456,7 +515,7 @@ class Dashboard {
         endif;
         echo '</td>
                     <td>' .
-          $value->visitors .
+          absint($value->visitors) .
           '</td>
                 </tr>';
       }
